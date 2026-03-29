@@ -617,6 +617,78 @@
       .cell-primary { font-size: 11px; }
       .cell-secondary { font-size: 11px; }
     }
+    .fab-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+    }
+    .fab-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(10px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .fab-menu.is-open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    .fab-action {
+      background: linear-gradient(180deg, rgba(15,23,42,0.95), rgba(11,16,32,0.95));
+      border: 1px solid var(--line);
+      color: var(--text);
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      backdrop-filter: blur(12px);
+      transition: 0.2s ease;
+      white-space: nowrap;
+    }
+    .fab-action:hover {
+      background: rgba(30,41,59,0.95);
+      border-color: rgba(125,211,252,0.3);
+      color: #f8fbff;
+      transform: translateX(-4px);
+    }
+    .fab-main {
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      color: #0f172a;
+      border: none;
+      padding: 16px 20px;
+      border-radius: 999px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(56, 189, 248, 0.3);
+      transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .fab-main:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 14px 40px rgba(56, 189, 248, 0.4);
+    }
+    .fab-main.is-open {
+      background: linear-gradient(135deg, #f472b6, #c084fc);
+      box-shadow: 0 10px 30px rgba(244, 114, 182, 0.3);
+    }
+    @media (max-width: 640px) {
+      .fab-container { bottom: 18px; right: 18px; }
+      .fab-action { padding: 10px 16px; font-size: 13px; }
+      .fab-main { padding: 14px 18px; font-size: 14px; }
+    }
   </style>
 </head>
 <body>
@@ -709,6 +781,17 @@
 
       <div class="search-result" id="searchResult"></div>
     </div>
+  </div>
+
+  <div class="fab-container">
+    <div class="fab-menu" id="fabMenu" aria-hidden="true">
+      <button class="fab-action" type="button" data-fab-type="dataGu">구·군별 보기</button>
+      <button class="fab-action" type="button" data-fab-type="dataMetro">광역의회 선거구</button>
+      <button class="fab-action" type="button" data-fab-type="dataBasic">기초의회 선거구</button>
+    </div>
+    <button class="fab-main" type="button" id="fabToggle">
+      <span id="fabLabel">구역 선택</span>
+    </button>
   </div>
 
   <script>
@@ -1125,6 +1208,37 @@
 
       const item = currentData.find(d => d.code === selectedSearchCode) || currentData[0];
       renderSearchResult(item, start, end);
+    });
+
+    const fabToggle = document.getElementById('fabToggle');
+    const fabMenu = document.getElementById('fabMenu');
+    const fabLabel = document.getElementById('fabLabel');
+    
+    fabToggle.addEventListener('click', () => {
+      const isOpen = fabMenu.classList.contains('is-open');
+      if (isOpen) {
+        fabMenu.classList.remove('is-open');
+        fabToggle.classList.remove('is-open');
+        fabLabel.textContent = '구역 선택';
+      } else {
+        fabMenu.classList.add('is-open');
+        fabToggle.classList.add('is-open');
+        fabLabel.textContent = '닫기 ✕';
+      }
+    });
+
+    document.querySelectorAll('.fab-action').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const type = e.currentTarget.dataset.fabType;
+        const mainTab = document.querySelector(`.tab-btn[data-type="${type}"]`);
+        if(mainTab) mainTab.click();
+        
+        fabMenu.classList.remove('is-open');
+        fabToggle.classList.remove('is-open');
+        fabLabel.textContent = '구역 선택';
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
     });
 
     buildHero();
