@@ -2,577 +2,206 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
   <title>dg26 메인페이지</title>
 
-  <link
-    rel="stylesheet"
-    as="style"
-    crossorigin
-    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css"
-  />
+  <!-- Pretendard -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css"/>
 
   <style>
-    :root {
-      --text-main: rgba(255, 255, 255, 0.98);
-      --text-sub: rgba(255, 255, 255, 0.90);
-      --text-dim: rgba(255, 255, 255, 0.72);
-      --line-soft: rgba(255, 255, 255, 0.14);
-      --panel-bg: rgba(7, 16, 30, 0.34);
-      --panel-bg-mobile: rgba(7, 16, 30, 0.50);
-      --card-bg: rgba(255, 255, 255, 0.10);
-      --card-hover: rgba(255, 255, 255, 0.16);
-      --accent: #ffd86e;
-      --shadow: 0 20px 60px rgba(0, 0, 0, 0.30);
-      --radius-xl: 30px;
-      --radius-lg: 22px;
-      --radius-md: 18px;
-    }
+    * { box-sizing: border-box; }
 
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    html,
     body {
       margin: 0;
-      width: 100%;
-      min-height: 100%;
-      font-family:
-        "Pretendard",
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        "Apple SD Gothic Neo",
-        "Malgun Gothic",
-        sans-serif;
-      color: var(--text-main);
-      background: #000;
-    }
-
-    body {
-      position: relative;
-      min-height: 100dvh;
+      font-family: "Pretendard", sans-serif;
+      color: #fff;
       background:
-        linear-gradient(
-          180deg,
-          rgba(7, 16, 30, 0.10) 0%,
-          rgba(7, 16, 30, 0.24) 34%,
-          rgba(7, 16, 30, 0.58) 100%
-        ),
-        url("back.png") center center / cover no-repeat;
-      overflow-x: hidden;
-    }
-
-    body::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 50% 22%, rgba(255, 211, 128, 0.20), transparent 30%),
-        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.18));
-      pointer-events: none;
+        linear-gradient(180deg, rgba(7,16,30,0.1), rgba(7,16,30,0.6)),
+        url("back.png") center/cover no-repeat;
     }
 
     .page {
-      position: relative;
-      z-index: 1;
-      min-height: 100dvh;
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding:
-        max(20px, env(safe-area-inset-top))
-        24px
-        max(24px, env(safe-area-inset-bottom))
-        24px;
+      padding: 20px;
     }
 
     .panel {
-      width: min(920px, 100%);
-      padding: 30px 32px 26px;
-      border-radius: var(--radius-xl);
-      background: var(--panel-bg);
-      border: 1px solid var(--line-soft);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      box-shadow: var(--shadow);
+      width: 100%;
+      max-width: 720px;
+      padding: 26px 20px;
+      border-radius: 26px;
+      background: rgba(10,20,35,0.45);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.15);
     }
 
+    /* ✅ 로고 중앙 */
     .logo-wrap {
-      margin-bottom: 18px;
       display: flex;
-      align-items: center;
-      justify-content: flex-start;
+      justify-content: center;
+      margin-bottom: 14px;
     }
 
     .logo-image {
-      display: block;
-      width: clamp(180px, 26vw, 280px);
-      height: auto;
-      object-fit: contain;
-      filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.22));
+      width: clamp(160px, 40vw, 240px);
     }
 
-    .eyebrow {
-      font-size: clamp(1rem, 1.8vw, 1.14rem);
-      font-weight: 700;
-      line-height: 1.45;
-      margin-bottom: 8px;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
-    }
-
-    .headline {
-      font-size: clamp(1.55rem, 3.2vw, 2.48rem);
-      font-weight: 800;
-      line-height: 1.34;
-      letter-spacing: -0.02em;
-      margin: 0 0 12px 0;
-      word-break: keep-all;
-      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.28);
-      max-width: 16.5em;
-    }
-
+    /* ✅ 텍스트 중앙 */
+    .eyebrow,
+    .headline,
     .subcopy {
-      margin: 0;
-      font-size: clamp(0.98rem, 1.4vw, 1.08rem);
-      line-height: 1.76;
-      color: var(--text-sub);
-      max-width: 52em;
-      word-break: keep-all;
-    }
-
-    .hours-left {
-      color: var(--accent);
-      font-weight: 800;
-    }
-
-    .countdown-wrap {
-      margin-top: 22px;
-    }
-
-    .countdown-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 10px;
-      flex-wrap: wrap;
-    }
-
-    .countdown-title {
-      font-size: 0.83rem;
-      font-weight: 700;
-      letter-spacing: 0.10em;
-      color: var(--text-dim);
-      text-transform: uppercase;
-    }
-
-    .target-date {
-      font-size: 0.86rem;
-      color: rgba(255,255,255,0.78);
-      font-weight: 600;
-    }
-
-    .countdown-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .time-card {
-      min-width: 0;
-      padding: 14px 10px 12px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.09);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
       text-align: center;
     }
 
-    .time-value {
-      font-size: clamp(1.55rem, 3vw, 2.3rem);
-      line-height: 1;
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      margin-bottom: 7px;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .time-label {
-      font-size: 0.82rem;
+    .eyebrow {
+      font-size: 1rem;
+      margin-bottom: 6px;
       font-weight: 600;
-      color: var(--text-dim);
-      letter-spacing: 0.02em;
     }
 
-    .bottom-meta {
-      margin-top: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .now-text,
-    .footnote {
-      font-size: 0.84rem;
-      line-height: 1.55;
-      color: rgba(255,255,255,0.70);
-    }
-
-    .menu-section {
-      margin-top: 22px;
-    }
-
-    .menu-title {
-      font-size: 0.85rem;
-      font-weight: 700;
-      letter-spacing: 0.10em;
-      color: var(--text-dim);
-      text-transform: uppercase;
+    .headline {
+      font-size: 1.5rem;
+      font-weight: 800;
+      line-height: 1.4;
       margin-bottom: 10px;
     }
 
-    .menu-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
+    .subcopy {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 18px;
     }
 
+    .hours-left {
+      color: #ffd86e;
+      font-weight: 800;
+    }
+
+    /* ✅ 카운트다운 (작게) */
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .time-card {
+      background: rgba(255,255,255,0.1);
+      padding: 10px 6px;
+      border-radius: 14px;
+      text-align: center;
+      font-size: 0.85rem;
+    }
+
+    .time-value {
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+
+    .time-label {
+      font-size: 0.7rem;
+      opacity: 0.7;
+    }
+
+    .now-text {
+      text-align: center;
+      font-size: 0.75rem;
+      opacity: 0.7;
+      margin-bottom: 16px;
+    }
+
+    /* ✅ 메뉴 */
     .menu-card {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 18px 18px;
-      border-radius: 18px;
-      background: var(--card-bg);
-      border: 1px solid rgba(255,255,255,0.13);
-      color: #fff;
+      display: block;
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.1);
       text-decoration: none;
-      transition:
-        transform 0.18s ease,
-        background 0.18s ease,
-        border-color 0.18s ease,
-        box-shadow 0.18s ease;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+      color: #fff;
+      transition: 0.2s;
     }
 
     .menu-card:hover {
+      background: rgba(255,255,255,0.18);
       transform: translateY(-2px);
-      background: var(--card-hover);
-      border-color: rgba(255,255,255,0.22);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.06),
-        0 12px 28px rgba(0,0,0,0.18);
     }
 
-    .menu-card:active {
-      transform: translateY(0);
-    }
-
-    .menu-card-left {
-      min-width: 0;
-    }
-
-    .menu-card-title {
-      font-size: 1.04rem;
+    .menu-title {
       font-weight: 800;
-      line-height: 1.4;
-      color: rgba(255,255,255,0.98);
-      margin-bottom: 4px;
-      word-break: keep-all;
+      font-size: 1rem;
     }
 
-    .menu-card-desc {
-      font-size: 0.9rem;
-      line-height: 1.6;
-      color: rgba(255,255,255,0.72);
-      word-break: keep-all;
+    .menu-desc {
+      font-size: 0.85rem;
+      opacity: 0.7;
+      margin-top: 4px;
     }
 
-    .menu-arrow {
-      flex-shrink: 0;
-      font-size: 1.15rem;
-      color: rgba(255,255,255,0.78);
-    }
-
-    @media (max-width: 920px) {
-      .page {
-        align-items: flex-end;
-      }
-
-      .panel {
-        width: 100%;
-        max-width: 720px;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .page {
-        padding:
-          max(12px, env(safe-area-inset-top))
-          12px
-          max(14px, env(safe-area-inset-bottom))
-          12px;
-        align-items: flex-end;
-      }
-
-      .panel {
-        padding: 20px 15px 16px;
-        border-radius: 22px;
-        background: var(--panel-bg-mobile);
-      }
-
-      .logo-wrap {
-        margin-bottom: 14px;
-      }
-
-      .logo-image {
-        width: 180px;
-        max-width: 62vw;
-      }
-
-      .eyebrow {
-        font-size: 0.96rem;
-        margin-bottom: 7px;
-      }
-
+    /* 모바일 */
+    @media (max-width: 480px) {
       .headline {
-        font-size: 1.34rem;
-        line-height: 1.42;
-        margin-bottom: 10px;
-        max-width: 100%;
-      }
-
-      .subcopy {
-        font-size: 0.94rem;
-        line-height: 1.7;
-      }
-
-      .countdown-wrap {
-        margin-top: 18px;
-      }
-
-      .countdown-header {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 3px;
-        margin-bottom: 8px;
-      }
-
-      .countdown-title {
-        font-size: 0.76rem;
-      }
-
-      .target-date {
-        font-size: 0.8rem;
+        font-size: 1.3rem;
       }
 
       .countdown-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 7px;
-      }
-
-      .time-card {
-        padding: 11px 6px 10px;
-        border-radius: 14px;
-      }
-
-      .time-value {
-        font-size: 1.22rem;
-        margin-bottom: 6px;
-      }
-
-      .time-label {
-        font-size: 0.73rem;
-      }
-
-      .bottom-meta {
-        margin-top: 9px;
-      }
-
-      .now-text,
-      .footnote {
-        font-size: 0.76rem;
-        line-height: 1.45;
-      }
-
-      .menu-section {
-        margin-top: 18px;
-      }
-
-      .menu-title {
-        font-size: 0.77rem;
-        margin-bottom: 8px;
-      }
-
-      .menu-card {
-        padding: 15px 14px;
-        border-radius: 16px;
-        gap: 12px;
-      }
-
-      .menu-card-title {
-        font-size: 0.96rem;
-      }
-
-      .menu-card-desc {
-        font-size: 0.82rem;
-        line-height: 1.5;
-      }
-
-      .menu-arrow {
-        font-size: 1rem;
-      }
-    }
-
-    @media (max-width: 380px) {
-      .panel {
-        padding: 18px 12px 14px;
-      }
-
-      .headline {
-        font-size: 1.22rem;
-      }
-
-      .subcopy {
-        font-size: 0.9rem;
-      }
-
-      .logo-image {
-        width: 160px;
-      }
-
-      .time-value {
-        font-size: 1.08rem;
-      }
-
-      .time-label {
-        font-size: 0.68rem;
+        grid-template-columns: repeat(2, 1fr);
       }
     }
   </style>
 </head>
+
 <body>
-  <main class="page">
-    <section class="panel">
+
+  <div class="page">
+    <div class="panel">
+
+      <!-- 로고 -->
       <div class="logo-wrap">
-        <img src="dg26.png" alt="대구이륙 로고" class="logo-image" />
+        <img src="dg26.png" class="logo-image">
       </div>
 
+      <!-- 문구 -->
       <div class="eyebrow">안내 말씀드립니다.</div>
 
-      <h1 class="headline">
-        더 나은 대구로 향하는 dg26편, 곧 출발 예정입니다.
-      </h1>
-
-      <p class="subcopy">
-        탑승은 약 <span class="hours-left" id="hoursLeft">0시간</span> 후
-        마감되오니 서둘러 주시기 바랍니다.
-      </p>
-
-      <div class="countdown-wrap">
-        <div class="countdown-header">
-          <div class="countdown-title">COUNTDOWN</div>
-          <div class="target-date">2026.06.03 00:00 KST</div>
-        </div>
-
-        <div class="countdown-grid">
-          <div class="time-card">
-            <div class="time-value" id="days">0</div>
-            <div class="time-label">일</div>
-          </div>
-          <div class="time-card">
-            <div class="time-value" id="hours">0</div>
-            <div class="time-label">시간</div>
-          </div>
-          <div class="time-card">
-            <div class="time-value" id="minutes">0</div>
-            <div class="time-label">분</div>
-          </div>
-          <div class="time-card">
-            <div class="time-value" id="seconds">0</div>
-            <div class="time-label">초</div>
-          </div>
-        </div>
-
-        <div class="bottom-meta">
-          <div class="now-text" id="nowText"></div>
-          <div class="footnote">※ 기준 시각은 한국 표준시(KST)입니다.</div>
-        </div>
+      <div class="headline">
+        더 나은 대구로 향하는 dg26편<br>
+        곧 출발 예정입니다.
       </div>
 
-      <div class="menu-section">
-        <div class="menu-title">MENU</div>
-
-        <div class="menu-grid">
-          <a
-            class="menu-card"
-            href="https://dg26.kr/population"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <div class="menu-card-left">
-              <div class="menu-card-title">대구 인구 구조 분석</div>
-              <div class="menu-card-desc">
-                연령대별·성별 인구 구조를 한눈에 볼 수 있는 분석 페이지
-              </div>
-            </div>
-            <div class="menu-arrow">↗</div>
-          </a>
-        </div>
+      <div class="subcopy">
+        탑승은 약 <span id="hoursLeft" class="hours-left">0시간</span> 후 마감됩니다.
       </div>
-    </section>
-  </main>
+
+      <!-- 카운트다운 -->
+      <div class="countdown-grid">
+        <div class="time-card"><div id="days" class="time-value">0</div><div class="time-label">일</div></div>
+        <div class="time-card"><div id="hours" class="time-value">0</div><div class="time-label">시간</div></div>
+        <div class="time-card"><div id="minutes" class="time-value">0</div><div class="time-label">분</div></div>
+        <div class="time-card"><div id="seconds" class="time-value">0</div><div class="time-label">초</div></div>
+      </div>
+
+      <div id="nowText" class="now-text"></div>
+
+      <!-- 메뉴 -->
+      <a href="https://dg26.kr/population" class="menu-card">
+        <div class="menu-title">대구 인구 구조 분석</div>
+        <div class="menu-desc">연령대·성별 인구 구조 분석 페이지</div>
+      </a>
+
+    </div>
+  </div>
 
   <script>
-    // 목표 시각: 2026-06-03 00:00:00 KST
-    // UTC 기준: 2026-06-02 15:00:00
     const targetTime = Date.UTC(2026, 5, 2, 15, 0, 0);
 
-    const hoursLeftEl = document.getElementById("hoursLeft");
-    const daysEl = document.getElementById("days");
-    const hoursEl = document.getElementById("hours");
-    const minutesEl = document.getElementById("minutes");
-    const secondsEl = document.getElementById("seconds");
-    const nowTextEl = document.getElementById("nowText");
-
-    function pad(num) {
-      return String(num).padStart(2, "0");
-    }
-
-    function formatKST(date) {
-      const kst = new Date(date.getTime() + 9 * 60 * 60 * 1000);
-
-      const year = kst.getUTCFullYear();
-      const month = pad(kst.getUTCMonth() + 1);
-      const day = pad(kst.getUTCDate());
-      const hours = pad(kst.getUTCHours());
-      const minutes = pad(kst.getUTCMinutes());
-      const seconds = pad(kst.getUTCSeconds());
-
-      return `${year}.${month}.${day} ${hours}:${minutes}:${seconds}`;
-    }
-
-    function updateCountdown() {
+    function update() {
       const now = new Date();
-      const diff = targetTime - now.getTime();
+      const diff = targetTime - now;
 
-      if (diff <= 0) {
-        hoursLeftEl.textContent = "0시간";
-        daysEl.textContent = "0";
-        hoursEl.textContent = "0";
-        minutesEl.textContent = "0";
-        secondsEl.textContent = "0";
-        nowTextEl.textContent = "현재 시각: 2026.06.03 00:00:00 이후";
-        return;
-      }
+      if (diff <= 0) return;
 
       const totalHours = Math.floor(diff / (1000 * 60 * 60));
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -580,17 +209,19 @@
       const minutes = Math.floor((diff / (1000 * 60)) % 60);
       const seconds = Math.floor((diff / 1000) % 60);
 
-      hoursLeftEl.textContent = `${totalHours.toLocaleString("ko-KR")}시간`;
-      daysEl.textContent = days.toLocaleString("ko-KR");
-      hoursEl.textContent = String(hours);
-      minutesEl.textContent = String(minutes);
-      secondsEl.textContent = String(seconds);
+      document.getElementById("hoursLeft").textContent = totalHours + "시간";
+      document.getElementById("days").textContent = days;
+      document.getElementById("hours").textContent = hours;
+      document.getElementById("minutes").textContent = minutes;
+      document.getElementById("seconds").textContent = seconds;
 
-      nowTextEl.textContent = `현재 시각: ${formatKST(now)}`;
+      document.getElementById("nowText").textContent =
+        "현재 시각: " + new Date().toLocaleString("ko-KR");
     }
 
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
+    update();
+    setInterval(update, 1000);
   </script>
+
 </body>
 </html>
