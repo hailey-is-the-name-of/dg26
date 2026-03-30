@@ -25,12 +25,13 @@
       color: #fff;
       background:
         linear-gradient(180deg, rgba(7, 16, 30, 0.10), rgba(7, 16, 30, 0.60)),
-        url("back.png") center / cover no-repeat;
+        url("back.webp") center / cover no-repeat;
     }
 
     .page {
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 20px;
@@ -213,9 +214,61 @@
       }
     }
   </style>
+  <style>
+    /* Floating Bar */
+    .floating-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 0 20px;
+      z-index: 1000;
+      background: rgba(10, 20, 35, 0.45);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.22);
+    }
+    
+    .floating-text {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .floating-logo {
+      height: 28px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    @media (max-width: 480px) {
+      .floating-bar {
+        padding: 0 12px;
+        height: 40px;
+      }
+      .floating-text {
+        font-size: 0.9rem;
+      }
+      .floating-logo {
+        height: 24px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div class="page">
+  <!-- 상단 Floating Bar -->
+  <div class="floating-bar">
+    <a href="https://theminjoodaegu.co.kr/" target="_blank" rel="noopener noreferrer">
+      <img src="logo_w.png" class="floating-logo" alt="우측 로고" />
+    </a>
+  </div>
+
+  <div class="page" style="padding-top: 60px;">
     <div class="panel-wrap">
       <div class="logo-wrap">
         <img src="dg26.png" class="logo-image" alt="대구이륙 로고" />
@@ -255,10 +308,15 @@
         <div id="nowText" class="now-text"></div>
 
         <a href="https://dg26.kr/population" class="menu-card">
-          <div class="menu-title">대구 인구 구조 분석</div>
-          <div class="menu-desc">연령대·성별 인구 구조 분석 페이지</div>
+          <div class="menu-title">대구 유권자 인구학적 분석</div>
+          <div class="menu-desc">연령대·성별 유권자 인구학적 분석</div>
         </a>
       </div>
+    </div>
+    <div style="text-align: center; margin-top: 40px; padding-bottom: 20px;">
+      <a href="https://theminjoodaegu.co.kr/" target="_blank" rel="noopener noreferrer">
+        <img src="logo_w.png" style="width: clamp(120px, 20vw, 150px); opacity: 0.6;" alt="더불어민주당 로고" />
+      </a>
     </div>
   </div>
 
