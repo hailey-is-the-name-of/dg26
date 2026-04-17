@@ -97,8 +97,8 @@
       transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* 카드에 호버 시 마스코트도 함께 움직임 */
-    .menu-container:has(.menu-card:hover) .menu-mascot-wrap {
+    /* 첫 번째 카드에 호버 시에만 마스코트가 함께 움직임 */
+    .menu-container:has(.menu-card:first-of-type:hover) .menu-mascot-wrap {
       transform: translateY(-71%);
     }
 
@@ -176,6 +176,7 @@
     }
 
     .menu-card {
+      position: relative;
       display: block;
       padding: 24px;
       border-radius: 20px;
@@ -211,6 +212,28 @@
       font-weight: 400;
     }
 
+    /* 카드 내부 추가 마스코트 (우측 중간 오버레이) */
+    .card-extra-mascot {
+      position: absolute;
+      right: 5px;
+      /* 안쪽으로 살짝 이동 */
+      top: 50%;
+      transform: translateY(-50%);
+      width: clamp(100px, 20vw, 145px);
+      /* 약 30% 크기 키움 */
+      height: auto;
+      pointer-events: none;
+      z-index: 10;
+      filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.3));
+      transition: transform 0.3s ease;
+    }
+
+    .menu-card:hover .card-extra-mascot {
+      transform: translateY(-55%) rotate(5deg) scale(1.05);
+      /* 호버 시 위로 살짝 들리며 확대 */
+    }
+    }
+
     @media (max-width: 480px) {
       .page {
         padding: 14px;
@@ -238,7 +261,8 @@
         transform: translateY(-62%);
       }
 
-      .menu-container:has(.menu-card:hover) .menu-mascot-wrap {
+      /* 모바일에서도 첫 번째 카드 호버 시에만 움직임 */
+      .menu-container:has(.menu-card:first-of-type:hover) .menu-mascot-wrap {
         transform: translateY(-65%);
       }
 
@@ -257,6 +281,13 @@
       .menu-desc {
         font-size: 0.85rem;
       }
+
+      /* 모바일에서 수학 마스코트 위치/크기 조정 */
+      .card-extra-mascot {
+        right: 0px;
+        width: 95px;
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+      }
     }
   </style>
   <style>
@@ -269,7 +300,8 @@
       height: 60px;
       display: flex;
       align-items: center;
-      justify-content: space-between; /* 양쪽 배치 */
+      justify-content: space-between;
+      /* 양쪽 배치 */
       padding: 0 20px;
       z-index: 1000;
       background: rgba(10, 20, 35, 0.45);
@@ -318,7 +350,8 @@
       }
 
       .page {
-        padding-top: 130px !important; /* 상단 로고 가림 방지 */
+        padding-top: 130px !important;
+        /* 상단 로고 가림 방지 */
       }
     }
   </style>
@@ -375,7 +408,7 @@
 
         <div class="menu-container">
           <div class="menu-mascot-wrap">
-            <img src="mindall.png" class="menu-mascot-image" alt="마스코트" />
+            <img src="mindall.webp" class="menu-mascot-image" alt="마스코트" />
           </div>
 
           <a href="https://whobo.dg26.kr" class="menu-card">
@@ -386,6 +419,7 @@
           <a href="https://records.dg26.kr/" class="menu-card">
             <div class="menu-title">대구광역시 득표 비교</div>
             <div class="menu-desc">2014년 지선부터 2024년 총선까지 구군 및 동별 득표통계</div>
+            <img src="mindall_math.webp" class="card-extra-mascot" alt="수학 수달" />
           </a>
 
           <a href="https://dg26.kr/population" class="menu-card">
