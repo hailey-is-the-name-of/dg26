@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>더 나은 대구로 향하는 dg26</title>
 
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css"
-  />
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" />
 
   <style>
     * {
       box-sizing: border-box;
     }
 
-    html, body {
+    html,
+    body {
       margin: 0;
       min-height: 100%;
     }
@@ -67,13 +67,45 @@
 
     .panel {
       width: 100%;
-      padding: 100px 20px 26px;
+      padding: 100px 20px 40px;
       border-radius: 26px;
       background: rgba(10, 20, 35, 0.45);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.15);
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.22);
+      margin-bottom: 20px;
+    }
+
+    /* 메뉴 영역 컨테이너 */
+    .menu-container {
+      position: relative;
+      margin-top: 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* 캐릭터가 앉아 있는 듯한 배치 */
+    .menu-mascot-wrap {
+      position: absolute;
+      top: 0;
+      left: 20px;
+      transform: translateY(-68%);
+      z-index: 20;
+      pointer-events: none;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* 카드에 호버 시 마스코트도 함께 움직임 */
+    .menu-container:has(.menu-card:hover) .menu-mascot-wrap {
+      transform: translateY(-71%);
+    }
+
+    .menu-mascot-image {
+      width: clamp(140px, 28vw, 180px);
+      height: auto;
+      filter: drop-shadow(0 6px 15px rgba(0, 0, 0, 0.3));
     }
 
     .eyebrow,
@@ -145,30 +177,38 @@
 
     .menu-card {
       display: block;
-      padding: 16px;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.10);
+      padding: 24px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.08);
+      /* 더 투명하게 */
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       text-decoration: none;
       color: #fff;
-      transition: 0.2s ease;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
 
     .menu-card:hover {
-      background: rgba(255, 255, 255, 0.18);
-      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      border-color: rgba(255, 255, 255, 0.25);
     }
 
     .menu-title {
       font-weight: 800;
-      font-size: 1rem;
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
     }
 
     .menu-desc {
-      font-size: 0.85rem;
-      opacity: 0.72;
-      margin-top: 4px;
+      font-size: 0.9rem;
+      opacity: 0.8;
+      margin-top: 6px;
       line-height: 1.5;
+      font-weight: 400;
     }
 
     @media (max-width: 480px) {
@@ -193,24 +233,29 @@
         border-radius: 22px;
       }
 
-      .headline {
-        font-size: 1.28rem;
+      .menu-mascot-wrap {
+        left: 14px;
+        transform: translateY(-80%);
       }
 
-      .subcopy {
-        font-size: 0.94rem;
+      .menu-container:has(.menu-card:hover) .menu-mascot-wrap {
+        transform: translateY(-83%);
       }
 
-      .countdown-grid {
-        grid-template-columns: repeat(2, 1fr);
+      .menu-mascot-image {
+        width: 140px;
       }
 
-      .time-card {
-        padding: 10px 6px;
+      .menu-container {
+        margin-top: 50px;
       }
 
-      .time-value {
-        font-size: 1.12rem;
+      .menu-title {
+        font-size: 1.05rem;
+      }
+
+      .menu-desc {
+        font-size: 0.85rem;
       }
     }
   </style>
@@ -224,7 +269,7 @@
       height: 60px;
       display: flex;
       align-items: center;
-      justify-content: flex-end;
+      justify-content: space-between; /* 양쪽 배치 */
       padding: 0 20px;
       z-index: 1000;
       background: rgba(10, 20, 35, 0.45);
@@ -233,7 +278,18 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.15);
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.22);
     }
-    
+
+    .floating-center-text {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #fff;
+      white-space: nowrap;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
     .floating-text {
       font-size: 1rem;
       font-weight: 800;
@@ -251,18 +307,28 @@
         padding: 0 12px;
         height: 60px;
       }
-      .floating-text {
-        font-size: 0.9rem;
+
+      .floating-center-text {
+        font-size: 0.8rem;
+        letter-spacing: -0.02em;
       }
+
       .floating-logo {
-        height: 30px;
+        height: 28px;
+      }
+
+      .page {
+        padding-top: 130px !important; /* 상단 로고 가림 방지 */
       }
     }
   </style>
 </head>
+
 <body>
   <!-- 상단 Floating Bar -->
   <div class="floating-bar">
+    <div style="width: 40px;"></div> <!-- 좌측 균형용 빈 공간 -->
+    <div class="floating-center-text">대구이륙 ::: 대구시당 선거안내 플랫폼</div>
     <a href="https://theminjoodaegu.co.kr/" target="_blank" rel="noopener noreferrer">
       <img src="logo_w.png" class="floating-logo" alt="우측 로고" />
     </a>
@@ -306,14 +372,27 @@
         </div>
 
         <div id="nowText" class="now-text"></div>
-     <a href="https://whobo.dg26.kr" class="menu-card">
-          <div class="menu-title">후보 누구?! </div>
-          <div class="menu-desc">제9회 전국동시지방선거 출마자들을 소개합니다</div>
-        </a><br>
-        <a href="https://dg26.kr/population" class="menu-card">
-          <div class="menu-title">대구 유권자 인구학적 분석</div>
-          <div class="menu-desc">연령대·성별 유권자 인구학적 분석</div>
-        </a>
+
+        <div class="menu-container">
+          <div class="menu-mascot-wrap">
+            <img src="mindall.png" class="menu-mascot-image" alt="마스코트" />
+          </div>
+
+          <a href="https://whobo.dg26.kr" class="menu-card">
+            <div class="menu-title">후보 누구?!</div>
+            <div class="menu-desc">제9회 전국동시지방선거 출마자들을 소개합니다</div>
+          </a>
+
+          <a href="https://records.dg26.kr/" class="menu-card">
+            <div class="menu-title">대구광역시 득표 비교</div>
+            <div class="menu-desc">2014년 지선부터 2024년 총선까지 구군 및 동별 득표통계</div>
+          </a>
+
+          <a href="https://dg26.kr/population" class="menu-card">
+            <div class="menu-title">대구 유권자 인구학적 분석</div>
+            <div class="menu-desc">연령대·성별 유권자 인구학적 분석</div>
+          </a>
+        </div>
       </div>
     </div>
     <div style="text-align: center; margin-top: 40px; padding-bottom: 20px;">
@@ -326,7 +405,26 @@
   <script>
     const targetTime = Date.UTC(2026, 5, 2, 15, 0, 0);
 
+    function updateBackground() {
+      const now = new Date();
+      const hour = now.getHours();
+      let bgImg = "back.webp";
+
+      if (hour >= 5 && hour < 6) bgImg = "05-06.webp";
+      else if (hour >= 6 && hour < 8) bgImg = "06-08.webp";
+      else if (hour >= 8 && hour < 11) bgImg = "08-11.webp";
+      else if (hour >= 11 && hour < 17) bgImg = "11-17.webp";
+      else if (hour >= 17 && hour < 19) bgImg = "17-19.webp";
+      else if (hour >= 19 && hour < 20) bgImg = "19-20.webp";
+      else if (hour >= 20 && hour < 23) bgImg = "20-23.webp";
+      else bgImg = "23-05.webp";
+
+      const bgUrl = `back_webp/${bgImg}`;
+      document.body.style.background = `linear-gradient(180deg, rgba(7, 16, 30, 0.10), rgba(7, 16, 30, 0.60)), url("${bgUrl}") center / cover no-repeat`;
+    }
+
     function update() {
+      updateBackground(); // 시간별 배경 업데이트 추가
       const now = new Date();
       const diff = targetTime - now.getTime();
 
@@ -359,4 +457,5 @@
     setInterval(update, 1000);
   </script>
 </body>
+
 </html>
