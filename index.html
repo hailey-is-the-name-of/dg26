@@ -80,10 +80,12 @@
     /* 메뉴 영역 컨테이너 */
     .menu-container {
       position: relative;
-      margin-top: 110px; /* 첫 번째 마스코트 공간 확보를 위해 늘림 */
+      margin-top: 40px;
+      /* 기존 110px에서 축소: 상단 문구와 밀착 */
       display: flex;
       flex-direction: column;
-      gap: 14px; /* 기본 간격으로 복구 */
+      gap: 14px;
+      /* 기본 간격으로 복구 */
     }
 
     /* 캐릭터가 앉아 있는 듯한 배치 */
@@ -212,15 +214,11 @@
       font-weight: 400;
     }
 
-    /* 이미지가 있는 카드(2번)에만 상단 간격 추가 */
-    .menu-card:nth-of-type(2) {
-      margin-top: 60px;
-    }
-
     /* 카드 내부 추가 마스코트 (우측 상단 오버레이) */
     .card-extra-mascot {
       position: absolute;
-      right: 20px; /* 좌측에서 우측으로 다시 이동 */
+      right: 20px;
+      /* 좌측에서 우측으로 다시 이동 */
       top: 0;
       transform: translateY(-70%);
       width: clamp(100px, 20vw, 145px);
@@ -272,13 +270,8 @@
       }
 
       .menu-container {
-        margin-top: 90px;
+        margin-top: 30px;
         gap: 12px;
-      }
-
-      /* 모바일 이미지가 있는 카드 간격 조정 */
-      .menu-card:nth-of-type(2) {
-        margin-top: 45px;
       }
 
       .menu-title {
