@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>비례대표 의석수 계산기</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --danger: #ef4444;
+            --success: #10b981;
+            --text-main: #1f2937;
+            --text-muted: #4b5563;
+        }
+
+        /* 1. 배경 설정 (글래스모피즘이 돋보이도록 그라데이션 적용) */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 2. 로고 설정 */
+        .logo-img {
+            display: block;
+            width: 200px;
+            height: auto;
+            margin: 0 auto 24px auto;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+        }
+
+        /* 3. 글래스모피즘 컨테이너 */
+        .container {
+            width: 100%;
+            max-width: 650px;
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(79, 70, 229, 0.3);
+            padding-bottom: 10px;
+            text-align: center;
+            color: var(--primary);
+        }
+
+        /* 4. 입력 폼 글래스 처리 */
+        .config-group {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .config-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        input[type="number"],
+        input[type="text"] {
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            font-size: 1rem;
+            color: var(--text-main);
+            transition: all 0.2s;
+        }
+
+        input[type="number"]:focus,
+        input[type="text"]:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.9);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+        }
+
+        .party-list {
+            margin-bottom: 20px;
+        }
+
+        .party-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+
+        .party-item input[type="text"] {
+            flex: 2;
+        }
+
+        .party-item input[type="number"] {
+            flex: 1;
+        }
+
+        button {
+            cursor: pointer;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.2s;
+            backdrop-filter: blur(4px);
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .btn-add {
+            background-color: rgba(16, 185, 129, 0.85);
+            color: white;
+            width: 100%;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-remove {
+            background-color: rgba(239, 68, 68, 0.85);
+            color: white;
+            padding: 10px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-calc {
+            background-color: var(--primary);
+            color: white;
+            width: 100%;
+            font-size: 1.1rem;
+            padding: 14px;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+        }
+
+        .btn-calc:hover {
+            background-color: var(--primary-hover);
+        }
+
+        #result {
+            margin-top: 24px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        th {
+            background-color: rgba(255, 255, 255, 0.5);
+            font-weight: 700;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .explanation {
+            margin-top: 24px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.55);
+            border-radius: 12px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            border-left: 5px solid var(--primary);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .explanation h3 {
+            margin-top: 0;
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .explanation ul {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: var(--danger);
+            background: rgba(239, 68, 68, 0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        /* 5. 모바일 친화적 반응형 (미디어 쿼리) */
+        @media (max-width: 500px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 16px;
+            }
+
+            .config-group {
+                flex-direction: column;
+                /* 모바일에서는 설정 항목을 세로로 배치 */
+                gap: 12px;
+            }
+
+            h1 {
+                font-size: 1.3rem;
+            }
+
+            .party-item {
+                flex-wrap: wrap;
+                /* 작은 화면에서 정당 입력폼이 너무 좁아지면 줄바꿈 허용 */
+            }
+
+            .party-item input[type="text"] {
+                flex: 1 1 100%;
+                /* 이름 입력칸을 한 줄 다 차지하게 (선택사항) */
+                margin-bottom: 5px;
+            }
+
+            .party-item input[type="number"] {
+                flex: 2;
+            }
+
+            .btn-remove {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <img src="logo.png" alt="Logo" class="logo-img">
+
+    <div class="container">
+        <h1>지방선거 비례대표 계산기</h1>
+
+        <div class="config-group">
+            <div class="config-item">
+                <label for="totalSeats">총 의석수 (석)</label>
+                <input type="number" id="totalSeats" value="3" min="1">
+            </div>
+            <div class="config-item">
+                <label for="threshold">봉쇄조항 (%)</label>
+                <input type="number" id="threshold" value="5" step="0.1" min="0">
+            </div>
+        </div>
+
+        <div class="party-list" id="partyList">
+            <div class="party-item">
+                <input type="text" class="party-name" value="A정당" placeholder="정당명">
+                <input type="number" class="party-rate" value="45" placeholder="득표율(%)">
+                <button class="btn-remove" onclick="removeParty(this)">X</button>
+            </div>
+            <div class="party-item">
+                <input type="text" class="party-name" value="B정당" placeholder="정당명">
+                <input type="number" class="party-rate" value="35" placeholder="득표율(%)">
+                <button class="btn-remove" onclick="removeParty(this)">X</button>
+            </div>
+            <div class="party-item">
+                <input type="text" class="party-name" value="C정당" placeholder="정당명">
+                <input type="number" class="party-rate" value="15" placeholder="득표율(%)">
+                <button class="btn-remove" onclick="removeParty(this)">X</button>
+            </div>
+        </div>
+
+        <button class="btn-add" onclick="addParty()">+ 정당 추가</button>
+        <button class="btn-calc" onclick="calculateSeats()">계산하기</button>
+
+        <div id="result"></div>
+        <div id="explanationContainer"></div>
+    </div>
+
+    <script>
+        let partyCount = 3;
+
+        function addParty() {
+            partyCount++;
+            const list = document.getElementById('partyList');
+            const div = document.createElement('div');
+            div.className = 'party-item';
+            div.innerHTML = `
+                <input type="text" class="party-name" value="정당${partyCount}" placeholder="정당명">
+                <input type="number" class="party-rate" value="0" placeholder="득표율(%)">
+                <button class="btn-remove" onclick="removeParty(this)">X</button>
+            `;
+            list.appendChild(div);
+        }
+
+        function removeParty(btn) {
+            btn.parentElement.remove();
+        }
+
+        function calculateSeats() {
+            const totalSeats = parseInt(document.getElementById('totalSeats').value);
+            const threshold = parseFloat(document.getElementById('threshold').value);
+            const resultDiv = document.getElementById('result');
+            const expDiv = document.getElementById('explanationContainer');
+
+            if (isNaN(totalSeats) || totalSeats < 1) return alert("총 의석수를 올바르게 입력해주세요.");
+
+            const partyItems = document.querySelectorAll('.party-item');
+            let parties = [];
+
+            partyItems.forEach(item => {
+                const name = item.querySelector('.party-name').value;
+                const rate = parseFloat(item.querySelector('.party-rate').value) || 0;
+                parties.push({ name, rate, seats: 0, rawValue: 0, remainder: 0, extraSeat: false });
+            });
+
+            // 1. 봉쇄조항 적용
+            let eligibleParties = parties.filter(p => p.rate >= threshold);
+            let failedParties = parties.filter(p => p.rate < threshold);
+
+            if (eligibleParties.length === 0) {
+                resultDiv.innerHTML = "<p style='text-align:center; padding: 20px;'>봉쇄조항을 넘은 정당이 없습니다.</p>";
+                expDiv.innerHTML = "";
+                return;
+            }
+
+            let explHTML = `<div class="explanation"><h3>📊 계산 과정 상세 해설</h3>`;
+
+            // 봉쇄조항 설명
+            let sumRate = eligibleParties.reduce((sum, p) => sum + p.rate, 0).toFixed(2);
+            explHTML += `<p><strong>1. 봉쇄조항(${threshold}%) 통과 및 분모 재계산</strong><br>`;
+            if (failedParties.length > 0) explHTML += `• ${failedParties.map(p => p.name).join(', ')} 정당은 ${threshold}% 미만 득표로 의석 할당에서 제외됩니다.<br>`;
+            explHTML += `• 통과 정당: ${eligibleParties.map(p => p.name).join(', ')}<br>`;
+            explHTML += `• <strong style="color:var(--primary);">할당 기준 득표율 총합: ${sumRate}%</strong> (이 값을 기준으로 비율을 다시 나눕니다.)</p>`;
+
+            // 의석 할당 내부 함수
+            function allocate(targetParties, seatsToAllocate) {
+                let localSumRate = targetParties.reduce((sum, p) => sum + p.rate, 0);
+                let remainingSeats = seatsToAllocate;
+
+                // 1차 배분
+                explHTML += `<p><strong>2. 1차 기본 배분 (정수 배분)</strong><br>
+                계산식: (해당 정당 득표율 ÷ 기준 득표율 총합) × 배분할 의석수(${seatsToAllocate}석)<ul>`;
+
+                targetParties.forEach(p => {
+                    let rawSeats = (p.rate / localSumRate) * seatsToAllocate;
+                    p.rawValue = rawSeats;
+                    p.seats = Math.floor(rawSeats);
+                    p.remainder = rawSeats - p.seats;
+                    remainingSeats -= p.seats;
+                    explHTML += `<li><strong>${p.name}:</strong> (${p.rate} ÷ ${localSumRate.toFixed(2)}) × ${seatsToAllocate} = ${rawSeats.toFixed(4)} ➔ <strong>기본 ${p.seats}석</strong> (소수점: ${p.remainder.toFixed(4)})</li>`;
+                });
+                explHTML += `</ul></p>`;
+
+                // 2차 배분
+                if (remainingSeats > 0) {
+                    explHTML += `<p><strong>3. 2차 잔여 의석 배분</strong><br>
+                    1차 배분 후 남은 <strong>${remainingSeats}석</strong>을 소수점이 큰 순서대로 1석씩 추가 배분합니다.<ul>`;
+
+                    targetParties.sort((a, b) => {
+                        if (Math.abs(b.remainder - a.remainder) < 0.00001) return b.rate - a.rate;
+                        return b.remainder - a.remainder;
+                    });
+
+                    for (let i = 0; i < remainingSeats; i++) {
+                        if (targetParties[i]) {
+                            targetParties[i].seats += 1;
+                            targetParties[i].extraSeat = true;
+                            explHTML += `<li><strong>${targetParties[i].name}:</strong> 소수점이 높아 <strong style="color:var(--success);">+1석 추가</strong></li>`;
+                        }
+                    }
+                    explHTML += `</ul></p>`;
+                } else {
+                    explHTML += `<p><strong>3. 2차 잔여 의석 배분</strong><br><span style="color:var(--text-muted);">남은 잔여 의석이 없어 2차 배분을 진행하지 않습니다.</span></p>`;
+                }
+            }
+
+            // 기본 할당 실행
+            allocate(eligibleParties, totalSeats);
+
+            // 1당 독점 방지 조항 검사
+            const capLimit = Math.floor(totalSeats * (2 / 3));
+            eligibleParties.sort((a, b) => b.seats - a.seats); // 의석 많은 순 정렬
+
+            if (eligibleParties[0] && eligibleParties[0].seats > capLimit) {
+                let capParty = eligibleParties[0];
+                explHTML += `<p class="highlight">🚨 4. 1당 독점 방지 조항(2/3 제한) 발동!</p>
+                <p>공직선거법에 따라 한 정당이 전체 비례대표 의석의 2/3를 초과할 수 없습니다.<br>
+                총 ${totalSeats}석의 2/3인 <strong>${capLimit}석</strong>까지만 ${capParty.name}에 할당됩니다.</p>`;
+
+                capParty.seats = capLimit;
+                let otherParties = eligibleParties.slice(1);
+
+                if (otherParties.length > 0) {
+                    let remainingTotalSeats = totalSeats - capLimit;
+                    explHTML += `<p><strong>※ 캡 적용 후 재배분</strong><br>
+                    ${capParty.name}에 할당하고 남은 <strong>${remainingTotalSeats}석</strong>을 나머지 정당(${otherParties.map(p => p.name).join(', ')})들끼리 다시 배분합니다.</p>
+                    <hr style="border: 0; height: 1px; background: rgba(0,0,0,0.1); margin: 15px 0;">`;
+
+                    // 이전 할당 기록 초기화
+                    otherParties.forEach(p => { p.seats = 0; p.remainder = 0; p.extraSeat = false; });
+                    allocate(otherParties, remainingTotalSeats);
+                }
+            } else {
+                explHTML += `<p><strong>4. 1당 독점 방지 조항</strong><br><span style="color:var(--text-muted);">특정 정당이 의석의 2/3(${capLimit}석)를 초과하지 않아 제한 없이 확정됩니다.</span></p>`;
+            }
+
+            explHTML += `</div>`;
+
+            // 결과 정리 및 출력
+            parties.forEach(p => {
+                if (!eligibleParties.includes(p)) p.seats = 0;
+            });
+
+            renderTable(parties);
+            expDiv.innerHTML = explHTML;
+        }
+
+        function renderTable(parties) {
+            let html = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>정당명</th>
+                            <th>입력 득표율</th>
+                            <th>최종 의석수</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            parties.forEach(p => {
+                let rowStyle = p.seats > 0 ? "font-weight:bold; color:var(--primary); background:rgba(255,255,255,0.3);" : "color:var(--text-muted);";
+                html += `
+                    <tr style="${rowStyle}">
+                        <td>${p.name}</td>
+                        <td>${p.rate}%</td>
+                        <td>${p.seats}석</td>
+                    </tr>
+                `;
+            });
+            html += `</tbody></table>`;
+            document.getElementById('result').innerHTML = html;
+        }
+    </script>
+
+</body>
+
+</html>
