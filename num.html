@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>더불어민주당 대구광역시당 지방선거 현황</title>
+    <style>
+        body {
+            font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        h1 {
+            text-align: center;
+            color: #004ea2; /* 민주당 상징색 */
+            border-bottom: 2px solid #004ea2;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        .tab-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            background-color: #e9ecef;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        .tab-btn:hover {
+            background-color: #dbe4f0;
+        }
+        .tab-btn.active {
+            background-color: #004ea2;
+            color: white;
+            border-color: #004ea2;
+        }
+        .election-content {
+            display: none;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .election-content.active {
+            display: block;
+        }
+        h2 {
+            color: #2c3e50;
+            margin-top: 30px;
+            border-left: 4px solid #004ea2;
+            padding-left: 10px;
+            font-size: 1.2em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f1f3f5;
+            font-weight: bold;
+            color: #495057;
+        }
+        .win {
+            color: #004ea2;
+            font-weight: bold;
+        }
+        .lose {
+            color: #868e96;
+        }
+        .summary-table th { background-color: #e3f2fd; }
+    </style>
+</head>
+<body>
+
+    <h1>더불어민주당 대구광역시당 지방선거 현황</h1>
+
+    <div class="tab-container">
+        <button class="tab-btn" onclick="showElection('6')">제6회 (2014년)</button>
+        <button class="tab-btn" onclick="showElection('7')">제7회 (2018년)</button>
+        <button class="tab-btn active" onclick="showElection('8')">제8회 (2022년)</button>
+    </div>
+
+    <div id="elec-8" class="election-content active">
+        <h2>1. 당선 요약 (총계: 출마 58명 / 당선 29명)</h2>
+        <table class="summary-table">
+            <tr>
+                <th>선거 구분</th><th>출마 인원</th><th>당선 인원</th><th>비고</th>
+            </tr>
+            <tr><td>기초자치단체장</td><td>4명</td><td>0명</td><td>전원 낙선</td></tr>
+            <tr><td>대구광역시의원 (지역구)</td><td>4명</td><td>0명</td><td>전원 낙선</td></tr>
+            <tr><td>대구광역시의원 (비례)</td><td>2명</td><td>1명</td><td>육정미 당선</td></tr>
+            <tr><td>기초의회의원 (지역구)</td><td>42명</td><td>24명</td><td>무투표 당선 1명 포함</td></tr>
+            <tr><td>기초의회의원 (비례)</td><td>6명</td><td>4명</td><td>무투표 당선 1명 포함</td></tr>
+        </table>
+
+        <h2>2. 기초자치단체장 (구청장/군수)</h2>
+        <table>
+            <tr><th>선거구</th><th>정수</th><th>후보명</th><th>결과</th></tr>
+            <tr><td>동구청장</td><td>1</td><td>최완식</td><td class="lose">낙선</td></tr>
+            <tr><td>남구청장</td><td>1</td><td>최창희</td><td class="lose">낙선</td></tr>
+            <tr><td>수성구청장</td><td>1</td><td>강민구</td><td class="lose">낙선</td></tr>
+            <tr><td>달성군수</td><td>1</td><td>전유진</td><td class="lose">낙선</td></tr>
+        </table>
+
+        <h2>3. 대구광역시의원 (지역구/비례)</h2>
+        <table>
+            <tr><th>구분</th><th>선거구</th><th>정수</th><th>후보명</th><th>결과</th></tr>
+            <tr><td rowspan="4">지역구</td><td>중구 제2선거구</td><td>1</td><td>김준민</td><td class="lose">낙선</td></tr>
+            <tr><td>북구 제5선거구</td><td>1</td><td>신동환</td><td class="lose">낙선</td></tr>
+            <tr><td>달서구 제4선거구</td><td>1</td><td>김성태</td><td class="lose">낙선</td></tr>
+            <tr><td>달성군 제2선거구</td><td>1</td><td>김수옥</td><td class="lose">낙선</td></tr>
+            <tr><td>비례대표</td><td>대구광역시비례</td><td>3</td><td>육정미(1), 황귀주(2)</td><td class="win">육정미 당선</td></tr>
+        </table>
+
+        <h2>4. 기초의회의원 (지역구)</h2>
+        <table>
+            <tr><th>구/군</th><th>선거구</th><th>정수</th><th>후보명 및 결과</th></tr>
+            <tr><td rowspan="2">중구</td><td>[가]</td><td>3</td><td><span class="win">이경숙(당선)</span></td></tr>
+            <tr><td>[나]</td><td>3</td><td><span class="win">안재철(당선)</span></td></tr>
+            <tr><td rowspan="6">동구</td><td>[가]</td><td>2</td><td><span class="lose">우영식(낙선)</span></td></tr>
+            <tr><td>[나]</td><td>2</td><td><span class="lose">강성대(낙선)</span></td></tr>
+            <tr><td>[다]</td><td>3</td><td><span class="lose">최지영(낙선), 신효철(낙선)</span></td></tr>
+            <tr><td>[라]</td><td>3</td><td><span class="win">노남옥(당선)</span></td></tr>
+            <tr><td>[마]</td><td>2</td><td><span class="lose">오말임(낙선)</span></td></tr>
+            <tr><td>[바]</td><td>3</td><td><span class="win">안평훈(당선)</span></td></tr>
+            <tr><td rowspan="4">서구</td><td>[가]</td><td>2</td><td><span class="lose">김성규(낙선)</span></td></tr>
+            <tr><td>[나]</td><td>3</td><td><span class="win">이주한(당선)</span></td></tr>
+            <tr><td>[다]</td><td>2</td><td><span class="lose">김남일(낙선)</span></td></tr>
+            <tr><td>[라]</td><td>2</td><td><span class="lose">오세광(낙선)</span></td></tr>
+            <tr><td rowspan="3">남구</td><td>[가]</td><td>3</td><td><span class="win">이정현(당선)</span></td></tr>
+            <tr><td>[나]</td><td>2</td><td><span class="lose">정연우(낙선)</span></td></tr>
+            <tr><td>[다]</td><td>2</td><td><span class="win">강민욱(당선)</span></td></tr>
+            <tr><td rowspan="7">북구</td><td>[가]</td><td>2</td><td><span class="lose">안경완(낙선)</span></td></tr>
+            <tr><td>[나]</td><td>2</td><td><span class="lose">박정희(낙선)</span></td></tr>
+            <tr><td>[다]</td><td>3</td><td><span class="win">오영준(당선)</span></td></tr>
+            <tr><td>[라]</td><td>2</td><td><span class="win">한상열(당선)</span></td></tr>
+            <tr><td>[마]</td><td>3</td><td><span class="win">최우영(당선)</span></td></tr>
+            <tr><td>[바]</td><td>3</td><td><span class="win">장윤영(당선)</span></td></tr>
+            <tr><td>[사]</td><td>3</td><td><span class="win">채장식(당선)</span></td></tr>
+            <tr><td rowspan="6">수성구</td><td>[가]</td><td>3</td><td><span class="win">정대현(당선)</span></td></tr>
+            <tr><td>[나]</td><td>2</td><td><span class="win">김희섭(당선)</span></td></tr>
+            <tr><td>[다]</td><td>2</td><td><span class="lose">최홍석(낙선)</span></td></tr>
+            <tr><td>[라]</td><td>3</td><td><span class="win">황혜진(당선)</span></td></tr>
+            <tr><td>[마]</td><td>5</td><td><span class="win">차현민(당선)</span>, <span class="lose">김희윤(낙선)</span></td></tr>
+            <tr><td>[바]</td><td>4</td><td><span class="win">정경은(당선)</span></td></tr>
+            <tr><td rowspan="8">달서구</td><td>[가]</td><td>3</td><td><span class="win">이영빈(당선)</span></td></tr>
+            <tr><td>[나]</td><td>3</td><td><span class="win">박종길(당선)</span></td></tr>
+            <tr><td>[다]</td><td>2</td><td><span class="lose">허은경(낙선)</span></td></tr>
+            <tr><td>[라]</td><td>2</td><td><span class="lose">배지훈(낙선)</span></td></tr>
+            <tr><td>[마]</td><td>3</td><td><span class="win">서보영(당선)</span></td></tr>
+            <tr><td>[바]</td><td>2</td><td><span class="lose">이성순(낙선)</span></td></tr>
+            <tr><td>[사]</td><td>3</td><td><span class="win">최홍린(당선)</span></td></tr>
+            <tr><td>[아]</td><td>3</td><td><span class="win">김정희(무투표 당선)</span></td></tr>
+            <tr><td rowspan="4">달성군</td><td>[가]</td><td>2</td><td><span class="lose">김동훈(낙선)</span></td></tr>
+            <tr><td>[나]</td><td>2</td><td><span class="lose">김성화(낙선)</span></td></tr>
+            <tr><td>[다]</td><td>3</td><td><span class="win">박영동(당선)</span></td></tr>
+            <tr><td>[라]</td><td>3</td><td><span class="win">김보경(당선)</span></td></tr>
+        </table>
+
+        <h2>5. 기초의회의원 (비례)</h2>
+        <table>
+            <tr><th>구/군</th><th>정수</th><th>후보명</th><th>결과</th></tr>
+            <tr><td>동구비례</td><td>2</td><td>윤미경</td><td class="lose">낙선</td></tr>
+            <tr><td>북구비례</td><td>3</td><td>김종련, 김효원</td><td class="win">김종련 당선</td></tr>
+            <tr><td>수성구비례</td><td>3</td><td>최명숙</td><td class="win">최명숙 당선</td></tr>
+            <tr><td>달서구비례</td><td>3</td><td>임미연</td><td class="win">임미연 당선</td></tr>
+            <tr><td>달성군비례</td><td>2</td><td>양은숙</td><td class="win">양은숙 당선 (무투표)</td></tr>
+        </table>
+    </div>
+
+    <div id="elec-7" class="election-content">
+        <h2>1. 당선 요약 (총계: 출마 84명 / 당선 53명)</h2>
+        <table class="summary-table">
+            <tr>
+                <th>선거 구분</th><th>출마 인원</th><th>당선 인원</th><th>비고</th>
+            </tr>
+            <tr><td>기초자치단체장</td><td>7명</td><td>0명</td><td>전원 낙선</td></tr>
+            <tr><td>대구광역시의원 (지역구)</td><td>22명</td><td>4명</td><td>북구3, 수성1·2, 달서3 당선</td></tr>
+            <tr><td>대구광역시의원 (비례)</td><td>3명</td><td>1명</td><td>이진련 당선</td></tr>
+            <tr><td>기초의회의원 (지역구)</td><td>44명</td><td>43명</td><td>북구 '사' 1명 제외 전원 당선</td></tr>
+            <tr><td>기초의회의원 (비례)</td><td>8명</td><td>5명</td><td>동, 서, 북, 수성, 달서 각 1명 당선</td></tr>
+        </table>
+
+        <h2>2. 기초자치단체장 (구청장/군수)</h2>
+        <table>
+            <tr><th>선거구</th><th>정수</th><th>후보명</th><th>결과</th></tr>
+            <tr><td>중구청장</td><td>1</td><td>노상석</td><td class="lose">낙선</td></tr>
+            <tr><td>동구청장</td><td>1</td><td>서재헌</td><td class="lose">낙선</td></tr>
+            <tr><td>서구청장</td><td>1</td><td>윤선진</td><td class="lose">낙선</td></tr>
+            <tr><td>남구청장</td><td>1</td><td>김현철</td><td class="lose">낙선</td></tr>
+            <tr><td>북구청장</td><td>1</td><td>이헌태</td><td class="lose">낙선</td></tr>
+            <tr><td>수성구청장</td><td>1</td><td>남칠우</td><td class="lose">낙선</td></tr>
+            <tr><td>달서구청장</td><td>1</td><td>김태용</td><td class="lose">낙선</td></tr>
+            <tr><td colspan="4">※ 달성군수는 더불어민주당 후보 출마 안함</td></tr>
+        </table>
+
+        <h2>3. 대구광역시의원 (지역구/비례)</h2>
+        <table>
+            <tr><th>구분</th><th>구/군</th><th>선거구</th><th>정수</th><th>후보명</th><th>결과</th></tr>
+            <tr><td rowspan="23">지역구</td><td rowspan="2">중구</td><td>제1선거구</td><td>1</td><td>이승규</td><td class="lose">낙선</td></tr>
+            <tr><td>제2선거구</td><td>1</td><td>이성규</td><td class="lose">낙선</td></tr>
+            <tr><td rowspan="3">동구</td><td>제1선거구</td><td>1</td><td>김원재</td><td class="lose">낙선</td></tr>
+            <tr><td>제3선거구</td><td>1</td><td>정상오</td><td class="lose">낙선</td></tr>
+            <tr><td>제4선거구</td><td>1</td><td>안평훈</td><td class="lose">낙선</td></tr>
+            <tr><td rowspan="2">남구</td><td>제1선거구</td><td>1</td><td>최창희</td><td class="lose">낙선</td></tr>
+            <tr><td>제2선거구</td><td>1</td><td>김기명</td><td class="lose">낙선</td></tr>
+            <tr><td rowspan="5">북구</td><td>제1선거구</td><td>1</td><td>송준향</td><td class="lose">낙선</td></tr>
+            <tr><td>제2선거구</td><td>1</td><td>남동헌</td><td class="lose">낙선</td></tr>
+            <tr><td>제3선거구</td><td>1</td><td>김혜정</td><td class="win">당선</td></tr>
+            <tr><td>제4선거구</td><td>1</td><td>김경숙</td><td class="lose">낙선</td></tr>
+            <tr><td>제5선거구</td><td>1</td><td>민병훈</td><td class="lose">낙선</td></tr>
+            <tr><td rowspan="4">수성구</td><td>제1선거구</td><td>1</td><td>강민구</td><td class="win">당선</td></tr>
+            <tr><td>제2선거구</td><td>1</td><td>김동식</td><td class="win">당선</td></tr>
+            <tr><td>제3선거구</td><td>1</td><td>김희윤</td><td class="lose">낙선</td></tr>
+            <tr><td>제4선거구</td><td>1</td><td>박인환</td><td class="lose">낙선</td></tr>
+            <tr><td rowspan="6">달서구</td><td>제1선거구</td><td>1</td><td>신창섭</td><td class="lose">낙선</td></tr>
+            <tr><td>제2선거구</td><td>1</td><td>장재홍</td><td class="lose">낙선</td></tr>
+            <tr><td>제3선거구</td><td>1</td><td>김성태</td><td class="win">당선</td></tr>
+            <tr><td>제4선거구</td><td>1</td><td>권오현</td><td class="lose">낙선</td></tr>
+            <tr><td>제5선거구</td><td>1</td><td>차우미</td><td class="lose">낙선</td></tr>
+            <tr><td>제6선거구</td><td>1</td><td>심규원</td><td class="lose">낙선</td></tr>
+            <tr><td>달성군</td><td>제1선거구</td><td>1</td><td>김종억</td><td class="lose">낙선</td></tr>
+            <tr><td>비례대표</td><td>대구광역시</td><td>대구광역시비례</td><td>3</td><td>이진련(1), 정애향(2), 마혜선(3)</td><td class="win">이진련 당선</td></tr>
+        </table>
+
+        <h2>4. 기초의회의원 (지역구)</h2>
+        <table>
+            <tr><th>구/군</th><th>선거구</th><th>정수</th><th>후보명 및 결과</th></tr>
+            <tr><td rowspan="2">중구</td><td>[가]</td><td>3</td><td><span class="win">이경숙(당선), 신범식(당선)</span></td></tr>
+            <tr><td>[나]</td><td>3</td><td><span class="win">홍준연(당선)</span></td></tr>
+            <tr><td rowspan="6">동구</td><td>[가]</td><td>2</td><td><span class="win">도근환(당선)</span></td></tr>
+            <tr><td>[나]</td><td>2</td><td><span class="win">권상대(당선)</span></td></tr>
+            <tr><td>[다]</td><td>3</td><td><span class="win">신효철(당선)</span></td></tr>
+            <tr><td>[라]</td><td>3</td><td><span class="win">노남옥(당선)</span></td></tr>
+            <tr><td>[마]</td><td>2</td><td><span class="win">오말임(당선)</span></td></tr>
+            <tr><td>[바]</td><td>2</td><td><span class="win">이은애(당선)</span></td></tr>
+            <tr><td rowspan="3">서구</td><td>[가]</td><td>2</td><td><span class="win">민부기(당선)</span></td></tr>
+            <tr><td>[나]</td><td>3</td><td><span class="win">오세광(당선)</span></td></tr>
+            <tr><td>[라]</td><td>2</td><td><span class="win">이주한(당선)</span></td></tr>
+            <tr><td rowspan="3">남구</td><td>[가]</td><td>3</td><td><span class="win">이정현(당선)</span></td></tr>
+            <tr><td>[나]</td><td>2</td><td><span class="win">정연우(당선)</span></td></tr>
+            <tr><td>[다]</td><td>2</td><td><span class="win">정연주(당선)</span></td></tr>
+            <tr><td rowspan="8">북구</td><td>[가]</td><td>2</td><td><span class="win">안경완(당선)</span></td></tr>
+            <tr><td>[나]</td><td>2</td><td><span class="win">박정희(당선)</span></td></tr>
+            <tr><td>[다]</td><td>3</td><td><span class="win">유병철(당선)</span></td></tr>
+            <tr><td>[라]</td><td>2</td><td><span class="win">한상열(당선)</span></td></tr>
+            <tr><td>[마]</td><td>3</td><td><span class="win">채장식(당선)</span></td></tr>
+            <tr><td>[바]</td><td>2</td><td><span class="win">최우영(당선)</span></td></tr>
+            <tr><td>[사]</td><td>2</td><td><span class="win">김기조(당선)</span>, <span class="lose">장윤영(낙선)</span></td></tr>
+            <tr><td>[아]</td><td>2</td><td><span class="win">김용덕(당선)</span></td></tr>
+            <tr><td rowspan="8">수성구</td><td>[가]</td><td>2</td><td><span class="win">김희섭(당선)</span></td></tr>
+            <tr><td>[나]</td><td>3</td><td><span class="win">육정미(당선), 박정권(당선)</span></td></tr>
+            <tr><td>[다]</td><td>2</td><td><span class="win">유지호(당선)</span></td></tr>
+            <tr><td>[라]</td><td>3</td><td><span class="win">백종훈(당선)</span></td></tr>
+            <tr><td>[마]</td><td>2</td><td><span class="win">차현민(당선)</span></td></tr>
+            <tr><td>[바]</td><td>2</td><td><span class="win">김두현(당선)</span></td></tr>
+            <tr><td>[사]</td><td>2</td><td><span class="win">조용성(당선)</span></td></tr>
+            <tr><td>[아]</td><td>2</td><td><span class="win">김영애(당선)</span></td></tr>
+            <tr><td rowspan="9">달서구</td><td>[가]</td><td>2</td><td><span class="win">안대국(당선)</span></td></tr>
+            <tr><td>[나]</td><td>2</td><td><span class="win">이영빈(당선)</span></td></tr>
+            <tr><td>[다]</td><td>3</td><td><span class="win">박종길(당선)</span></td></tr>
+            <tr><td>[라]</td><td>2</td><td><span class="win">홍복조(당선)</span></td></tr>
+            <tr><td>[마]</td><td>2</td><td><span class="win">김정윤(당선)</span></td></tr>
+            <tr><td>[바]</td><td>2</td><td><span class="win">이성순(당선)</span></td></tr>
+            <tr><td>[사]</td><td>2</td><td><span class="win">배지훈(당선)</span></td></tr>
+            <tr><td>[아]</td><td>3</td><td><span class="win">김태형(당선)</span></td></tr>
+            <tr><td>[자]</td><td>3</td><td><span class="win">김귀화(당선)</span></td></tr>
+            <tr><td rowspan="4">달성군</td><td>[가]</td><td>2</td><td><span class="win">도일용(당선)</span></td></tr>
+            <tr><td>[나]</td><td>3</td><td><span class="win">김보경(당선)</span></td></tr>
+            <tr><td>[다]</td><td>2</td><td><span class="win">이대곤(당선)</span></td></tr>
+            <tr><td>[라]</td><td>2</td><td><span class="win">김정태(당선)</span></td></tr>
+        </table>
+
+        <h2>5. 기초의회의원 (비례)</h2>
+        <table>
+            <tr><th>구/군</th><th>정수</th><th>후보명</th><th>결과</th></tr>
+            <tr><td>동구비례</td><td>2</td><td>최은숙(1)</td><td class="win">당선</td></tr>
+            <tr><td>서구비례</td><td>2</td><td>차금영(1), 권순옥(2)</td><td class="win">차금영 당선</td></tr>
+            <tr><td>남구비례</td><td>1</td><td>김종련(1)</td><td class="lose">낙선</td></tr>
+            <tr><td>북구비례</td><td>2</td><td>김지연(1), 황귀주(2)</td><td class="win">김지연 당선</td></tr>
+            <tr><td>수성구비례</td><td>2</td><td>황혜진(1), 홍외순(2)</td><td class="win">황혜진 당선</td></tr>
+            <tr><td>달서구비례</td><td>3</td><td>이신자(1)</td><td class="win">당선</td></tr>
+        </table>
+    </div>
+
+    <div id="elec-6" class="election-content">
+        <h2>1. 당선 요약 (총계: 출마 24명 / 당선 14명)</h2>
+        <table class="summary-table">
+            <tr>
+                <th>선거 구분</th><th>출마 인원</th><th>당선 인원</th><th>비고</th>
+            </tr>
+            <tr><td>기초자치단체장</td><td>1명</td><td>0명</td><td>달서구청장 김학기 낙선</td></tr>
+            <tr><td>대구광역시의원 (지역구)</td><td>0명</td><td>0명</td><td>-</td></tr>
+            <tr><td>대구광역시의원 (비례)</td><td>2명</td><td>1명</td><td>김혜정 당선</td></tr>
+            <tr><td>기초의회의원 (지역구)</td><td>15명</td><td>9명</td><td>달서구에서 4명 당선 등 선전</td></tr>
+            <tr><td>기초의회의원 (비례)</td><td>6명</td><td>4명</td><td>동, 북, 수성, 달서 각 1명 당선</td></tr>
+        </table>
+
+        <h2>2. 기초자치단체장 (구청장/군수)</h2>
+        <table>
+            <tr><th>선거구</th><th>정수</th><th>후보명</th><th>결과</th></tr>
+            <tr><td>달서구청장</td><td>1</td><td>김학기</td><td class="lose">낙선</td></tr>
+        </table>
+
+        <h2>3. 대구광역시의원 (비례)</h2>
+        <table>
+            <tr><th>구분</th><th>선거구</th><th>정수</th><th>후보명</th><th>결과</th></tr>
+            <tr><td>비례대표</td><td>대구광역시비례</td><td>3</td><td>김혜정(1), 신남희(2)</td><td class="win">김혜정 당선</td></tr>
+        </table>
+
+        <h2>4. 기초의회의원 (지역구)</h2>
+        <table>
+            <tr><th>구/군</th><th>선거구</th><th>정수</th><th>후보명 및 결과</th></tr>
+            <tr><td rowspan="2">중구</td><td>[가]</td><td>3</td><td><span class="win">신범식(당선)</span></td></tr>
+            <tr><td>[나]</td><td>3</td><td><span class="lose">김병욱(낙선)</span></td></tr>
+            <tr><td rowspan="2">동구</td><td>[가]</td><td>3</td><td><span class="win">김원재(당선)</span></td></tr>
+            <tr><td>[나]</td><td>3</td><td><span class="lose">권상대(낙선)</span></td></tr>
+            <tr><td rowspan="2">서구</td><td>[가]</td><td>2</td><td><span class="lose">민부기(낙선)</span></td></tr>
+            <tr><td>[나]</td><td>3</td><td><span class="win">오세광(당선)</span></td></tr>
+            <tr><td>북구</td><td>[라]</td><td>3</td><td><span class="win">이헌태(당선)</span></td></tr>
+            <tr><td rowspan="2">수성구</td><td>[나]</td><td>3</td><td><span class="win">강민구(당선)</span></td></tr>
+            <tr><td>[다]</td><td>2</td><td><span class="lose">정경은(낙선)</span></td></tr>
+            <tr><td rowspan="5">달서구</td><td>[다]</td><td>3</td><td><span class="win">이유경(당선)</span></td></tr>
+            <tr><td>[마]</td><td>2</td><td><span class="win">김성태(당선)</span></td></tr>
+            <tr><td>[사]</td><td>2</td><td><span class="lose">김태용(낙선)</span></td></tr>
+            <tr><td>[아]</td><td>3</td><td><span class="win">박병주(당선)</span></td></tr>
+            <tr><td>[자]</td><td>3</td><td><span class="win">김귀화(당선)</span></td></tr>
+            <tr><td>달성군</td><td>[가]</td><td>2</td><td><span class="lose">도일용(낙선)</span></td></tr>
+        </table>
+
+        <h2>5. 기초의회의원 (비례)</h2>
+        <table>
+            <tr><th>구/군</th><th>정수</th><th>후보명</th><th>결과</th></tr>
+            <tr><td>동구비례</td><td>2</td><td>노남옥(1)</td><td class="win">당선</td></tr>
+            <tr><td>북구비례</td><td>2</td><td>장윤영(1)</td><td class="win">당선</td></tr>
+            <tr><td>수성구비례</td><td>2</td><td>강선경(1), 양유미(2)</td><td class="win">강선경 당선</td></tr>
+            <tr><td>달서구비례</td><td>3</td><td>홍복조(1), 이옥수(2)</td><td class="win">홍복조 당선</td></tr>
+        </table>
+    </div>
+
+    <script>
+        function showElection(electionNumber) {
+            // 모든 탭 버튼과 콘텐츠 숨기기/비활성화
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.election-content').forEach(content => content.classList.remove('active'));
+
+            // 선택된 탭과 콘텐츠만 활성화
+            // 클릭한 버튼 활성화 로직
+            const buttons = document.querySelectorAll('.tab-btn');
+            if(electionNumber === '6') buttons[0].classList.add('active');
+            if(electionNumber === '7') buttons[1].classList.add('active');
+            if(electionNumber === '8') buttons[2].classList.add('active');
+
+            document.getElementById('elec-' + electionNumber).classList.add('active');
+        }
+    </script>
+</body>
+</html>
