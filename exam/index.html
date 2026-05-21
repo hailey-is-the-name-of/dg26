@@ -3,523 +3,750 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>지방선거 기간 시험장 주변 유의 안내 | 더불어민주당 대구광역시당</title>
-  <meta name="description" content="지방선거 선거운동기간 중 대구지역 시험장 현황 및 주소 안내" />
+  <title>선거운동 기간 시험장 주변 유의 안내 | 더불어민주당 대구광역시당</title>
+  <meta name="description" content="지방선거 선거운동기간 중 대구지역 시험장 현황 및 시험 시간 안내" />
   <style>
-    :root{
-      --blue-950:#010713;
-      --blue-900:#041532;
-      --blue-800:#082a63;
-      --blue-700:#0b3d91;
-      --blue-600:#0d5bd7;
-      --blue-400:#4aa8ff;
-      --blue-200:#b9dcff;
-      --white:#ffffff;
-      --glass:rgba(6,21,52,.52);
-      --glass-strong:rgba(9,34,82,.68);
-      --line:rgba(133,185,255,.22);
-      --text:#eaf3ff;
-      --muted:rgba(234,243,255,.70);
-      --shadow:0 28px 90px rgba(0, 6, 24, .62);
-      --radius:28px;
-      --nav-height:78px;
+    :root {
+      --bg0:#02091d;
+      --bg1:#041436;
+      --bg2:#082866;
+      --blue:#0a4fb3;
+      --sky:#63c7ff;
+      --cyan:#8be2ff;
+      --text:#f4fbff;
+      --muted:rgba(244,251,255,.74);
+      --soft:rgba(255,255,255,.10);
+      --soft2:rgba(255,255,255,.16);
+      --line:rgba(178,222,255,.22);
+      --line2:rgba(255,255,255,.16);
+      --shadow:0 28px 90px rgba(0,0,0,.42);
     }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
       margin:0;
       min-height:100vh;
       color:var(--text);
       font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR","Segoe UI",sans-serif;
       background:
-        radial-gradient(circle at 12% 4%, rgba(42,119,220,.48) 0 12%, transparent 35%),
-        radial-gradient(circle at 84% 12%, rgba(11,61,145,.58) 0 16%, transparent 36%),
-        radial-gradient(circle at 50% 88%, rgba(0,93,180,.24) 0 13%, transparent 35%),
-        linear-gradient(135deg, #010713 0%, #041532 38%, #082a63 74%, #020a1f 100%);
+        radial-gradient(circle at 8% 8%, rgba(30,118,255,.42), transparent 30%),
+        radial-gradient(circle at 90% 0%, rgba(99,199,255,.22), transparent 34%),
+        radial-gradient(circle at 48% 100%, rgba(10,79,179,.32), transparent 38%),
+        linear-gradient(135deg, var(--bg0) 0%, var(--bg1) 42%, var(--bg2) 100%);
       overflow-x:hidden;
     }
-    body::before,
-    body::after{
+    body::before {
       content:"";
       position:fixed;
-      inset:auto;
+      inset:-120px -80px auto auto;
+      width:420px;
+      height:420px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(118,207,255,.28), transparent 68%);
+      filter:blur(12px);
       pointer-events:none;
       z-index:-1;
-      filter:blur(2px);
-      opacity:.78;
     }
-    body::before{
-      width:680px;height:680px;left:-260px;top:160px;border-radius:50%;
-      background:radial-gradient(circle, rgba(71,151,255,.16), rgba(71,151,255,0) 66%);
+    body::after {
+      content:"";
+      position:fixed;
+      left:-200px;
+      bottom:-170px;
+      width:620px;
+      height:620px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(0,79,179,.44), transparent 70%);
+      filter:blur(16px);
+      pointer-events:none;
+      z-index:-1;
     }
-    body::after{
-      width:520px;height:520px;right:-200px;bottom:120px;border-radius:50%;
-      background:radial-gradient(circle, rgba(53,124,230,.22), rgba(53,124,230,0) 68%);
-    }
-    .page{
+    .wrap {
       width:min(1180px, calc(100% - 36px));
       margin:0 auto;
-      padding:42px 0 64px;
+      padding:42px 0 70px;
     }
-    .hero{
+    .hero {
       position:relative;
       overflow:hidden;
+      padding:54px 54px 42px;
       border:1px solid var(--line);
-      border-radius:36px;
-      padding:52px 52px 42px;
-      background:linear-gradient(135deg, rgba(9,34,82,.74), rgba(4,13,35,.54));
+      border-radius:34px;
+      background:linear-gradient(135deg, rgba(15,59,137,.58), rgba(4,17,47,.64));
       box-shadow:var(--shadow);
-      backdrop-filter:blur(24px);
-      -webkit-backdrop-filter:blur(24px);
+      backdrop-filter:blur(26px);
+      -webkit-backdrop-filter:blur(26px);
     }
-    .hero::before{
+    .hero::before {
       content:"";
       position:absolute;
-      width:460px;height:460px;right:-170px;top:-210px;border-radius:50%;
-      background:radial-gradient(circle, rgba(91,160,255,.24), rgba(10,55,132,.14) 52%, transparent 72%);
+      width:520px;
+      height:520px;
+      top:-280px;
+      right:-160px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(139,226,255,.34), rgba(10,79,179,.14) 46%, transparent 72%);
     }
-    .hero::after{
-      content:"";
-      position:absolute;
-      inset:auto 28px 24px auto;
-      width:210px;height:54px;
-      background:linear-gradient(90deg, rgba(92,164,255,.18), rgba(92,164,255,0));
-      border-radius:999px;
-      transform:rotate(-12deg);
-      opacity:.42;
-    }
-    .eyebrow{
+    .eyebrow {
+      position:relative;
       display:inline-flex;
       align-items:center;
-      gap:8px;
+      gap:9px;
       padding:9px 14px;
-      border:1px solid rgba(255,255,255,.28);
+      border:1px solid rgba(139,226,255,.30);
       border-radius:999px;
-      color:#eaf8ff;
-      background:rgba(12,45,104,.52);
+      background:rgba(255,255,255,.08);
+      color:#d9f5ff;
       font-size:14px;
-      font-weight:700;
-      letter-spacing:.01em;
+      font-weight:850;
     }
-    .eyebrow .dot{
-      width:9px;height:9px;border-radius:50%;
-      background:#68c8ff;
-      box-shadow:0 0 18px #68c8ff;
+    .dot {
+      width:9px;
+      height:9px;
+      border-radius:50%;
+      background:var(--sky);
+      box-shadow:0 0 22px var(--sky);
     }
-    h1{
+    h1 {
       position:relative;
-      margin:22px 0 18px;
-      max-width:860px;
+      margin:24px 0 18px;
+      max-width:920px;
       font-size:clamp(38px, 7vw, 76px);
       line-height:1.02;
       letter-spacing:-.065em;
       word-break:keep-all;
     }
-    .hero-lead{
+    .lead {
       position:relative;
-      max-width:900px;
+      max-width:980px;
       margin:0;
-      color:rgba(245,251,255,.84);
-      font-size:clamp(16px, 2.2vw, 20px);
+      color:rgba(244,251,255,.84);
+      font-size:clamp(16px, 2vw, 20px);
       line-height:1.82;
+      letter-spacing:-.012em;
       word-break:keep-all;
     }
-    .summary{
+    .lead b { color:#fff; }
+    .stats {
+      position:relative;
       display:grid;
       grid-template-columns:repeat(3, minmax(0, 1fr));
       gap:14px;
-      margin-top:34px;
-      position:relative;
+      margin-top:32px;
     }
-    .summary-card{
-      border:1px solid rgba(255,255,255,.24);
-      border-radius:24px;
+    .stat {
+      min-height:98px;
       padding:19px 20px;
-      background:rgba(8,28,68,.58);
+      border:1px solid var(--line2);
+      border-radius:23px;
+      background:rgba(255,255,255,.075);
       backdrop-filter:blur(18px);
       -webkit-backdrop-filter:blur(18px);
     }
-    .summary-card b{
+    .stat strong {
       display:block;
       font-size:30px;
+      letter-spacing:-.045em;
       line-height:1;
-      letter-spacing:-.04em;
     }
-    .summary-card span{
+    .stat span {
       display:block;
-      margin-top:8px;
+      margin-top:9px;
       color:var(--muted);
       font-size:14px;
+      line-height:1.45;
       word-break:keep-all;
     }
-    .district-nav-wrap{
+    .nav-wrap {
       position:sticky;
       top:12px;
       z-index:30;
       margin:22px 0 26px;
     }
-    .district-nav{
+    .district-nav {
       display:flex;
       gap:8px;
       overflow-x:auto;
       padding:10px;
-      border:1px solid rgba(255,255,255,.24);
+      border:1px solid var(--line);
       border-radius:999px;
-      background:rgba(2,10,28,.78);
+      background:rgba(3,14,38,.72);
+      box-shadow:0 18px 50px rgba(0,0,0,.28);
       backdrop-filter:blur(20px);
       -webkit-backdrop-filter:blur(20px);
-      box-shadow:0 18px 55px rgba(0, 5, 22, .48);
       scrollbar-width:none;
     }
-    .district-nav::-webkit-scrollbar{display:none}
-    .district-nav a{
+    .district-nav::-webkit-scrollbar { display:none; }
+    .district-nav a {
       flex:0 0 auto;
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      gap:6px;
+      gap:7px;
       min-height:42px;
-      padding:0 16px;
+      padding:0 15px;
+      border:1px solid transparent;
       border-radius:999px;
-      color:rgba(245,251,255,.86);
+      color:rgba(244,251,255,.84);
       text-decoration:none;
       font-size:15px;
-      font-weight:800;
-      transition:.22s ease;
-      border:1px solid transparent;
+      font-weight:900;
+      transition:.2s ease;
     }
-    .district-nav a .count{
-      min-width:20px;
-      height:20px;
+    .district-nav a span {
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      padding:0 6px;
+      min-width:30px;
+      height:21px;
+      padding:0 7px;
       border-radius:999px;
-      background:rgba(56,129,230,.20);
-      color:rgba(245,251,255,.78);
+      background:rgba(255,255,255,.10);
+      color:rgba(244,251,255,.72);
       font-size:12px;
       font-weight:900;
     }
     .district-nav a:hover,
-    .district-nav a.active{
-      background:rgba(50,114,220,.32);
-      border-color:rgba(255,255,255,.34);
-      color:white;
+    .district-nav a.active {
+      color:#fff;
+      background:rgba(33,116,232,.38);
+      border-color:rgba(139,226,255,.28);
       transform:translateY(-1px);
     }
-    .content-grid{
-      display:grid;
-      gap:22px;
-    }
-    section.district{
-      scroll-margin-top:104px;
-      border:1px solid rgba(255,255,255,.23);
-      border-radius:var(--radius);
+    .district-list { display:grid; gap:22px; }
+    .district-card {
+      scroll-margin-top:106px;
       padding:24px;
-      background:linear-gradient(145deg, rgba(9,34,82,.66), rgba(3,13,35,.50));
-      box-shadow:0 20px 70px rgba(0, 5, 22, .46);
-      backdrop-filter:blur(20px);
-      -webkit-backdrop-filter:blur(20px);
-      overflow:hidden;
+      border:1px solid var(--line);
+      border-radius:28px;
+      background:linear-gradient(145deg, rgba(10,38,95,.58), rgba(4,16,45,.66));
+      box-shadow:0 18px 56px rgba(0,0,0,.25);
+      backdrop-filter:blur(22px);
+      -webkit-backdrop-filter:blur(22px);
     }
-    .section-head{
+    .district-head {
       display:flex;
-      align-items:flex-end;
+      align-items:center;
       justify-content:space-between;
-      gap:16px;
-      padding:2px 4px 18px;
-      border-bottom:1px solid rgba(255,255,255,.18);
+      gap:14px;
+      padding:0 2px 18px;
+      border-bottom:1px solid rgba(255,255,255,.13);
     }
-    .section-head h2{
+    .district-head h2 {
       margin:0;
       font-size:clamp(24px, 4vw, 34px);
-      line-height:1.15;
+      line-height:1.1;
       letter-spacing:-.045em;
     }
-    .section-head .badge{
+    .district-head span {
       flex:0 0 auto;
       padding:8px 12px;
       border-radius:999px;
-      color:#eaf8ff;
-      background:rgba(12,45,104,.52);
-      border:1px solid rgba(255,255,255,.19);
+      border:1px solid rgba(139,226,255,.23);
+      background:rgba(255,255,255,.075);
+      color:#dff5ff;
       font-size:13px;
-      font-weight:800;
-    }
-    .table{
-      width:100%;
-      border-collapse:separate;
-      border-spacing:0 10px;
-      margin-top:10px;
-    }
-    .table thead th{
-      padding:8px 14px;
-      color:rgba(245,251,255,.68);
-      text-align:left;
-      font-size:13px;
-      font-weight:800;
-    }
-    .table tbody tr{
-      background:rgba(8,28,68,.58);
-      transition:.2s ease;
-    }
-    .table tbody tr:hover{background:rgba(14,54,124,.72)}
-    .table td{
-      padding:18px 14px;
-      vertical-align:middle;
-      border-top:1px solid rgba(255,255,255,.14);
-      border-bottom:1px solid rgba(255,255,255,.14);
-    }
-    .table td:first-child{
-      width:190px;
-      border-left:1px solid rgba(255,255,255,.14);
-      border-radius:18px 0 0 18px;
-    }
-    .table td:last-child{
-      border-right:1px solid rgba(255,255,255,.14);
-      border-radius:0 18px 18px 0;
-    }
-    .date{
-      display:flex;
-      flex-direction:column;
-      gap:7px;
       font-weight:900;
+    }
+    .exam-table { margin-top:14px; }
+    .table-head,
+    .exam-row {
+      display:grid;
+      grid-template-columns:160px 235px minmax(250px, 1fr) 170px;
+      gap:0;
+      align-items:stretch;
+    }
+    .table-head {
+      padding:0 2px 8px;
+      color:rgba(244,251,255,.66);
+      font-size:13px;
+      font-weight:950;
       letter-spacing:-.01em;
     }
-    .exam{
+    .table-head div { padding:0 13px; }
+    .table-body { display:grid; gap:10px; }
+    .exam-row {
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:18px;
+      background:rgba(255,255,255,.075);
+      overflow:hidden;
+      transition:.2s ease;
+    }
+    .exam-row:hover {
+      transform:translateY(-1px);
+      background:rgba(255,255,255,.105);
+      border-color:rgba(139,226,255,.27);
+    }
+    .cell {
+      min-width:0;
+      padding:17px 14px;
+      border-right:1px solid rgba(255,255,255,.10);
+      display:flex;
+      align-items:center;
+      word-break:keep-all;
+    }
+    .cell:last-child { border-right:0; }
+    .date-cell {
+      flex-direction:column;
+      align-items:flex-start;
+      justify-content:center;
+      gap:7px;
+    }
+    .date-cell strong {
+      font-size:15px;
+      font-weight:950;
+      letter-spacing:-.01em;
+    }
+    .date-cell small {
       display:inline-flex;
-      width:max-content;
       max-width:100%;
       padding:5px 8px;
+      border:1px solid rgba(139,226,255,.23);
       border-radius:999px;
-      background:rgba(45,127,230,.24);
-      border:1px solid rgba(151,219,255,.22);
+      background:rgba(99,199,255,.12);
       color:#dff5ff;
       font-size:12px;
-      font-weight:800;
-      white-space:normal;
-      word-break:keep-all;
+      font-weight:850;
+      line-height:1.2;
     }
-    .venue{
-      font-weight:900;
+    .venue-cell {
       font-size:18px;
+      font-weight:950;
       letter-spacing:-.035em;
-      word-break:keep-all;
+      line-height:1.32;
     }
-    .address{
-      color:rgba(245,251,255,.82);
+    .address-cell {
+      color:rgba(244,251,255,.82);
+      font-size:15px;
       line-height:1.55;
-      word-break:keep-all;
     }
-    .empty{
-      margin-top:18px;
+    .time-cell {
+      justify-content:flex-start;
+      background:linear-gradient(135deg, rgba(10,79,179,.24), rgba(139,226,255,.06));
+    }
+    .time-pill {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:132px;
+      padding:10px 12px;
+      border:1px solid rgba(139,226,255,.34);
+      border-radius:999px;
+      background:rgba(99,199,255,.15);
+      color:#fff;
+      font-size:20px;
+      font-weight:1000;
+      letter-spacing:-.035em;
+      white-space:nowrap;
+      text-shadow:0 0 24px rgba(99,199,255,.28);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.12);
+    }
+    .empty {
+      margin-top:16px;
       padding:22px;
+      border:1px dashed rgba(139,226,255,.24);
       border-radius:20px;
-      border:1px dashed rgba(255,255,255,.25);
-      color:rgba(245,251,255,.7);
-      background:rgba(6,22,54,.42);
-      font-weight:700;
+      background:rgba(255,255,255,.05);
+      color:rgba(244,251,255,.68);
+      font-weight:800;
       word-break:keep-all;
     }
-    .notice{
-      margin-top:26px;
-      padding:22px 24px;
-      border-radius:24px;
-      border:1px solid rgba(255,255,255,.22);
-      background:rgba(6,22,54,.55);
-      color:rgba(245,251,255,.74);
-      line-height:1.7;
-      font-size:14px;
-      word-break:keep-all;
-    }
-    .notice b{color:#fff}
-    .top-button{
+    .top {
       position:fixed;
       right:18px;
       bottom:18px;
       z-index:40;
       width:48px;
       height:48px;
-      border:1px solid rgba(255,255,255,.28);
+      border:1px solid rgba(139,226,255,.28);
       border-radius:16px;
+      background:rgba(3,14,38,.76);
       color:#fff;
-      background:rgba(2, 12, 34, .76);
+      font-size:20px;
+      font-weight:950;
+      box-shadow:0 16px 40px rgba(0,0,0,.28);
       backdrop-filter:blur(16px);
       -webkit-backdrop-filter:blur(16px);
-      box-shadow:0 14px 38px rgba(0,0,0,.24);
       cursor:pointer;
-      font-size:20px;
-      font-weight:900;
     }
-    @media (max-width:860px){
-      .page{width:min(100% - 24px, 1180px);padding-top:22px}
-      .hero{padding:34px 24px 28px;border-radius:28px}
-      .summary{grid-template-columns:1fr;gap:10px;margin-top:26px}
-      .summary-card{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 18px}
-      .summary-card span{margin-top:0;text-align:right}
-      .district-nav-wrap{top:8px;margin:16px 0 18px}
-      .district-nav{border-radius:22px;padding:8px}
-      .district-nav a{min-height:38px;padding:0 13px;font-size:14px}
-      section.district{padding:18px;border-radius:22px;scroll-margin-top:94px}
-      .section-head{align-items:center;padding-bottom:14px}
-      .table, .table thead, .table tbody, .table tr, .table td{display:block;width:100%}
-      .table{border-spacing:0;margin-top:14px}
-      .table thead{display:none}
-      .table tbody tr{
-        display:grid;
-        gap:12px;
-        margin-bottom:12px;
+    @media (max-width:980px) {
+      .table-head,
+      .exam-row { grid-template-columns:145px 210px minmax(220px, 1fr) 160px; }
+      .venue-cell { font-size:17px; }
+      .time-pill { min-width:124px; font-size:18px; }
+    }
+    @media (max-width:840px) {
+      .wrap { width:min(100% - 24px, 1180px); padding-top:22px; }
+      .hero { padding:34px 24px 28px; border-radius:28px; }
+      .stats { grid-template-columns:1fr; gap:10px; margin-top:26px; }
+      .stat { min-height:auto; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px 18px; }
+      .stat span { margin-top:0; text-align:right; }
+      .nav-wrap { top:8px; margin:16px 0 18px; }
+      .district-nav { border-radius:22px; padding:8px; }
+      .district-nav a { min-height:38px; padding:0 13px; font-size:14px; }
+      .district-card { padding:18px; border-radius:23px; scroll-margin-top:94px; }
+      .table-head { display:none; }
+      .table-body { gap:12px; }
+      .exam-row {
+        display:block;
         padding:16px;
-        border:1px solid rgba(255,255,255,.15);
         border-radius:20px;
       }
-      .table td{
-        padding:0;
-        border:0 !important;
-        border-radius:0 !important;
-      }
-      .table td::before{
+      .cell {
         display:block;
-        margin-bottom:5px;
-        color:rgba(245,251,255,.56);
+        padding:0 0 13px;
+        border:0;
+        background:transparent;
+      }
+      .cell:last-child { padding-bottom:0; }
+      .cell::before {
+        content:attr(data-label);
+        display:block;
+        margin-bottom:6px;
+        color:rgba(244,251,255,.56);
         font-size:12px;
-        font-weight:900;
+        font-weight:950;
         letter-spacing:.02em;
       }
-      .table td:nth-child(1)::before{content:"시험 날짜"}
-      .table td:nth-child(2)::before{content:"시험장 이름"}
-      .table td:nth-child(3)::before{content:"시험장 주소"}
-      .venue{font-size:17px}
-      .notice{font-size:13px;padding:18px}
+      .date-cell strong { display:block; }
+      .date-cell small { margin-top:7px; }
+      .time-cell { background:transparent; }
+      .time-pill {
+        min-width:0;
+        width:100%;
+        max-width:240px;
+        justify-content:center;
+        font-size:20px;
+      }
     }
-    @media (max-width:430px){
-      .page{width:calc(100% - 18px);padding-bottom:46px}
-      .hero{padding:28px 18px 24px;border-radius:24px}
-      .eyebrow{font-size:12px;padding:8px 11px}
-      h1{font-size:36px;letter-spacing:-.06em}
-      .hero-lead{font-size:15px;line-height:1.72}
-      .summary-card b{font-size:24px}
-      .summary-card span{font-size:12px}
-      .section-head{flex-direction:column;align-items:flex-start;gap:9px}
-      .section-head .badge{font-size:12px}
-      .top-button{width:44px;height:44px;border-radius:14px}
+    @media (max-width:430px) {
+      .wrap { width:calc(100% - 18px); padding-bottom:50px; }
+      .hero { padding:28px 18px 24px; border-radius:24px; }
+      .eyebrow { font-size:12px; padding:8px 11px; }
+      h1 { font-size:36px; letter-spacing:-.06em; }
+      .lead { font-size:15px; line-height:1.72; }
+      .stat strong { font-size:24px; }
+      .stat span { font-size:12px; }
+      .district-head { flex-direction:column; align-items:flex-start; gap:9px; }
+      .top { width:44px; height:44px; border-radius:14px; }
     }
   </style>
 </head>
 <body>
-  <main class="page" id="top">
+  <main class="wrap" id="top">
     <header class="hero">
       <div class="eyebrow"><span class="dot"></span> 더불어민주당 대구광역시당 안내</div>
       <h1>선거운동 기간<br>시험장 주변 유의 안내</h1>
-      <p class="hero-lead">
+      <p class="lead">
         지방선거 기간 중 대구지역에서 국가전문자격시험 및 TOEIC 정기시험이 예정되어 있습니다.
         후보자 및 캠프 관계자께서는 유세차량, 확성장치, 로고송 운영 등 유세일정을 수립하실 때
         시험 당일 시험장 인근 소음으로 수험생에게 불편이 발생하지 않도록 각별히 배려해주시기 바랍니다.
-        아래 시험장 현황을 참고하시어 조용하고 질서 있는 선거운동이 이루어질 수 있도록 협조 부탁드립니다.
+        아래 목록은 <b>시험 날짜 · 시험장 이름 · 시험장 주소 · 시험 시간</b>을 함께 정리한 현황입니다.
+        해당 시간대에는 시험장 인근 유세차량 운행, 확성장치 사용, 로고송 송출 등 소음이 발생할 수 있는 활동을 최대한 자제해주시기 바랍니다.
       </p>
-      <div class="summary" aria-label="시험장 현황 요약">
-        <div class="summary-card"><b id="totalCount">0</b><span>시험장 현황 건수<br>중복 포함</span></div>
-        <div class="summary-card"><b>3</b><span>확인된 시험일<br>5.23 / 5.30 / 5.31</span></div>
-        <div class="summary-card"><b id="districtCount">0</b><span>시험장 소재 구·군<br>대구지역 기준</span></div>
+      <div class="stats" aria-label="시험장 현황 요약">
+        <div class="stat"><strong>13건</strong><span>시험장 현황 건수<br>중복 포함</span></div>
+        <div class="stat"><strong>3일</strong><span>확인된 시험일<br>5.23 / 5.30 / 5.31</span></div>
+        <div class="stat"><strong>5개</strong><span>시험장 소재 구·군<br>대구지역 기준</span></div>
       </div>
     </header>
 
-    <div class="district-nav-wrap" aria-label="구군 바로가기">
-      <nav class="district-nav" id="districtNav"></nav>
+    <div class="nav-wrap" aria-label="구군 바로가기">
+      <nav class="district-nav" id="districtNav">
+        <a href="#jung" data-target="jung">중구<span>1건</span></a>
+<a href="#dong" data-target="dong">동구<span>0건</span></a>
+<a href="#seo" data-target="seo">서구<span>2건</span></a>
+<a href="#nam" data-target="nam">남구<span>0건</span></a>
+<a href="#buk" data-target="buk">북구<span>2건</span></a>
+<a href="#suseong" data-target="suseong">수성구<span>3건</span></a>
+<a href="#dalseo" data-target="dalseo">달서구<span>5건</span></a>
+<a href="#dalseong" data-target="dalseong">달성군<span>0건</span></a>
+<a href="#gunwi" data-target="gunwi">군위군<span>0건</span></a>
+      </nav>
     </div>
 
-    <div class="content-grid" id="districtSections"></div>
-  </main>
-  <button class="top-button" type="button" aria-label="맨 위로" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-
-  <script>
-    const districts = [
-      {
-        name: '중구', id: 'jung', items: [
-          { date: '2026.05.31(일)', exam: 'TOEIC 정기시험', venue: 'YBM센터(대구 동성로)', address: '대구 중구 동성로1길 15, 유니온스퀘어 4층' }
-        ]
-      },
-      { name: '동구', id: 'dong', items: [] },
-      {
-        name: '서구', id: 'seo', items: [
-          { date: '2026.05.23(토)', exam: '공인노무사 1차 자격시험', venue: '대구과학기술고등학교', address: '대구 서구 당산로 228' },
-          { date: '2026.05.31(일)', exam: 'TOEIC 정기시험', venue: '대구과학기술고', address: '대구 서구 당산로 228' }
-        ]
-      },
-      { name: '남구', id: 'nam', items: [] },
-      {
-        name: '북구', id: 'buk', items: [
-          { date: '2026.05.31(일)', exam: 'TOEIC 정기시험', venue: '경북대 언어교육센터', address: '대구 북구 대학로 80, 경북대학교 외국어교육관' },
-          { date: '2026.05.31(일)', exam: 'TOEIC 정기시험', venue: '영진고', address: '대구 북구 동북로57길 9' }
-        ]
-      },
-      {
-        name: '수성구', id: 'suseong', items: [
-          { date: '2026.05.23(토)', exam: '공인노무사 1차 자격시험', venue: '영남공업고등학교', address: '대구 수성구 교학로 96' },
-          { date: '2026.05.31(일)', exam: 'TOEIC 정기시험', venue: '대구고산중', address: '대구 수성구 천을로 71' },
-          { date: '2026.05.31(일)', exam: 'TOEIC 정기시험', venue: '신명여중', address: '대구 수성구 신천동로 364' }
-        ]
-      },
-      {
-        name: '달서구', id: 'dalseo', items: [
-          { date: '2026.05.30(토)', exam: '국가전문자격시험', venue: '경북기계공업고등학교', address: '대구 달서구 월배로 275' },
-          { date: '2026.05.31(일)', exam: 'TOEIC 정기시험', venue: '경북기계공고', address: '대구 달서구 월배로 275' },
-          { date: '2026.05.31(일)', exam: 'TOEIC 정기시험', venue: '대구상원중', address: '대구 달서구 상인로 117' },
-          { date: '2026.05.31(일)', exam: 'TOEIC 정기시험', venue: '대구하이텍고', address: '대구 달서구 학산남로 50' },
-          { date: '2026.05.31(일)', exam: 'TOEIC 정기시험', venue: '성지중', address: '대구 달서구 성서동로 361' }
-        ]
-      },
-      { name: '달성군', id: 'dalseong', items: [] },
-      { name: '군위군', id: 'gunwi', items: [] }
-    ];
-
-    const nav = document.getElementById('districtNav');
-    const sections = document.getElementById('districtSections');
-    const totalCount = districts.reduce((sum, d) => sum + d.items.length, 0);
-    const activeDistricts = districts.filter(d => d.items.length > 0).length;
-    document.getElementById('totalCount').textContent = `${totalCount}건`;
-    document.getElementById('districtCount').textContent = `${activeDistricts}개`;
-
-    nav.innerHTML = districts.map(d => `
-      <a href="#${d.id}" data-target="${d.id}">${d.name}<span class="count">${d.items.length}</span></a>
-    `).join('');
-
-    sections.innerHTML = districts.map(d => {
-      const rows = d.items.map(item => `
-        <tr>
-          <td><div class="date"><span>${item.date}</span><span class="exam">${item.exam}</span></div></td>
-          <td><div class="venue">${item.venue}</div></td>
-          <td><div class="address">${item.address}</div></td>
-        </tr>
-      `).join('');
-      const body = d.items.length ? `
-        <table class="table">
-          <thead><tr><th>시험 날짜</th><th>시험장 이름</th><th>시험장 주소</th></tr></thead>
-          <tbody>${rows}</tbody>
-        </table>
-      ` : `<div class="empty">첨부 자료 기준, 해당 구·군에 등록된 대구지역 시험장은 없습니다.</div>`;
-      return `
-        <section class="district" id="${d.id}" data-section="${d.id}">
-          <div class="section-head">
-            <h2>${d.name}</h2>
-            <span class="badge">${d.items.length ? `${d.items.length}건 확인` : '해당 없음'}</span>
+    <div class="district-list">
+      
+      <section class="district-card" id="jung">
+        <div class="district-head">
+          <h2>중구</h2>
+          <span>1건</span>
+        </div>
+        
+        <div class="exam-table" role="table" aria-label="중구 시험장 현황">
+          <div class="table-head" role="row">
+            <div role="columnheader">시험 날짜</div>
+            <div role="columnheader">시험장 이름</div>
+            <div role="columnheader">시험장 주소</div>
+            <div role="columnheader">시험 시간</div>
           </div>
-          ${body}
-        </section>
-      `;
-    }).join('');
+          <div class="table-body">
+            
+          <div class="exam-row">
+            <div class="cell date-cell" data-label="시험 날짜">
+              <strong>2026.05.31(일)</strong>
+              <small>TOEIC 정기시험</small>
+            </div>
+            <div class="cell venue-cell" data-label="시험장 이름">YBM센터(대구 동성로)</div>
+            <div class="cell address-cell" data-label="시험장 주소">대구 중구 동성로1길 15, 유니온스퀘어 4층</div>
+            <div class="cell time-cell" data-label="시험 시간">
+              <span class="time-pill">09:20~12:10</span>
+            </div>
+          </div>
+          </div>
+        </div>
+      </section>
 
+      <section class="district-card" id="dong">
+        <div class="district-head">
+          <h2>동구</h2>
+          <span>0건</span>
+        </div>
+        <div class="empty">첨부 자료 기준, 해당 구·군에 등록된 대구지역 시험장은 없습니다.</div>
+      </section>
+
+      <section class="district-card" id="seo">
+        <div class="district-head">
+          <h2>서구</h2>
+          <span>2건</span>
+        </div>
+        
+        <div class="exam-table" role="table" aria-label="서구 시험장 현황">
+          <div class="table-head" role="row">
+            <div role="columnheader">시험 날짜</div>
+            <div role="columnheader">시험장 이름</div>
+            <div role="columnheader">시험장 주소</div>
+            <div role="columnheader">시험 시간</div>
+          </div>
+          <div class="table-body">
+            
+          <div class="exam-row">
+            <div class="cell date-cell" data-label="시험 날짜">
+              <strong>2026.05.23(토)</strong>
+              <small>공인노무사 제1차 시험</small>
+            </div>
+            <div class="cell venue-cell" data-label="시험장 이름">대구과학기술고등학교</div>
+            <div class="cell address-cell" data-label="시험장 주소">대구 서구 당산로 228</div>
+            <div class="cell time-cell" data-label="시험 시간">
+              <span class="time-pill">09:00~13:20</span>
+            </div>
+          </div>
+          <div class="exam-row">
+            <div class="cell date-cell" data-label="시험 날짜">
+              <strong>2026.05.31(일)</strong>
+              <small>TOEIC 정기시험</small>
+            </div>
+            <div class="cell venue-cell" data-label="시험장 이름">대구과학기술고</div>
+            <div class="cell address-cell" data-label="시험장 주소">대구 서구 당산로 228</div>
+            <div class="cell time-cell" data-label="시험 시간">
+              <span class="time-pill">09:20~12:10</span>
+            </div>
+          </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="district-card" id="nam">
+        <div class="district-head">
+          <h2>남구</h2>
+          <span>0건</span>
+        </div>
+        <div class="empty">첨부 자료 기준, 해당 구·군에 등록된 대구지역 시험장은 없습니다.</div>
+      </section>
+
+      <section class="district-card" id="buk">
+        <div class="district-head">
+          <h2>북구</h2>
+          <span>2건</span>
+        </div>
+        
+        <div class="exam-table" role="table" aria-label="북구 시험장 현황">
+          <div class="table-head" role="row">
+            <div role="columnheader">시험 날짜</div>
+            <div role="columnheader">시험장 이름</div>
+            <div role="columnheader">시험장 주소</div>
+            <div role="columnheader">시험 시간</div>
+          </div>
+          <div class="table-body">
+            
+          <div class="exam-row">
+            <div class="cell date-cell" data-label="시험 날짜">
+              <strong>2026.05.31(일)</strong>
+              <small>TOEIC 정기시험</small>
+            </div>
+            <div class="cell venue-cell" data-label="시험장 이름">경북대 언어교육센터</div>
+            <div class="cell address-cell" data-label="시험장 주소">대구 북구 대학로 80, 경북대학교 외국어교육관</div>
+            <div class="cell time-cell" data-label="시험 시간">
+              <span class="time-pill">09:20~12:10</span>
+            </div>
+          </div>
+          <div class="exam-row">
+            <div class="cell date-cell" data-label="시험 날짜">
+              <strong>2026.05.31(일)</strong>
+              <small>TOEIC 정기시험</small>
+            </div>
+            <div class="cell venue-cell" data-label="시험장 이름">영진고</div>
+            <div class="cell address-cell" data-label="시험장 주소">대구 북구 동북로57길 9</div>
+            <div class="cell time-cell" data-label="시험 시간">
+              <span class="time-pill">09:20~12:10</span>
+            </div>
+          </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="district-card" id="suseong">
+        <div class="district-head">
+          <h2>수성구</h2>
+          <span>3건</span>
+        </div>
+        
+        <div class="exam-table" role="table" aria-label="수성구 시험장 현황">
+          <div class="table-head" role="row">
+            <div role="columnheader">시험 날짜</div>
+            <div role="columnheader">시험장 이름</div>
+            <div role="columnheader">시험장 주소</div>
+            <div role="columnheader">시험 시간</div>
+          </div>
+          <div class="table-body">
+            
+          <div class="exam-row">
+            <div class="cell date-cell" data-label="시험 날짜">
+              <strong>2026.05.23(토)</strong>
+              <small>공인노무사 제1차 시험</small>
+            </div>
+            <div class="cell venue-cell" data-label="시험장 이름">영남공업고등학교</div>
+            <div class="cell address-cell" data-label="시험장 주소">대구 수성구 교학로 96</div>
+            <div class="cell time-cell" data-label="시험 시간">
+              <span class="time-pill">09:00~13:20</span>
+            </div>
+          </div>
+          <div class="exam-row">
+            <div class="cell date-cell" data-label="시험 날짜">
+              <strong>2026.05.31(일)</strong>
+              <small>TOEIC 정기시험</small>
+            </div>
+            <div class="cell venue-cell" data-label="시험장 이름">대구고산중</div>
+            <div class="cell address-cell" data-label="시험장 주소">대구 수성구 천을로 71</div>
+            <div class="cell time-cell" data-label="시험 시간">
+              <span class="time-pill">09:20~12:10</span>
+            </div>
+          </div>
+          <div class="exam-row">
+            <div class="cell date-cell" data-label="시험 날짜">
+              <strong>2026.05.31(일)</strong>
+              <small>TOEIC 정기시험</small>
+            </div>
+            <div class="cell venue-cell" data-label="시험장 이름">신명여중</div>
+            <div class="cell address-cell" data-label="시험장 주소">대구 수성구 신천동로 364</div>
+            <div class="cell time-cell" data-label="시험 시간">
+              <span class="time-pill">09:20~12:10</span>
+            </div>
+          </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="district-card" id="dalseo">
+        <div class="district-head">
+          <h2>달서구</h2>
+          <span>5건</span>
+        </div>
+        
+        <div class="exam-table" role="table" aria-label="달서구 시험장 현황">
+          <div class="table-head" role="row">
+            <div role="columnheader">시험 날짜</div>
+            <div role="columnheader">시험장 이름</div>
+            <div role="columnheader">시험장 주소</div>
+            <div role="columnheader">시험 시간</div>
+          </div>
+          <div class="table-body">
+            
+          <div class="exam-row">
+            <div class="cell date-cell" data-label="시험 날짜">
+              <strong>2026.05.30(토)</strong>
+              <small>국가전문자격시험</small>
+            </div>
+            <div class="cell venue-cell" data-label="시험장 이름">경북기계공업고등학교</div>
+            <div class="cell address-cell" data-label="시험장 주소">대구 달서구 월배로 275</div>
+            <div class="cell time-cell" data-label="시험 시간">
+              <span class="time-pill">09:00~11:00</span>
+            </div>
+          </div>
+          <div class="exam-row">
+            <div class="cell date-cell" data-label="시험 날짜">
+              <strong>2026.05.31(일)</strong>
+              <small>TOEIC 정기시험</small>
+            </div>
+            <div class="cell venue-cell" data-label="시험장 이름">경북기계공고</div>
+            <div class="cell address-cell" data-label="시험장 주소">대구 달서구 월배로 275</div>
+            <div class="cell time-cell" data-label="시험 시간">
+              <span class="time-pill">09:20~12:10</span>
+            </div>
+          </div>
+          <div class="exam-row">
+            <div class="cell date-cell" data-label="시험 날짜">
+              <strong>2026.05.31(일)</strong>
+              <small>TOEIC 정기시험</small>
+            </div>
+            <div class="cell venue-cell" data-label="시험장 이름">대구상원중</div>
+            <div class="cell address-cell" data-label="시험장 주소">대구 달서구 상인로 117</div>
+            <div class="cell time-cell" data-label="시험 시간">
+              <span class="time-pill">09:20~12:10</span>
+            </div>
+          </div>
+          <div class="exam-row">
+            <div class="cell date-cell" data-label="시험 날짜">
+              <strong>2026.05.31(일)</strong>
+              <small>TOEIC 정기시험</small>
+            </div>
+            <div class="cell venue-cell" data-label="시험장 이름">대구하이텍고</div>
+            <div class="cell address-cell" data-label="시험장 주소">대구 달서구 학산남로 50</div>
+            <div class="cell time-cell" data-label="시험 시간">
+              <span class="time-pill">09:20~12:10</span>
+            </div>
+          </div>
+          <div class="exam-row">
+            <div class="cell date-cell" data-label="시험 날짜">
+              <strong>2026.05.31(일)</strong>
+              <small>TOEIC 정기시험</small>
+            </div>
+            <div class="cell venue-cell" data-label="시험장 이름">성지중</div>
+            <div class="cell address-cell" data-label="시험장 주소">대구 달서구 성서동로 361</div>
+            <div class="cell time-cell" data-label="시험 시간">
+              <span class="time-pill">09:20~12:10</span>
+            </div>
+          </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="district-card" id="dalseong">
+        <div class="district-head">
+          <h2>달성군</h2>
+          <span>0건</span>
+        </div>
+        <div class="empty">첨부 자료 기준, 해당 구·군에 등록된 대구지역 시험장은 없습니다.</div>
+      </section>
+
+      <section class="district-card" id="gunwi">
+        <div class="district-head">
+          <h2>군위군</h2>
+          <span>0건</span>
+        </div>
+        <div class="empty">첨부 자료 기준, 해당 구·군에 등록된 대구지역 시험장은 없습니다.</div>
+      </section>
+    </div>
+  </main>
+  <button class="top" type="button" aria-label="맨 위로" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+  <script>
     const links = [...document.querySelectorAll('.district-nav a')];
-    const observedSections = [...document.querySelectorAll('section.district')];
+    const sections = [...document.querySelectorAll('.district-card')];
     const observer = new IntersectionObserver(entries => {
-      const visible = entries
-        .filter(entry => entry.isIntersecting)
-        .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+      const visible = entries.filter(e => e.isIntersecting).sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
       if(!visible) return;
       links.forEach(link => link.classList.toggle('active', link.dataset.target === visible.target.id));
     }, { rootMargin: '-22% 0px -62% 0px', threshold: [0, .2, .5, 1] });
-    observedSections.forEach(section => observer.observe(section));
+    sections.forEach(section => observer.observe(section));
     links[0]?.classList.add('active');
   </script>
 </body>
