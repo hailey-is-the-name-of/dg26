@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>지방선거 기간 시험장 주변 유의 안내 | 더불어민주당 대구광역시당</title>
+  <meta name="description" content="지방선거 선거운동기간 중 대구지역 시험장 현황 및 주소 안내" />
+  <style>
+    :root{
+      --blue-950:#010713;
+      --blue-900:#041532;
+      --blue-800:#082a63;
+      --blue-700:#0b3d91;
+      --blue-600:#0d5bd7;
+      --blue-400:#4aa8ff;
+      --blue-200:#b9dcff;
+      --white:#ffffff;
+      --glass:rgba(6,21,52,.52);
+      --glass-strong:rgba(9,34,82,.68);
+      --line:rgba(133,185,255,.22);
+      --text:#eaf3ff;
+      --muted:rgba(234,243,255,.70);
+      --shadow:0 28px 90px rgba(0, 6, 24, .62);
+      --radius:28px;
+      --nav-height:78px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-height:100vh;
+      color:var(--text);
+      font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR","Segoe UI",sans-serif;
+      background:
+        radial-gradient(circle at 12% 4%, rgba(42,119,220,.48) 0 12%, transparent 35%),
+        radial-gradient(circle at 84% 12%, rgba(11,61,145,.58) 0 16%, transparent 36%),
+        radial-gradient(circle at 50% 88%, rgba(0,93,180,.24) 0 13%, transparent 35%),
+        linear-gradient(135deg, #010713 0%, #041532 38%, #082a63 74%, #020a1f 100%);
+      overflow-x:hidden;
+    }
+    body::before,
+    body::after{
+      content:"";
+      position:fixed;
+      inset:auto;
+      pointer-events:none;
+      z-index:-1;
+      filter:blur(2px);
+      opacity:.78;
+    }
+    body::before{
+      width:680px;height:680px;left:-260px;top:160px;border-radius:50%;
+      background:radial-gradient(circle, rgba(71,151,255,.16), rgba(71,151,255,0) 66%);
+    }
+    body::after{
+      width:520px;height:520px;right:-200px;bottom:120px;border-radius:50%;
+      background:radial-gradient(circle, rgba(53,124,230,.22), rgba(53,124,230,0) 68%);
+    }
+    .page{
+      width:min(1180px, calc(100% - 36px));
+      margin:0 auto;
+      padding:42px 0 64px;
+    }
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border:1px solid var(--line);
+      border-radius:36px;
+      padding:52px 52px 42px;
+      background:linear-gradient(135deg, rgba(9,34,82,.74), rgba(4,13,35,.54));
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(24px);
+      -webkit-backdrop-filter:blur(24px);
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      width:460px;height:460px;right:-170px;top:-210px;border-radius:50%;
+      background:radial-gradient(circle, rgba(91,160,255,.24), rgba(10,55,132,.14) 52%, transparent 72%);
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:auto 28px 24px auto;
+      width:210px;height:54px;
+      background:linear-gradient(90deg, rgba(92,164,255,.18), rgba(92,164,255,0));
+      border-radius:999px;
+      transform:rotate(-12deg);
+      opacity:.42;
+    }
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:9px 14px;
+      border:1px solid rgba(255,255,255,.28);
+      border-radius:999px;
+      color:#eaf8ff;
+      background:rgba(12,45,104,.52);
+      font-size:14px;
+      font-weight:700;
+      letter-spacing:.01em;
+    }
+    .eyebrow .dot{
+      width:9px;height:9px;border-radius:50%;
+      background:#68c8ff;
+      box-shadow:0 0 18px #68c8ff;
+    }
+    h1{
+      position:relative;
+      margin:22px 0 18px;
+      max-width:860px;
+      font-size:clamp(38px, 7vw, 76px);
+      line-height:1.02;
+      letter-spacing:-.065em;
+      word-break:keep-all;
+    }
+    .hero-lead{
+      position:relative;
+      max-width:900px;
+      margin:0;
+      color:rgba(245,251,255,.84);
+      font-size:clamp(16px, 2.2vw, 20px);
+      line-height:1.82;
+      word-break:keep-all;
+    }
+    .summary{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0, 1fr));
+      gap:14px;
+      margin-top:34px;
+      position:relative;
+    }
+    .summary-card{
+      border:1px solid rgba(255,255,255,.24);
+      border-radius:24px;
+      padding:19px 20px;
+      background:rgba(8,28,68,.58);
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
+    }
+    .summary-card b{
+      display:block;
+      font-size:30px;
+      line-height:1;
+      letter-spacing:-.04em;
+    }
+    .summary-card span{
+      display:block;
+      margin-top:8px;
+      color:var(--muted);
+      font-size:14px;
+      word-break:keep-all;
+    }
+    .district-nav-wrap{
+      position:sticky;
+      top:12px;
+      z-index:30;
+      margin:22px 0 26px;
+    }
+    .district-nav{
+      display:flex;
+      gap:8px;
+      overflow-x:auto;
+      padding:10px;
+      border:1px solid rgba(255,255,255,.24);
+      border-radius:999px;
+      background:rgba(2,10,28,.78);
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
+      box-shadow:0 18px 55px rgba(0, 5, 22, .48);
+      scrollbar-width:none;
+    }
+    .district-nav::-webkit-scrollbar{display:none}
+    .district-nav a{
+      flex:0 0 auto;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      min-height:42px;
+      padding:0 16px;
+      border-radius:999px;
+      color:rgba(245,251,255,.86);
+      text-decoration:none;
+      font-size:15px;
+      font-weight:800;
+      transition:.22s ease;
+      border:1px solid transparent;
+    }
+    .district-nav a .count{
+      min-width:20px;
+      height:20px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:0 6px;
+      border-radius:999px;
+      background:rgba(56,129,230,.20);
+      color:rgba(245,251,255,.78);
+      font-size:12px;
+      font-weight:900;
+    }
+    .district-nav a:hover,
+    .district-nav a.active{
+      background:rgba(50,114,220,.32);
+      border-color:rgba(255,255,255,.34);
+      color:white;
+      transform:translateY(-1px);
+    }
+    .content-grid{
+      display:grid;
+      gap:22px;
+    }
+    section.district{
+      scroll-margin-top:104px;
+      border:1px solid rgba(255,255,255,.23);
+      border-radius:var(--radius);
+      padding:24px;
+      background:linear-gradient(145deg, rgba(9,34,82,.66), rgba(3,13,35,.50));
+      box-shadow:0 20px 70px rgba(0, 5, 22, .46);
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
+      overflow:hidden;
+    }
+    .section-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:16px;
+      padding:2px 4px 18px;
+      border-bottom:1px solid rgba(255,255,255,.18);
+    }
+    .section-head h2{
+      margin:0;
+      font-size:clamp(24px, 4vw, 34px);
+      line-height:1.15;
+      letter-spacing:-.045em;
+    }
+    .section-head .badge{
+      flex:0 0 auto;
+      padding:8px 12px;
+      border-radius:999px;
+      color:#eaf8ff;
+      background:rgba(12,45,104,.52);
+      border:1px solid rgba(255,255,255,.19);
+      font-size:13px;
+      font-weight:800;
+    }
+    .table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0 10px;
+      margin-top:10px;
+    }
+    .table thead th{
+      padding:8px 14px;
+      color:rgba(245,251,255,.68);
+      text-align:left;
+      font-size:13px;
+      font-weight:800;
+    }
+    .table tbody tr{
+      background:rgba(8,28,68,.58);
+      transition:.2s ease;
+    }
+    .table tbody tr:hover{background:rgba(14,54,124,.72)}
+    .table td{
+      padding:18px 14px;
+      vertical-align:middle;
+      border-top:1px solid rgba(255,255,255,.14);
+      border-bottom:1px solid rgba(255,255,255,.14);
+    }
+    .table td:first-child{
+      width:190px;
+      border-left:1px solid rgba(255,255,255,.14);
+      border-radius:18px 0 0 18px;
+    }
+    .table td:last-child{
+      border-right:1px solid rgba(255,255,255,.14);
+      border-radius:0 18px 18px 0;
+    }
+    .date{
+      display:flex;
+      flex-direction:column;
+      gap:7px;
+      font-weight:900;
+      letter-spacing:-.01em;
+    }
+    .exam{
+      display:inline-flex;
+      width:max-content;
+      max-width:100%;
+      padding:5px 8px;
+      border-radius:999px;
+      background:rgba(45,127,230,.24);
+      border:1px solid rgba(151,219,255,.22);
+      color:#dff5ff;
+      font-size:12px;
+      font-weight:800;
+      white-space:normal;
+      word-break:keep-all;
+    }
+    .venue{
+      font-weight:900;
+      font-size:18px;
+      letter-spacing:-.035em;
+      word-break:keep-all;
+    }
+    .address{
+      color:rgba(245,251,255,.82);
+      line-height:1.55;
+      word-break:keep-all;
+    }
+    .empty{
+      margin-top:18px;
+      padding:22px;
+      border-radius:20px;
+      border:1px dashed rgba(255,255,255,.25);
+      color:rgba(245,251,255,.7);
+      background:rgba(6,22,54,.42);
+      font-weight:700;
+      word-break:keep-all;
+    }
+    .notice{
+      margin-top:26px;
+      padding:22px 24px;
+      border-radius:24px;
+      border:1px solid rgba(255,255,255,.22);
+      background:rgba(6,22,54,.55);
+      color:rgba(245,251,255,.74);
+      line-height:1.7;
+      font-size:14px;
+      word-break:keep-all;
+    }
+    .notice b{color:#fff}
+    .top-button{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      z-index:40;
+      width:48px;
+      height:48px;
+      border:1px solid rgba(255,255,255,.28);
+      border-radius:16px;
+      color:#fff;
+      background:rgba(2, 12, 34, .76);
+      backdrop-filter:blur(16px);
+      -webkit-backdrop-filter:blur(16px);
+      box-shadow:0 14px 38px rgba(0,0,0,.24);
+      cursor:pointer;
+      font-size:20px;
+      font-weight:900;
+    }
+    @media (max-width:860px){
+      .page{width:min(100% - 24px, 1180px);padding-top:22px}
+      .hero{padding:34px 24px 28px;border-radius:28px}
+      .summary{grid-template-columns:1fr;gap:10px;margin-top:26px}
+      .summary-card{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 18px}
+      .summary-card span{margin-top:0;text-align:right}
+      .district-nav-wrap{top:8px;margin:16px 0 18px}
+      .district-nav{border-radius:22px;padding:8px}
+      .district-nav a{min-height:38px;padding:0 13px;font-size:14px}
+      section.district{padding:18px;border-radius:22px;scroll-margin-top:94px}
+      .section-head{align-items:center;padding-bottom:14px}
+      .table, .table thead, .table tbody, .table tr, .table td{display:block;width:100%}
+      .table{border-spacing:0;margin-top:14px}
+      .table thead{display:none}
+      .table tbody tr{
+        display:grid;
+        gap:12px;
+        margin-bottom:12px;
+        padding:16px;
+        border:1px solid rgba(255,255,255,.15);
+        border-radius:20px;
+      }
+      .table td{
+        padding:0;
+        border:0 !important;
+        border-radius:0 !important;
+      }
+      .table td::before{
+        display:block;
+        margin-bottom:5px;
+        color:rgba(245,251,255,.56);
+        font-size:12px;
+        font-weight:900;
+        letter-spacing:.02em;
+      }
+      .table td:nth-child(1)::before{content:"시험 날짜"}
+      .table td:nth-child(2)::before{content:"시험장 이름"}
+      .table td:nth-child(3)::before{content:"시험장 주소"}
+      .venue{font-size:17px}
+      .notice{font-size:13px;padding:18px}
+    }
+    @media (max-width:430px){
+      .page{width:calc(100% - 18px);padding-bottom:46px}
+      .hero{padding:28px 18px 24px;border-radius:24px}
+      .eyebrow{font-size:12px;padding:8px 11px}
+      h1{font-size:36px;letter-spacing:-.06em}
+      .hero-lead{font-size:15px;line-height:1.72}
+      .summary-card b{font-size:24px}
+      .summary-card span{font-size:12px}
+      .section-head{flex-direction:column;align-items:flex-start;gap:9px}
+      .section-head .badge{font-size:12px}
+      .top-button{width:44px;height:44px;border-radius:14px}
+    }
+  </style>
+</head>
+<body>
+  <main class="page" id="top">
+    <header class="hero">
+      <div class="eyebrow"><span class="dot"></span> 더불어민주당 대구광역시당 안내</div>
+      <h1>선거운동 기간<br>시험장 주변 유의 안내</h1>
+      <p class="hero-lead">
+        지방선거 기간 중 대구지역에서 국가전문자격시험 및 TOEIC 정기시험이 예정되어 있습니다.
+        후보자 및 캠프 관계자께서는 유세차량, 확성장치, 로고송 운영 등 유세일정을 수립하실 때
+        시험 당일 시험장 인근 소음으로 수험생에게 불편이 발생하지 않도록 각별히 배려해주시기 바랍니다.
+        아래 시험장 현황을 참고하시어 조용하고 질서 있는 선거운동이 이루어질 수 있도록 협조 부탁드립니다.
+      </p>
+      <div class="summary" aria-label="시험장 현황 요약">
+        <div class="summary-card"><b id="totalCount">0</b><span>시험장 현황 건수<br>중복 포함</span></div>
+        <div class="summary-card"><b>3</b><span>확인된 시험일<br>5.23 / 5.30 / 5.31</span></div>
+        <div class="summary-card"><b id="districtCount">0</b><span>시험장 소재 구·군<br>대구지역 기준</span></div>
+      </div>
+    </header>
+
+    <div class="district-nav-wrap" aria-label="구군 바로가기">
+      <nav class="district-nav" id="districtNav"></nav>
+    </div>
+
+    <div class="content-grid" id="districtSections"></div>
+  </main>
+  <button class="top-button" type="button" aria-label="맨 위로" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+  <script>
+    const districts = [
+      {
+        name: '중구', id: 'jung', items: [
+          { date: '2026.05.31(일)', exam: 'TOEIC 정기시험', venue: 'YBM센터(대구 동성로)', address: '대구 중구 동성로1길 15, 유니온스퀘어 4층' }
+        ]
+      },
+      { name: '동구', id: 'dong', items: [] },
+      {
+        name: '서구', id: 'seo', items: [
+          { date: '2026.05.23(토)', exam: '공인노무사 1차 자격시험', venue: '대구과학기술고등학교', address: '대구 서구 당산로 228' },
+          { date: '2026.05.31(일)', exam: 'TOEIC 정기시험', venue: '대구과학기술고', address: '대구 서구 당산로 228' }
+        ]
+      },
+      { name: '남구', id: 'nam', items: [] },
+      {
+        name: '북구', id: 'buk', items: [
+          { date: '2026.05.31(일)', exam: 'TOEIC 정기시험', venue: '경북대 언어교육센터', address: '대구 북구 대학로 80, 경북대학교 외국어교육관' },
+          { date: '2026.05.31(일)', exam: 'TOEIC 정기시험', venue: '영진고', address: '대구 북구 동북로57길 9' }
+        ]
+      },
+      {
+        name: '수성구', id: 'suseong', items: [
+          { date: '2026.05.23(토)', exam: '공인노무사 1차 자격시험', venue: '영남공업고등학교', address: '대구 수성구 교학로 96' },
+          { date: '2026.05.31(일)', exam: 'TOEIC 정기시험', venue: '대구고산중', address: '대구 수성구 천을로 71' },
+          { date: '2026.05.31(일)', exam: 'TOEIC 정기시험', venue: '신명여중', address: '대구 수성구 신천동로 364' }
+        ]
+      },
+      {
+        name: '달서구', id: 'dalseo', items: [
+          { date: '2026.05.30(토)', exam: '국가전문자격시험', venue: '경북기계공업고등학교', address: '대구 달서구 월배로 275' },
+          { date: '2026.05.31(일)', exam: 'TOEIC 정기시험', venue: '경북기계공고', address: '대구 달서구 월배로 275' },
+          { date: '2026.05.31(일)', exam: 'TOEIC 정기시험', venue: '대구상원중', address: '대구 달서구 상인로 117' },
+          { date: '2026.05.31(일)', exam: 'TOEIC 정기시험', venue: '대구하이텍고', address: '대구 달서구 학산남로 50' },
+          { date: '2026.05.31(일)', exam: 'TOEIC 정기시험', venue: '성지중', address: '대구 달서구 성서동로 361' }
+        ]
+      },
+      { name: '달성군', id: 'dalseong', items: [] },
+      { name: '군위군', id: 'gunwi', items: [] }
+    ];
+
+    const nav = document.getElementById('districtNav');
+    const sections = document.getElementById('districtSections');
+    const totalCount = districts.reduce((sum, d) => sum + d.items.length, 0);
+    const activeDistricts = districts.filter(d => d.items.length > 0).length;
+    document.getElementById('totalCount').textContent = `${totalCount}건`;
+    document.getElementById('districtCount').textContent = `${activeDistricts}개`;
+
+    nav.innerHTML = districts.map(d => `
+      <a href="#${d.id}" data-target="${d.id}">${d.name}<span class="count">${d.items.length}</span></a>
+    `).join('');
+
+    sections.innerHTML = districts.map(d => {
+      const rows = d.items.map(item => `
+        <tr>
+          <td><div class="date"><span>${item.date}</span><span class="exam">${item.exam}</span></div></td>
+          <td><div class="venue">${item.venue}</div></td>
+          <td><div class="address">${item.address}</div></td>
+        </tr>
+      `).join('');
+      const body = d.items.length ? `
+        <table class="table">
+          <thead><tr><th>시험 날짜</th><th>시험장 이름</th><th>시험장 주소</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      ` : `<div class="empty">첨부 자료 기준, 해당 구·군에 등록된 대구지역 시험장은 없습니다.</div>`;
+      return `
+        <section class="district" id="${d.id}" data-section="${d.id}">
+          <div class="section-head">
+            <h2>${d.name}</h2>
+            <span class="badge">${d.items.length ? `${d.items.length}건 확인` : '해당 없음'}</span>
+          </div>
+          ${body}
+        </section>
+      `;
+    }).join('');
+
+    const links = [...document.querySelectorAll('.district-nav a')];
+    const observedSections = [...document.querySelectorAll('section.district')];
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries
+        .filter(entry => entry.isIntersecting)
+        .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if(!visible) return;
+      links.forEach(link => link.classList.toggle('active', link.dataset.target === visible.target.id));
+    }, { rootMargin: '-22% 0px -62% 0px', threshold: [0, .2, .5, 1] });
+    observedSections.forEach(section => observer.observe(section));
+    links[0]?.classList.add('active');
+  </script>
+</body>
+</html>
