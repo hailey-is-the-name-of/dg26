@@ -1,0 +1,3320 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>대구 구군별 지정게시대 목록</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --ink: #152033;
+      --muted: #64748b;
+      --line: rgba(15, 23, 42, .11);
+      --card: rgba(255,255,255,.82);
+      --blue: #004594;
+      --blue2: #1167d8;
+      --sky: #e6f1ff;
+      --shadow: 0 18px 45px rgba(19, 48, 90, .11);
+      --radius: 22px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(0,69,148,.16), transparent 28rem),
+        radial-gradient(circle at 85% 10%, rgba(17,103,216,.14), transparent 24rem),
+        linear-gradient(180deg, #f8fbff 0%, var(--bg) 45%, #eef4fb 100%);
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+    .hero {
+      padding: 44px clamp(18px, 5vw, 72px) 20px;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .hero-card {
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      background: linear-gradient(135deg, rgba(255,255,255,.86), rgba(230,241,255,.72));
+      box-shadow: var(--shadow);
+      padding: clamp(24px, 5vw, 46px);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      right: -110px;
+      top: -120px;
+      background: radial-gradient(circle, rgba(0,69,148,.18), transparent 65%);
+      border-radius: 999px;
+      pointer-events: none;
+    }
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 6vw, 56px);
+      letter-spacing: -0.055em;
+      line-height: 1.05;
+    }
+    .lead {
+      max-width: 760px;
+      margin: 18px 0 0;
+      color: #42526a;
+      font-size: clamp(15px, 2vw, 18px);
+      line-height: 1.68;
+    }
+    .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+    .stat {
+      padding: 10px 14px;
+      border: 1px solid rgba(0,69,148,.15);
+      border-radius: 999px;
+      background: rgba(255,255,255,.65);
+      color: #24415f;
+      font-weight: 700;
+    }
+    .stat strong { color: var(--blue); }
+    .floating-bar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(244,247,251,.78);
+      backdrop-filter: blur(18px);
+      border-top: 1px solid rgba(255,255,255,.6);
+      border-bottom: 1px solid var(--line);
+      padding: 14px clamp(14px, 4vw, 56px);
+    }
+    .bar-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(220px, 360px) 1fr;
+      gap: 12px;
+      align-items: center;
+    }
+    .search-wrap { position: relative; }
+    .search-wrap input {
+      width: 100%;
+      height: 44px;
+      border: 1px solid rgba(0,69,148,.16);
+      border-radius: 999px;
+      padding: 0 16px 0 42px;
+      outline: none;
+      font-size: 15px;
+      background: rgba(255,255,255,.82);
+      color: var(--ink);
+    }
+    .search-wrap span {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+    }
+    .nav-scroll {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: thin;
+    }
+    .nav-chip {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      height: 44px;
+      padding: 0 13px 0 15px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,69,148,.13);
+      background: rgba(255,255,255,.75);
+      font-weight: 800;
+      color: #1e3551;
+      box-shadow: 0 6px 20px rgba(0,0,0,.035);
+      white-space: nowrap;
+    }
+    .nav-chip b {
+      min-width: 25px;
+      height: 25px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 999px;
+      background: var(--sky);
+      color: var(--blue);
+      font-size: 12px;
+    }
+    main {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 18px clamp(18px, 5vw, 72px) 70px;
+    }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(9, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .summary-card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,.72);
+      padding: 16px 14px;
+      box-shadow: 0 10px 24px rgba(27, 54, 93, .06);
+    }
+    .summary-card strong { display: block; font-size: 17px; letter-spacing: -.03em; }
+    .summary-card span { display: block; margin-top: 4px; color: var(--blue); font-weight: 800; }
+    .district {
+      scroll-margin-top: 92px;
+      margin: 26px 0;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: rgba(255,255,255,.64);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 26px clamp(20px, 4vw, 32px);
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(135deg, rgba(255,255,255,.72), rgba(230,241,255,.72));
+    }
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(25px, 4vw, 36px);
+      letter-spacing: -.045em;
+    }
+    .count-pill {
+      flex: 0 0 auto;
+      border-radius: 999px;
+      background: var(--blue);
+      color: white;
+      padding: 10px 14px;
+      font-weight: 900;
+      box-shadow: 0 12px 24px rgba(0,69,148,.22);
+    }
+    .board-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      padding: clamp(16px, 3vw, 28px);
+    }
+    .board-card {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 12px;
+      align-items: start;
+      min-height: 72px;
+      padding: 15px;
+      border: 1px solid rgba(15,23,42,.09);
+      border-radius: 19px;
+      background: var(--card);
+      box-shadow: 0 10px 20px rgba(15, 23, 42, .045);
+    }
+    .num {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: #eff6ff;
+      color: var(--blue);
+      font-size: 14px;
+      font-weight: 900;
+    }
+    .card-title {
+      font-size: 16px;
+      font-weight: 850;
+      line-height: 1.45;
+      letter-spacing: -.025em;
+    }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .meta span {
+      display: inline-flex;
+      gap: 5px;
+      align-items: center;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: rgba(241,245,249,.95);
+      color: #43536a;
+      font-size: 12px;
+      line-height: 1.2;
+    }
+    .meta em {
+      font-style: normal;
+      color: #718096;
+      font-weight: 800;
+    }
+    .tag {
+      display: inline-flex;
+      vertical-align: middle;
+      margin-left: 4px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 900;
+    }
+    .tag.priority { background: #fff1f2; color: #be123c; }
+    .tag.admin { background: #eef2ff; color: #3730a3; }
+    .empty {
+      display: none;
+      margin: 32px 0;
+      padding: 22px;
+      border-radius: 20px;
+      background: rgba(255,255,255,.8);
+      border: 1px dashed rgba(0,69,148,.25);
+      color: var(--muted);
+      text-align: center;
+      font-weight: 700;
+    }
+    .top-btn {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      width: 48px;
+      height: 48px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: var(--blue);
+      color: white;
+      font-weight: 900;
+      box-shadow: 0 16px 30px rgba(0,69,148,.28);
+      z-index: 21;
+    }
+    footer {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 clamp(18px, 5vw, 72px) 42px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    @media (max-width: 1000px) {
+      .bar-inner { grid-template-columns: 1fr; }
+      .summary-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+      .board-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .floating-bar { padding: 10px 12px; }
+      .summary-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      main { padding-left: 12px; padding-right: 12px; }
+      .district { border-radius: 22px; }
+      .board-card { grid-template-columns: 36px 1fr; padding: 13px; }
+      .num { width: 36px; height: 36px; border-radius: 12px; }
+      .top-btn { right: 14px; bottom: 14px; }
+    }
+  </style>
+</head>
+<body id="top">
+  <nav class="floating-bar" aria-label="구군별 바로가기">
+    <div class="bar-inner">
+      <label class="search-wrap">
+        <span>⌕</span>
+        <input id="searchInput" type="search" placeholder="게시대명·주소 검색" autocomplete="off" />
+      </label>
+      <div class="nav-scroll">
+        <a class="nav-chip" href="#junggu" data-region-link="중구"><span>중구</span><b>7</b></a>
+<a class="nav-chip" href="#donggu" data-region-link="동구"><span>동구</span><b>61</b></a>
+<a class="nav-chip" href="#seogu" data-region-link="서구"><span>서구</span><b>23</b></a>
+<a class="nav-chip" href="#namgu" data-region-link="남구"><span>남구</span><b>19</b></a>
+<a class="nav-chip" href="#bukgu" data-region-link="북구"><span>북구</span><b>58</b></a>
+<a class="nav-chip" href="#suseong" data-region-link="수성구"><span>수성구</span><b>38</b></a>
+<a class="nav-chip" href="#dalseo" data-region-link="달서구"><span>달서구</span><b>46</b></a>
+<a class="nav-chip" href="#dalseong" data-region-link="달성군"><span>달성군</span><b>84</b></a>
+<a class="nav-chip" href="#gunwi" data-region-link="군위군"><span>군위군</span><b>65</b></a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="summary-grid" aria-label="구군별 요약">
+      <a href="#junggu" class="summary-card"><strong>중구</strong><span>7개</span></a>
+<a href="#donggu" class="summary-card"><strong>동구</strong><span>61개</span></a>
+<a href="#seogu" class="summary-card"><strong>서구</strong><span>23개</span></a>
+<a href="#namgu" class="summary-card"><strong>남구</strong><span>19개</span></a>
+<a href="#bukgu" class="summary-card"><strong>북구</strong><span>58개</span></a>
+<a href="#suseong" class="summary-card"><strong>수성구</strong><span>38개</span></a>
+<a href="#dalseo" class="summary-card"><strong>달서구</strong><span>46개</span></a>
+<a href="#dalseong" class="summary-card"><strong>달성군</strong><span>84개</span></a>
+<a href="#gunwi" class="summary-card"><strong>군위군</strong><span>65개</span></a>
+    </div>
+    <div id="resultNotice" class="empty">검색 결과가 없습니다.</div>
+    
+    <section class="district" id="junggu" data-district="중구">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">District</p>
+          <h2>중구</h2>
+        </div>
+        <span class="count-pill">7개</span>
+      </div>
+      <div class="board-grid">
+        
+        <article class="board-card" data-region="중구" data-search="중구 경북여고 앞 1 경북여고 앞">
+          <div class="num">1</div>
+          <div class="card-body">
+            <div class="card-title">경북여고 앞 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="중구" data-search="중구 계성빌딩 앞-좌측 2 계성빌딩 앞-좌측">
+          <div class="num">2</div>
+          <div class="card-body">
+            <div class="card-title">계성빌딩 앞-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="중구" data-search="중구 남부교회 3 남부교회">
+          <div class="num">3</div>
+          <div class="card-body">
+            <div class="card-title">남부교회 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="중구" data-search="중구 남산초등학교 후문-좌측 4 남산초등학교 후문-좌측">
+          <div class="num">4</div>
+          <div class="card-body">
+            <div class="card-title">남산초등학교 후문-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="중구" data-search="중구 동산육교 아래-좌측 5 동산육교 아래-좌측">
+          <div class="num">5</div>
+          <div class="card-body">
+            <div class="card-title">동산육교 아래-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="중구" data-search="중구 봉산육거리-좌측(대구축산) 6 봉산육거리-좌측(대구축산)">
+          <div class="num">6</div>
+          <div class="card-body">
+            <div class="card-title">봉산육거리-좌측(대구축산) </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="중구" data-search="중구 적십자사 대구지사 앞-좌측 7 적십자사 대구지사 앞-좌측">
+          <div class="num">7</div>
+          <div class="card-body">
+            <div class="card-title">적십자사 대구지사 앞-좌측 </div>
+            
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="district" id="donggu" data-district="동구">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">District</p>
+          <h2>동구</h2>
+        </div>
+        <span class="count-pill">61개</span>
+      </div>
+      <div class="board-grid">
+        
+        <article class="board-card" data-region="동구" data-search="동구 kt동대구지사 옆-우측 1 kt동대구지사 옆-우측">
+          <div class="num">1</div>
+          <div class="card-body">
+            <div class="card-title">KT동대구지사 옆-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 kt동대구지사 옆-중앙 2 kt동대구지사 옆-중앙">
+          <div class="num">2</div>
+          <div class="card-body">
+            <div class="card-title">KT동대구지사 옆-중앙 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 kt동대구지사 옆-좌측 3 kt동대구지사 옆-좌측">
+          <div class="num">3</div>
+          <div class="card-body">
+            <div class="card-title">KT동대구지사 옆-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 각산지하차도 동편 4 각산지하차도 동편">
+          <div class="num">4</div>
+          <div class="card-body">
+            <div class="card-title">각산지하차도 동편 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 각산지하차도 서편 5 각산지하차도 서편">
+          <div class="num">5</div>
+          <div class="card-body">
+            <div class="card-title">각산지하차도 서편 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 공산댐 앞 6 공산댐 앞">
+          <div class="num">6</div>
+          <div class="card-body">
+            <div class="card-title">공산댐 앞 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 대구공고네거리 7 대구공고네거리">
+          <div class="num">7</div>
+          <div class="card-body">
+            <div class="card-title">대구공고네거리 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 대구은행신천역지점-우측 8 대구은행신천역지점-우측">
+          <div class="num">8</div>
+          <div class="card-body">
+            <div class="card-title">대구은행신천역지점-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 대구은행신천역지점-좌측 9 대구은행신천역지점-좌측">
+          <div class="num">9</div>
+          <div class="card-body">
+            <div class="card-title">대구은행신천역지점-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 대구지방법원등기국-우측 10 대구지방법원등기국-우측">
+          <div class="num">10</div>
+          <div class="card-body">
+            <div class="card-title">대구지방법원등기국-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 대구지방법원등기국-좌측 11 대구지방법원등기국-좌측">
+          <div class="num">11</div>
+          <div class="card-body">
+            <div class="card-title">대구지방법원등기국-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 대림치안센터 맞은편 12 대림치안센터 맞은편">
+          <div class="num">12</div>
+          <div class="card-body">
+            <div class="card-title">대림치안센터 맞은편 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 동대구역네거리-우측 13 동대구역네거리-우측">
+          <div class="num">13</div>
+          <div class="card-body">
+            <div class="card-title">동대구역네거리-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 동대구역네거리-좌측 14 동대구역네거리-좌측">
+          <div class="num">14</div>
+          <div class="card-body">
+            <div class="card-title">동대구역네거리-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 동촌네거리-우측 15 동촌네거리-우측">
+          <div class="num">15</div>
+          <div class="card-body">
+            <div class="card-title">동촌네거리-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 동촌네거리-중앙 16 동촌네거리-중앙">
+          <div class="num">16</div>
+          <div class="card-body">
+            <div class="card-title">동촌네거리-중앙 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 동호근린공원 앞-우측 17 동호근린공원 앞-우측">
+          <div class="num">17</div>
+          <div class="card-body">
+            <div class="card-title">동호근린공원 앞-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 동호근린공원 앞-좌측 18 동호근린공원 앞-좌측">
+          <div class="num">18</div>
+          <div class="card-body">
+            <div class="card-title">동호근린공원 앞-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 반야월삼거리-우측 19 반야월삼거리-우측">
+          <div class="num">19</div>
+          <div class="card-body">
+            <div class="card-title">반야월삼거리-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 반야월삼거리-좌측 20 반야월삼거리-좌측">
+          <div class="num">20</div>
+          <div class="card-body">
+            <div class="card-title">반야월삼거리-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 반야월삼거리-중앙 21 반야월삼거리-중앙">
+          <div class="num">21</div>
+          <div class="card-body">
+            <div class="card-title">반야월삼거리-중앙 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 방촌역세영리첼 앞-우측 22 방촌역세영리첼 앞-우측">
+          <div class="num">22</div>
+          <div class="card-body">
+            <div class="card-title">방촌역세영리첼 앞-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 방촌역세영리첼 앞-좌측 23 방촌역세영리첼 앞-좌측">
+          <div class="num">23</div>
+          <div class="card-body">
+            <div class="card-title">방촌역세영리첼 앞-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 백안삼거리-우측 24 백안삼거리-우측">
+          <div class="num">24</div>
+          <div class="card-body">
+            <div class="card-title">백안삼거리-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 백안삼거리-좌측 25 백안삼거리-좌측">
+          <div class="num">25</div>
+          <div class="card-body">
+            <div class="card-title">백안삼거리-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 봉무공원입구네거리-우측 26 봉무공원입구네거리-우측">
+          <div class="num">26</div>
+          <div class="card-body">
+            <div class="card-title">봉무공원입구네거리-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 봉무공원입구네거리-좌측 27 봉무공원입구네거리-좌측">
+          <div class="num">27</div>
+          <div class="card-body">
+            <div class="card-title">봉무공원입구네거리-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 불로삼거리-우측 28 불로삼거리-우측">
+          <div class="num">28</div>
+          <div class="card-body">
+            <div class="card-title">불로삼거리-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 불로삼거리-좌측 29 불로삼거리-좌측">
+          <div class="num">29</div>
+          <div class="card-body">
+            <div class="card-title">불로삼거리-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 신서지하차도 동편-우측 30 신서지하차도 동편-우측">
+          <div class="num">30</div>
+          <div class="card-body">
+            <div class="card-title">신서지하차도 동편-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 신서지하차도 동편-좌측 31 신서지하차도 동편-좌측">
+          <div class="num">31</div>
+          <div class="card-body">
+            <div class="card-title">신서지하차도 동편-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 아양초등학교 건너편-우측 32 아양초등학교 건너편-우측">
+          <div class="num">32</div>
+          <div class="card-body">
+            <div class="card-title">아양초등학교 건너편-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 아양초등학교 건너편-좌측 33 아양초등학교 건너편-좌측">
+          <div class="num">33</div>
+          <div class="card-body">
+            <div class="card-title">아양초등학교 건너편-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 아양초등학교 앞-우측 34 아양초등학교 앞-우측">
+          <div class="num">34</div>
+          <div class="card-body">
+            <div class="card-title">아양초등학교 앞-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 아양초등학교 앞-좌측 35 아양초등학교 앞-좌측">
+          <div class="num">35</div>
+          <div class="card-body">
+            <div class="card-title">아양초등학교 앞-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 안심교삼거리 36 안심교삼거리">
+          <div class="num">36</div>
+          <div class="card-body">
+            <div class="card-title">안심교삼거리 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 안심주공1단지 건너편-우측 37 안심주공1단지 건너편-우측">
+          <div class="num">37</div>
+          <div class="card-body">
+            <div class="card-title">안심주공1단지 건너편-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 안심주공1단지 건너편-좌측 38 안심주공1단지 건너편-좌측">
+          <div class="num">38</div>
+          <div class="card-body">
+            <div class="card-title">안심주공1단지 건너편-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 안심주공1단지 앞 39 안심주공1단지 앞">
+          <div class="num">39</div>
+          <div class="card-body">
+            <div class="card-title">안심주공1단지 앞 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 앵초어린이공원(좌측감김) 40 앵초어린이공원(좌측감김)">
+          <div class="num">40</div>
+          <div class="card-body">
+            <div class="card-title">앵초어린이공원(좌측감김) </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 영조2단지 네거리-우측 41 영조2단지 네거리-우측">
+          <div class="num">41</div>
+          <div class="card-body">
+            <div class="card-title">영조2단지 네거리-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 영조2단지 네거리-좌측 42 영조2단지 네거리-좌측">
+          <div class="num">42</div>
+          <div class="card-body">
+            <div class="card-title">영조2단지 네거리-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 우방강촌1차 입구 43 우방강촌1차 입구">
+          <div class="num">43</div>
+          <div class="card-body">
+            <div class="card-title">우방강촌1차 입구 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 우방강촌2차-우측 44 우방강촌2차-우측">
+          <div class="num">44</div>
+          <div class="card-body">
+            <div class="card-title">우방강촌2차-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 우방강촌2차-좌측 45 우방강촌2차-좌측">
+          <div class="num">45</div>
+          <div class="card-body">
+            <div class="card-title">우방강촌2차-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 율하교동편-우측 46 율하교동편-우측">
+          <div class="num">46</div>
+          <div class="card-body">
+            <div class="card-title">율하교동편-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 율하교동편-좌측 47 율하교동편-좌측">
+          <div class="num">47</div>
+          <div class="card-body">
+            <div class="card-title">율하교동편-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 율하휴먼시아6단지-우측(좌.. 48 율하휴먼시아6단지-우측(좌..">
+          <div class="num">48</div>
+          <div class="card-body">
+            <div class="card-title">율하휴먼시아6단지-우측(좌.. </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 율하휴먼시아6단지-좌측(좌.. 49 율하휴먼시아6단지-좌측(좌..">
+          <div class="num">49</div>
+          <div class="card-body">
+            <div class="card-title">율하휴먼시아6단지-좌측(좌.. </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 율하휴먼시아7단지-우측(좌.. 50 율하휴먼시아7단지-우측(좌..">
+          <div class="num">50</div>
+          <div class="card-body">
+            <div class="card-title">율하휴먼시아7단지-우측(좌.. </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 율하휴먼시아7단지-좌측(좌.. 51 율하휴먼시아7단지-좌측(좌..">
+          <div class="num">51</div>
+          <div class="card-body">
+            <div class="card-title">율하휴먼시아7단지-좌측(좌.. </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 이시아폴리스 삼거리 52 이시아폴리스 삼거리">
+          <div class="num">52</div>
+          <div class="card-body">
+            <div class="card-title">이시아폴리스 삼거리 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 청구고등학교 앞 53 청구고등학교 앞">
+          <div class="num">53</div>
+          <div class="card-body">
+            <div class="card-title">청구고등학교 앞 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 코스트코 삼거리-우측 54 코스트코 삼거리-우측">
+          <div class="num">54</div>
+          <div class="card-body">
+            <div class="card-title">코스트코 삼거리-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 코스트코 삼거리-좌측 55 코스트코 삼거리-좌측">
+          <div class="num">55</div>
+          <div class="card-body">
+            <div class="card-title">코스트코 삼거리-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 파계교네거리 56 파계교네거리">
+          <div class="num">56</div>
+          <div class="card-body">
+            <div class="card-title">파계교네거리 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 파군재삼거리 서편 57 파군재삼거리 서편">
+          <div class="num">57</div>
+          <div class="card-body">
+            <div class="card-title">파군재삼거리 서편 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 푸른공원 58 푸른공원">
+          <div class="num">58</div>
+          <div class="card-body">
+            <div class="card-title">푸른공원 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 한국교육학술정보원 건너편 59 한국교육학술정보원 건너편">
+          <div class="num">59</div>
+          <div class="card-body">
+            <div class="card-title">한국교육학술정보원 건너편 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 한국사학진흥재단 건너편-좌.. 60 한국사학진흥재단 건너편-좌..">
+          <div class="num">60</div>
+          <div class="card-body">
+            <div class="card-title">한국사학진흥재단 건너편-좌.. </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="동구" data-search="동구 한국사학진흥재단 건너편-우.. 61 한국사학진흥재단 건너편-우..">
+          <div class="num">61</div>
+          <div class="card-body">
+            <div class="card-title">한국사학진흥재단 건너편-우.. </div>
+            
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="district" id="seogu" data-district="서구">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">District</p>
+          <h2>서구</h2>
+        </div>
+        <span class="count-pill">23개</span>
+      </div>
+      <div class="board-grid">
+        
+        <article class="board-card" data-region="서구" data-search="서구 가르뱅이 1 가르뱅이">
+          <div class="num">1</div>
+          <div class="card-body">
+            <div class="card-title">가르뱅이 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="서구" data-search="서구 구)새방지하차도 2 구)새방지하차도">
+          <div class="num">2</div>
+          <div class="card-body">
+            <div class="card-title">구)새방지하차도 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="서구" data-search="서구 달서천복개도로 철도부지-우.. 3 달서천복개도로 철도부지-우..">
+          <div class="num">3</div>
+          <div class="card-body">
+            <div class="card-title">달서천복개도로 철도부지-우.. </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="서구" data-search="서구 달서천복개도로 철도부지-좌.. 4 달서천복개도로 철도부지-좌..">
+          <div class="num">4</div>
+          <div class="card-body">
+            <div class="card-title">달서천복개도로 철도부지-좌.. </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="서구" data-search="서구 달서천복개도로-우측 5 달서천복개도로-우측">
+          <div class="num">5</div>
+          <div class="card-body">
+            <div class="card-title">달서천복개도로-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="서구" data-search="서구 달서천복개도로-좌측 6 달서천복개도로-좌측">
+          <div class="num">6</div>
+          <div class="card-body">
+            <div class="card-title">달서천복개도로-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="서구" data-search="서구 달서천복개도로-중앙 7 달서천복개도로-중앙">
+          <div class="num">7</div>
+          <div class="card-body">
+            <div class="card-title">달서천복개도로-중앙 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="서구" data-search="서구 달성초등학교 앞 8 달성초등학교 앞">
+          <div class="num">8</div>
+          <div class="card-body">
+            <div class="card-title">달성초등학교 앞 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="서구" data-search="서구 대구의료원 네거리-우측 9 대구의료원 네거리-우측">
+          <div class="num">9</div>
+          <div class="card-body">
+            <div class="card-title">대구의료원 네거리-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="서구" data-search="서구 대구의료원 네거리-좌측 10 대구의료원 네거리-좌측">
+          <div class="num">10</div>
+          <div class="card-body">
+            <div class="card-title">대구의료원 네거리-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="서구" data-search="서구 삼익뉴타운 앞 11 삼익뉴타운 앞">
+          <div class="num">11</div>
+          <div class="card-body">
+            <div class="card-title">삼익뉴타운 앞 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="서구" data-search="서구 삼익맨션 앞 12 삼익맨션 앞">
+          <div class="num">12</div>
+          <div class="card-body">
+            <div class="card-title">삼익맨션 앞 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="서구" data-search="서구 새방지하차도 입구 13 새방지하차도 입구">
+          <div class="num">13</div>
+          <div class="card-body">
+            <div class="card-title">새방지하차도 입구 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="서구" data-search="서구 서대구산업단지 서편도로 14 서대구산업단지 서편도로">
+          <div class="num">14</div>
+          <div class="card-body">
+            <div class="card-title">서대구산업단지 서편도로 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="서구" data-search="서구 엠월드 네거리(우측) 15 엠월드 네거리(우측)">
+          <div class="num">15</div>
+          <div class="card-body">
+            <div class="card-title">엠월드 네거리(우측) </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="서구" data-search="서구 이현빗물펌프장 맞은편 16 이현빗물펌프장 맞은편">
+          <div class="num">16</div>
+          <div class="card-body">
+            <div class="card-title">이현빗물펌프장 맞은편 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="서구" data-search="서구 중리공원 입구 17 중리공원 입구">
+          <div class="num">17</div>
+          <div class="card-body">
+            <div class="card-title">중리공원 입구 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="서구" data-search="서구 퀸스로드 입구 18 퀸스로드 입구">
+          <div class="num">18</div>
+          <div class="card-body">
+            <div class="card-title">퀸스로드 입구 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="서구" data-search="서구 팔달교 입구-우측 19 팔달교 입구-우측">
+          <div class="num">19</div>
+          <div class="card-body">
+            <div class="card-title">팔달교 입구-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="서구" data-search="서구 팔달교 입구-좌측 20 팔달교 입구-좌측">
+          <div class="num">20</div>
+          <div class="card-body">
+            <div class="card-title">팔달교 입구-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="서구" data-search="서구 평리네거리 21 평리네거리">
+          <div class="num">21</div>
+          <div class="card-body">
+            <div class="card-title">평리네거리 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="서구" data-search="서구 서대구역 제2주차장-우측 22 서대구역 제2주차장-우측">
+          <div class="num">22</div>
+          <div class="card-body">
+            <div class="card-title">서대구역 제2주차장-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="서구" data-search="서구 서대구역 제2주차장-좌측 23 서대구역 제2주차장-좌측">
+          <div class="num">23</div>
+          <div class="card-body">
+            <div class="card-title">서대구역 제2주차장-좌측 </div>
+            
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="district" id="namgu" data-district="남구">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">District</p>
+          <h2>남구</h2>
+        </div>
+        <span class="count-pill">19개</span>
+      </div>
+      <div class="board-grid">
+        
+        <article class="board-card" data-region="남구" data-search="남구 kt&amp;g주차장-우측 1 kt&amp;g주차장-우측">
+          <div class="num">1</div>
+          <div class="card-body">
+            <div class="card-title">KT&amp;G주차장-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="남구" data-search="남구 kt&amp;g주차장-좌측 2 kt&amp;g주차장-좌측">
+          <div class="num">2</div>
+          <div class="card-body">
+            <div class="card-title">KT&amp;G주차장-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="남구" data-search="남구 대구대학교 서편-우측 3 대구대학교 서편-우측">
+          <div class="num">3</div>
+          <div class="card-body">
+            <div class="card-title">대구대학교 서편-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="남구" data-search="남구 대구대학교 서편-좌측 4 대구대학교 서편-좌측">
+          <div class="num">4</div>
+          <div class="card-body">
+            <div class="card-title">대구대학교 서편-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="남구" data-search="남구 대덕맨션2차 북편담벽-우측 5 대덕맨션2차 북편담벽-우측">
+          <div class="num">5</div>
+          <div class="card-body">
+            <div class="card-title">대덕맨션2차 북편담벽-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="남구" data-search="남구 대덕맨션2차 북편담벽-좌측 6 대덕맨션2차 북편담벽-좌측">
+          <div class="num">6</div>
+          <div class="card-body">
+            <div class="card-title">대덕맨션2차 북편담벽-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="남구" data-search="남구 대명초등학교 담장 7 대명초등학교 담장">
+          <div class="num">7</div>
+          <div class="card-body">
+            <div class="card-title">대명초등학교 담장 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="남구" data-search="남구 봉덕맨션 담장 8 봉덕맨션 담장">
+          <div class="num">8</div>
+          <div class="card-body">
+            <div class="card-title">봉덕맨션 담장 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="남구" data-search="남구 서부정류장 앞 9 서부정류장 앞">
+          <div class="num">9</div>
+          <div class="card-body">
+            <div class="card-title">서부정류장 앞 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="남구" data-search="남구 성바울로 성당 건너 10 성바울로 성당 건너">
+          <div class="num">10</div>
+          <div class="card-body">
+            <div class="card-title">성바울로 성당 건너 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="남구" data-search="남구 앞산빨래터 공원-우측 11 앞산빨래터 공원-우측">
+          <div class="num">11</div>
+          <div class="card-body">
+            <div class="card-title">앞산빨래터 공원-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="남구" data-search="남구 앞산빨래터 공원-좌측 12 앞산빨래터 공원-좌측">
+          <div class="num">12</div>
+          <div class="card-body">
+            <div class="card-title">앞산빨래터 공원-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="남구" data-search="남구 앞산빨래터 공원-중앙 13 앞산빨래터 공원-중앙">
+          <div class="num">13</div>
+          <div class="card-body">
+            <div class="card-title">앞산빨래터 공원-중앙 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="남구" data-search="남구 영남대학병원 동편 14 영남대학병원 동편">
+          <div class="num">14</div>
+          <div class="card-body">
+            <div class="card-title">영남대학병원 동편 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="남구" data-search="남구 영남이공대학교 정문-우측 15 영남이공대학교 정문-우측">
+          <div class="num">15</div>
+          <div class="card-body">
+            <div class="card-title">영남이공대학교 정문-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="남구" data-search="남구 영남이공대학교 정문-좌측 16 영남이공대학교 정문-좌측">
+          <div class="num">16</div>
+          <div class="card-body">
+            <div class="card-title">영남이공대학교 정문-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="남구" data-search="남구 중동교 17 중동교">
+          <div class="num">17</div>
+          <div class="card-body">
+            <div class="card-title">중동교 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="남구" data-search="남구 홈스파월드-좌측 18 홈스파월드-좌측">
+          <div class="num">18</div>
+          <div class="card-body">
+            <div class="card-title">홈스파월드-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="남구" data-search="남구 3차 순환도로 동편 입구 19 3차 순환도로 동편 입구">
+          <div class="num">19</div>
+          <div class="card-body">
+            <div class="card-title">3차 순환도로 동편 입구 </div>
+            
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="district" id="bukgu" data-district="북구">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">District</p>
+          <h2>북구</h2>
+        </div>
+        <span class="count-pill">58개</span>
+      </div>
+      <div class="board-grid">
+        
+        <article class="board-card" data-region="북구" data-search="북구 침산교 서쪽 1 침산교 서쪽">
+          <div class="num">1</div>
+          <div class="card-body">
+            <div class="card-title">침산교 서쪽 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 경대교 서쪽 2 경대교 서쪽">
+          <div class="num">2</div>
+          <div class="card-body">
+            <div class="card-title">경대교 서쪽 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 도청교 남쪽 3 도청교 남쪽">
+          <div class="num">3</div>
+          <div class="card-body">
+            <div class="card-title">도청교 남쪽 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 오봉오거리 4 오봉오거리">
+          <div class="num">4</div>
+          <div class="card-body">
+            <div class="card-title">오봉오거리 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 침산변전소 옆 5 침산변전소 옆">
+          <div class="num">5</div>
+          <div class="card-body">
+            <div class="card-title">침산변전소 옆 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 만평네거리 6 만평네거리">
+          <div class="num">6</div>
+          <div class="card-body">
+            <div class="card-title">만평네거리 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 성북교-우측 7 성북교-우측">
+          <div class="num">7</div>
+          <div class="card-body">
+            <div class="card-title">성북교-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 성북교-중앙 8 성북교-중앙">
+          <div class="num">8</div>
+          <div class="card-body">
+            <div class="card-title">성북교-중앙 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 성북교-좌측 9 성북교-좌측">
+          <div class="num">9</div>
+          <div class="card-body">
+            <div class="card-title">성북교-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 대불공원-우측 10 대불공원-우측">
+          <div class="num">10</div>
+          <div class="card-body">
+            <div class="card-title">대불공원-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 대불공원-좌측 11 대불공원-좌측">
+          <div class="num">11</div>
+          <div class="card-body">
+            <div class="card-title">대불공원-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 유통단지 한국통신 옆 12 유통단지 한국통신 옆">
+          <div class="num">12</div>
+          <div class="card-body">
+            <div class="card-title">유통단지 한국통신 옆 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 복현초등학교 담벽 13 복현초등학교 담벽">
+          <div class="num">13</div>
+          <div class="card-body">
+            <div class="card-title">복현초등학교 담벽 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 경대교 동쪽 14 경대교 동쪽">
+          <div class="num">14</div>
+          <div class="card-body">
+            <div class="card-title">경대교 동쪽 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 경대후문 앞 15 경대후문 앞">
+          <div class="num">15</div>
+          <div class="card-body">
+            <div class="card-title">경대후문 앞 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 검단유성아파트 앞 16 검단유성아파트 앞">
+          <div class="num">16</div>
+          <div class="card-body">
+            <div class="card-title">검단유성아파트 앞 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 동변교-우측 17 동변교-우측">
+          <div class="num">17</div>
+          <div class="card-body">
+            <div class="card-title">동변교-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 동변교-좌측 18 동변교-좌측">
+          <div class="num">18</div>
+          <div class="card-body">
+            <div class="card-title">동변교-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 동화교 앞 19 동화교 앞">
+          <div class="num">19</div>
+          <div class="card-body">
+            <div class="card-title">동화교 앞 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 서변 영남네오빌블루 앞 20 서변 영남네오빌블루 앞">
+          <div class="num">20</div>
+          <div class="card-body">
+            <div class="card-title">서변 영남네오빌블루 앞 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 서변 월드메르디앙 앞 21 서변 월드메르디앙 앞">
+          <div class="num">21</div>
+          <div class="card-body">
+            <div class="card-title">서변 월드메르디앙 앞 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 연경지구삼거리 입구 22 연경지구삼거리 입구">
+          <div class="num">22</div>
+          <div class="card-body">
+            <div class="card-title">연경지구삼거리 입구 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 이가네더덕 입구 맞은편 23 이가네더덕 입구 맞은편">
+          <div class="num">23</div>
+          <div class="card-body">
+            <div class="card-title">이가네더덕 입구 맞은편 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 연경lh지구 맞은편 버스정.. 24 연경lh지구 맞은편 버스정..">
+          <div class="num">24</div>
+          <div class="card-body">
+            <div class="card-title">연경LH지구 맞은편 버스정.. </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 매천 북부화물터미널 앞 25 매천 북부화물터미널 앞">
+          <div class="num">25</div>
+          <div class="card-body">
+            <div class="card-title">매천 북부화물터미널 앞 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 팔달초중학교 삼거리 26 팔달초중학교 삼거리">
+          <div class="num">26</div>
+          <div class="card-body">
+            <div class="card-title">팔달초중학교 삼거리 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 와룡대교 입구-좌측 27 와룡대교 입구-좌측">
+          <div class="num">27</div>
+          <div class="card-body">
+            <div class="card-title">와룡대교 입구-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 와룡대교 입구-우측 28 와룡대교 입구-우측">
+          <div class="num">28</div>
+          <div class="card-body">
+            <div class="card-title">와룡대교 입구-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 금호공원 맞은편 29 금호공원 맞은편">
+          <div class="num">29</div>
+          <div class="card-body">
+            <div class="card-title">금호공원 맞은편 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 칠곡ic입구-우측 30 칠곡ic입구-우측">
+          <div class="num">30</div>
+          <div class="card-body">
+            <div class="card-title">칠곡IC입구-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 칠곡ic입구-좌측 31 칠곡ic입구-좌측">
+          <div class="num">31</div>
+          <div class="card-body">
+            <div class="card-title">칠곡IC입구-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 태전 대백아파트 건너편-우.. 32 태전 대백아파트 건너편-우..">
+          <div class="num">32</div>
+          <div class="card-body">
+            <div class="card-title">태전 대백아파트 건너편-우.. </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 태전 대백아파트 건너편-좌.. 33 태전 대백아파트 건너편-좌..">
+          <div class="num">33</div>
+          <div class="card-body">
+            <div class="card-title">태전 대백아파트 건너편-좌.. </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 대구병원 뒷편 34 대구병원 뒷편">
+          <div class="num">34</div>
+          <div class="card-body">
+            <div class="card-title">대구병원 뒷편 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 칠곡한국통신 옆 35 칠곡한국통신 옆">
+          <div class="num">35</div>
+          <div class="card-body">
+            <div class="card-title">칠곡한국통신 옆 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 태암교 앞 36 태암교 앞">
+          <div class="num">36</div>
+          <div class="card-body">
+            <div class="card-title">태암교 앞 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 구민운동장 맞은편-좌측 37 구민운동장 맞은편-좌측">
+          <div class="num">37</div>
+          <div class="card-body">
+            <div class="card-title">구민운동장 맞은편-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 구민운동장 맞은편-중앙 38 구민운동장 맞은편-중앙">
+          <div class="num">38</div>
+          <div class="card-body">
+            <div class="card-title">구민운동장 맞은편-중앙 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 구민운동장 맞은편-우측 39 구민운동장 맞은편-우측">
+          <div class="num">39</div>
+          <div class="card-body">
+            <div class="card-title">구민운동장 맞은편-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 국우성당 옆-1번(좌측) 40 국우성당 옆-1번(좌측)">
+          <div class="num">40</div>
+          <div class="card-body">
+            <div class="card-title">국우성당 옆-1번(좌측) </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 국우성당 옆-2번(좌측중앙.. 41 국우성당 옆-2번(좌측중앙..">
+          <div class="num">41</div>
+          <div class="card-body">
+            <div class="card-title">국우성당 옆-2번(좌측중앙.. </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 국우성당 옆-3번(우측중앙.. 42 국우성당 옆-3번(우측중앙..">
+          <div class="num">42</div>
+          <div class="card-body">
+            <div class="card-title">국우성당 옆-3번(우측중앙.. </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 국우성당 옆-4번(우측) 43 국우성당 옆-4번(우측)">
+          <div class="num">43</div>
+          <div class="card-body">
+            <div class="card-title">국우성당 옆-4번(우측) </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 운암중학교 앞 44 운암중학교 앞">
+          <div class="num">44</div>
+          <div class="card-body">
+            <div class="card-title">운암중학교 앞 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 운암초등학교 앞 45 운암초등학교 앞">
+          <div class="num">45</div>
+          <div class="card-body">
+            <div class="card-title">운암초등학교 앞 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 함지공원 앞 46 함지공원 앞">
+          <div class="num">46</div>
+          <div class="card-body">
+            <div class="card-title">함지공원 앞 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 읍내공원 앞 47 읍내공원 앞">
+          <div class="num">47</div>
+          <div class="card-body">
+            <div class="card-title">읍내공원 앞 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 관음동 해원사 옆-우측 48 관음동 해원사 옆-우측">
+          <div class="num">48</div>
+          <div class="card-body">
+            <div class="card-title">관음동 해원사 옆-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 관음동 해원사 옆-좌측 49 관음동 해원사 옆-좌측">
+          <div class="num">49</div>
+          <div class="card-body">
+            <div class="card-title">관음동 해원사 옆-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 동천교 대천초등학교 50 동천교 대천초등학교">
+          <div class="num">50</div>
+          <div class="card-body">
+            <div class="card-title">동천교 대천초등학교 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 운암교 51 운암교">
+          <div class="num">51</div>
+          <div class="card-body">
+            <div class="card-title">운암교 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 칠곡초등학교 앞 52 칠곡초등학교 앞">
+          <div class="num">52</div>
+          <div class="card-body">
+            <div class="card-title">칠곡초등학교 앞 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 거동교 53 거동교">
+          <div class="num">53</div>
+          <div class="card-body">
+            <div class="card-title">거동교 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 동천교 남쪽 54 동천교 남쪽">
+          <div class="num">54</div>
+          <div class="card-body">
+            <div class="card-title">동천교 남쪽 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 동천동 구수교 55 동천동 구수교">
+          <div class="num">55</div>
+          <div class="card-body">
+            <div class="card-title">동천동 구수교 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 동천동 하이마트 56 동천동 하이마트">
+          <div class="num">56</div>
+          <div class="card-body">
+            <div class="card-title">동천동 하이마트 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 칠곡 부영1단지 네거리 57 칠곡 부영1단지 네거리">
+          <div class="num">57</div>
+          <div class="card-body">
+            <div class="card-title">칠곡 부영1단지 네거리 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="북구" data-search="북구 팔거교 58 팔거교">
+          <div class="num">58</div>
+          <div class="card-body">
+            <div class="card-title">팔거교 </div>
+            
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="district" id="suseong" data-district="수성구">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">District</p>
+          <h2>수성구</h2>
+        </div>
+        <span class="count-pill">38개</span>
+      </div>
+      <div class="board-grid">
+        
+        <article class="board-card" data-region="수성구" data-search="수성구 감나무식당맞은편 1 감나무식당맞은편 고모동 15 33,800 600x70 5">
+          <div class="num">1</div>
+          <div class="card-body">
+            <div class="card-title">감나무식당맞은편 </div>
+            <div class="meta"><span><em>주소</em>고모동</span><span><em>부착일</em>15일</span><span><em>금액</em>33,800원</span><span><em>규격</em>600x70</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 경남타운맞은편 2 경남타운맞은편 범어동 15 48,650 800x90 5">
+          <div class="num">2</div>
+          <div class="card-body">
+            <div class="card-title">경남타운맞은편 </div>
+            <div class="meta"><span><em>주소</em>범어동</span><span><em>부착일</em>15일</span><span><em>금액</em>48,650원</span><span><em>규격</em>800x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 고모역입구삼거리 3 고모역입구삼거리 고모동 15 48,650 800x90 5">
+          <div class="num">3</div>
+          <div class="card-body">
+            <div class="card-title">고모역입구삼거리 </div>
+            <div class="meta"><span><em>주소</em>고모동</span><span><em>부착일</em>15일</span><span><em>금액</em>48,650원</span><span><em>규격</em>800x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 2군사령부후문입구 4 2군사령부후문입구 만촌동 15 48,650 800x90 5">
+          <div class="num">4</div>
+          <div class="card-body">
+            <div class="card-title">2군사령부후문입구 </div>
+            <div class="meta"><span><em>주소</em>만촌동</span><span><em>부착일</em>15일</span><span><em>금액</em>48,650원</span><span><em>규격</em>800x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 청림초교앞삼거리 5 청림초교앞삼거리 시지동 15 48,650 800x90 5">
+          <div class="num">5</div>
+          <div class="card-body">
+            <div class="card-title">청림초교앞삼거리 </div>
+            <div class="meta"><span><em>주소</em>시지동</span><span><em>부착일</em>15일</span><span><em>금액</em>48,650원</span><span><em>규격</em>800x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 담티역1번출구(우측) 6 담티역1번출구(우측) 만촌동 15 33,800 600x70 5">
+          <div class="num">6</div>
+          <div class="card-body">
+            <div class="card-title">담티역1번출구(우측) </div>
+            <div class="meta"><span><em>주소</em>만촌동</span><span><em>부착일</em>15일</span><span><em>금액</em>33,800원</span><span><em>규격</em>600x70</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 담티역1번출구(좌측) 7 담티역1번출구(좌측) 만촌동 15 33,800 600x70 5">
+          <div class="num">7</div>
+          <div class="card-body">
+            <div class="card-title">담티역1번출구(좌측) </div>
+            <div class="meta"><span><em>주소</em>만촌동</span><span><em>부착일</em>15일</span><span><em>금액</em>33,800원</span><span><em>규격</em>600x70</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 노변청구타운앞 8 노변청구타운앞 노변동 15 33,800 600x70 5">
+          <div class="num">8</div>
+          <div class="card-body">
+            <div class="card-title">노변청구타운앞 </div>
+            <div class="meta"><span><em>주소</em>노변동</span><span><em>부착일</em>15일</span><span><em>금액</em>33,800원</span><span><em>규격</em>600x70</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 대공원역(2,3번출구중간) 9 대공원역(2,3번출구중간) 연호동 15 33,800 600x70 4">
+          <div class="num">9</div>
+          <div class="card-body">
+            <div class="card-title">대공원역(2,3번출구중간) </div>
+            <div class="meta"><span><em>주소</em>연호동</span><span><em>부착일</em>15일</span><span><em>금액</em>33,800원</span><span><em>규격</em>600x70</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 대구자연과학교후문-우측 10 대구자연과학교후문-우측 노변동 15 48,650 800x90 5">
+          <div class="num">10</div>
+          <div class="card-body">
+            <div class="card-title">대구자연과학교후문-우측 </div>
+            <div class="meta"><span><em>주소</em>노변동</span><span><em>부착일</em>15일</span><span><em>금액</em>48,650원</span><span><em>규격</em>800x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 대구자연과학고후문-좌측 11 대구자연과학고후문-좌측 노변동 15 48,650 800x90 5">
+          <div class="num">11</div>
+          <div class="card-body">
+            <div class="card-title">대구자연과학고후문-좌측 </div>
+            <div class="meta"><span><em>주소</em>노변동</span><span><em>부착일</em>15일</span><span><em>금액</em>48,650원</span><span><em>규격</em>800x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 대구지방경찰청맞은편 12 대구지방경찰청맞은편 지산동 15 48,650 800x90 5">
+          <div class="num">12</div>
+          <div class="card-body">
+            <div class="card-title">대구지방경찰청맞은편 </div>
+            <div class="meta"><span><em>주소</em>지산동</span><span><em>부착일</em>15일</span><span><em>금액</em>48,650원</span><span><em>규격</em>800x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 덕원고입구-좌측 13 덕원고입구-좌측 욱수동 15 33,800 600x70 4">
+          <div class="num">13</div>
+          <div class="card-body">
+            <div class="card-title">덕원고입구-좌측 </div>
+            <div class="meta"><span><em>주소</em>욱수동</span><span><em>부착일</em>15일</span><span><em>금액</em>33,800원</span><span><em>규격</em>600x70</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 동아스포츠뒤-우측 14 동아스포츠뒤-우측 지산동 15 33,800 600x70 5">
+          <div class="num">14</div>
+          <div class="card-body">
+            <div class="card-title">동아스포츠뒤-우측 </div>
+            <div class="meta"><span><em>주소</em>지산동</span><span><em>부착일</em>15일</span><span><em>금액</em>33,800원</span><span><em>규격</em>600x70</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 만촌1차우방타운앞 15 만촌1차우방타운앞 만촌동 15 48,650 800x90 5">
+          <div class="num">15</div>
+          <div class="card-body">
+            <div class="card-title">만촌1차우방타운앞 </div>
+            <div class="meta"><span><em>주소</em>만촌동</span><span><em>부착일</em>15일</span><span><em>금액</em>48,650원</span><span><em>규격</em>800x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 만촌2동행정복지센터옆 16 만촌2동행정복지센터옆 만촌동 15 48,650 800x90 5">
+          <div class="num">16</div>
+          <div class="card-body">
+            <div class="card-title">만촌2동행정복지센터옆 </div>
+            <div class="meta"><span><em>주소</em>만촌동</span><span><em>부착일</em>15일</span><span><em>금액</em>48,650원</span><span><em>규격</em>800x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 무학네거리 17 무학네거리 지산동 15 33,800 600x70 5">
+          <div class="num">17</div>
+          <div class="card-body">
+            <div class="card-title">무학네거리 </div>
+            <div class="meta"><span><em>주소</em>지산동</span><span><em>부착일</em>15일</span><span><em>금액</em>33,800원</span><span><em>규격</em>600x70</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 범안로서편화단 18 범안로서편화단 연호동 15 33,800 600x70 5">
+          <div class="num">18</div>
+          <div class="card-body">
+            <div class="card-title">범안로서편화단 </div>
+            <div class="meta"><span><em>주소</em>연호동</span><span><em>부착일</em>15일</span><span><em>금액</em>33,800원</span><span><em>규격</em>600x70</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 사월보성타운-우측 19 사월보성타운-우측 사월동 15 33,800 600x70 5">
+          <div class="num">19</div>
+          <div class="card-body">
+            <div class="card-title">사월보성타운-우측 </div>
+            <div class="meta"><span><em>주소</em>사월동</span><span><em>부착일</em>15일</span><span><em>금액</em>33,800원</span><span><em>규격</em>600x70</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 두산교 20 두산교 상동 15 33,800 600x70 5">
+          <div class="num">20</div>
+          <div class="card-body">
+            <div class="card-title">두산교 </div>
+            <div class="meta"><span><em>주소</em>상동</span><span><em>부착일</em>15일</span><span><em>금액</em>33,800원</span><span><em>규격</em>600x70</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 수성케이블-우측 21 수성케이블-우측 황금동 15 48,650 800x90 5">
+          <div class="num">21</div>
+          <div class="card-body">
+            <div class="card-title">수성케이블-우측 </div>
+            <div class="meta"><span><em>주소</em>황금동</span><span><em>부착일</em>15일</span><span><em>금액</em>48,650원</span><span><em>규격</em>800x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 수성케이블-좌측 22 수성케이블-좌측 황금동 15 48,650 800x90 5">
+          <div class="num">22</div>
+          <div class="card-body">
+            <div class="card-title">수성케이블-좌측 </div>
+            <div class="meta"><span><em>주소</em>황금동</span><span><em>부착일</em>15일</span><span><em>금액</em>48,650원</span><span><em>규격</em>800x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 썬스포츠프라자앞 23 썬스포츠프라자앞 범어동 15 33,800 600x70 5">
+          <div class="num">23</div>
+          <div class="card-body">
+            <div class="card-title">썬스포츠프라자앞 </div>
+            <div class="meta"><span><em>주소</em>범어동</span><span><em>부착일</em>15일</span><span><em>금액</em>33,800원</span><span><em>규격</em>600x70</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 알파시티내 24 알파시티내 대흥동 15 33,800 600x70 5">
+          <div class="num">24</div>
+          <div class="card-body">
+            <div class="card-title">알파시티내 </div>
+            <div class="meta"><span><em>주소</em>대흥동</span><span><em>부착일</em>15일</span><span><em>금액</em>33,800원</span><span><em>규격</em>600x70</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 야구전설로남쪽 25 야구전설로남쪽 연호동 15 33,800 600x70 5">
+          <div class="num">25</div>
+          <div class="card-body">
+            <div class="card-title">야구전설로남쪽 </div>
+            <div class="meta"><span><em>주소</em>연호동</span><span><em>부착일</em>15일</span><span><em>금액</em>33,800원</span><span><em>규격</em>600x70</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 어린이회관-우측 26 어린이회관-우측 황금동 15 33,800 600x70 5">
+          <div class="num">26</div>
+          <div class="card-body">
+            <div class="card-title">어린이회관-우측 </div>
+            <div class="meta"><span><em>주소</em>황금동</span><span><em>부착일</em>15일</span><span><em>금액</em>33,800원</span><span><em>규격</em>600x70</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 어린이회관-좌측 27 어린이회관-좌측 황금동 15 33,800 600x70 5">
+          <div class="num">27</div>
+          <div class="card-body">
+            <div class="card-title">어린이회관-좌측 </div>
+            <div class="meta"><span><em>주소</em>황금동</span><span><em>부착일</em>15일</span><span><em>금액</em>33,800원</span><span><em>규격</em>600x70</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 에덴아파트앞 28 에덴아파트앞 시지동 15 48,650 800x90 5">
+          <div class="num">28</div>
+          <div class="card-body">
+            <div class="card-title">에덴아파트앞 </div>
+            <div class="meta"><span><em>주소</em>시지동</span><span><em>부착일</em>15일</span><span><em>금액</em>48,650원</span><span><em>규격</em>800x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 우방신천지아파트앞 29 우방신천지아파트앞 황금동 15 33,800 600x70 5">
+          <div class="num">29</div>
+          <div class="card-body">
+            <div class="card-title">우방신천지아파트앞 </div>
+            <div class="meta"><span><em>주소</em>황금동</span><span><em>부착일</em>15일</span><span><em>금액</em>33,800원</span><span><em>규격</em>600x70</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 월드컵삼거리-우 30 월드컵삼거리-우 시지동 15 33,800 600x70 5">
+          <div class="num">30</div>
+          <div class="card-body">
+            <div class="card-title">월드컵삼거리-우 </div>
+            <div class="meta"><span><em>주소</em>시지동</span><span><em>부착일</em>15일</span><span><em>금액</em>33,800원</span><span><em>규격</em>600x70</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 월드컵삼거리-좌 31 월드컵삼거리-좌 시지동 15 33,800 600x70 5">
+          <div class="num">31</div>
+          <div class="card-body">
+            <div class="card-title">월드컵삼거리-좌 </div>
+            <div class="meta"><span><em>주소</em>시지동</span><span><em>부착일</em>15일</span><span><em>금액</em>33,800원</span><span><em>규격</em>600x70</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 중앙초교맞은편 32 중앙초교맞은편 만촌동 15 48,650 800x90 5">
+          <div class="num">32</div>
+          <div class="card-body">
+            <div class="card-title">중앙초교맞은편 </div>
+            <div class="meta"><span><em>주소</em>만촌동</span><span><em>부착일</em>15일</span><span><em>금액</em>48,650원</span><span><em>규격</em>800x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 지산에덴어린이공원옆 33 지산에덴어린이공원옆 지산1동 15 33,800 600x70 5">
+          <div class="num">33</div>
+          <div class="card-body">
+            <div class="card-title">지산에덴어린이공원옆 </div>
+            <div class="meta"><span><em>주소</em>지산1동</span><span><em>부착일</em>15일</span><span><em>금액</em>33,800원</span><span><em>규격</em>600x70</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 지산공원앞 34 지산공원앞 지산동 15 48,650 800x90 5">
+          <div class="num">34</div>
+          <div class="card-body">
+            <div class="card-title">지산공원앞 </div>
+            <div class="meta"><span><em>주소</em>지산동</span><span><em>부착일</em>15일</span><span><em>금액</em>48,650원</span><span><em>규격</em>800x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 청아아파트정문 35 청아아파트정문 지산동 15 48,650 800x90 5">
+          <div class="num">35</div>
+          <div class="card-body">
+            <div class="card-title">청아아파트정문 </div>
+            <div class="meta"><span><em>주소</em>지산동</span><span><em>부착일</em>15일</span><span><em>금액</em>48,650원</span><span><em>규격</em>800x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 파동교네거리(좌측감김) 36 파동교네거리(좌측감김) 파동 15 33,800 650x70 5">
+          <div class="num">36</div>
+          <div class="card-body">
+            <div class="card-title">파동교네거리(좌측감김) </div>
+            <div class="meta"><span><em>주소</em>파동</span><span><em>부착일</em>15일</span><span><em>금액</em>33,800원</span><span><em>규격</em>650x70</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 경산이마트건너편(철길앞유턴) 37 경산이마트건너편(철길앞유턴) 사월동 15 33,800 600x70 5">
+          <div class="num">37</div>
+          <div class="card-body">
+            <div class="card-title">경산이마트건너편(철길앞유턴) </div>
+            <div class="meta"><span><em>주소</em>사월동</span><span><em>부착일</em>15일</span><span><em>금액</em>33,800원</span><span><em>규격</em>600x70</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="수성구" data-search="수성구 범물동관계삼거리 38 범물동관계삼거리 범물1동 15 33,800 600x70 5">
+          <div class="num">38</div>
+          <div class="card-body">
+            <div class="card-title">범물동관계삼거리 </div>
+            <div class="meta"><span><em>주소</em>범물1동</span><span><em>부착일</em>15일</span><span><em>금액</em>33,800원</span><span><em>규격</em>600x70</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="district" id="dalseo" data-district="달서구">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">District</p>
+          <h2>달서구</h2>
+        </div>
+        <span class="count-pill">46개</span>
+      </div>
+      <div class="board-grid">
+        
+        <article class="board-card" data-region="달서구" data-search="달서구 가람마을주공1단지 1 가람마을주공1단지">
+          <div class="num">1</div>
+          <div class="card-body">
+            <div class="card-title">가람마을주공1단지 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 감천네거리 2 감천네거리">
+          <div class="num">2</div>
+          <div class="card-body">
+            <div class="card-title">감천네거리 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 감천초등학교 3 감천초등학교">
+          <div class="num">3</div>
+          <div class="card-body">
+            <div class="card-title">감천초등학교 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 고려자동차학원앞 4 고려자동차학원앞">
+          <div class="num">4</div>
+          <div class="card-body">
+            <div class="card-title">고려자동차학원앞 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 그린맨션2차 북편 5 그린맨션2차 북편">
+          <div class="num">5</div>
+          <div class="card-body">
+            <div class="card-title">그린맨션2차 북편 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 대구직업능력개발원삼거리 6 대구직업능력개발원삼거리">
+          <div class="num">6</div>
+          <div class="card-body">
+            <div class="card-title">대구직업능력개발원삼거리 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 도원네거리-우측 7 도원네거리-우측">
+          <div class="num">7</div>
+          <div class="card-body">
+            <div class="card-title">도원네거리-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 도원네거리-좌측 8 도원네거리-좌측">
+          <div class="num">8</div>
+          <div class="card-body">
+            <div class="card-title">도원네거리-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 도원우체국앞 9 도원우체국앞">
+          <div class="num">9</div>
+          <div class="card-body">
+            <div class="card-title">도원우체국앞 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 두류공원네거리 10 두류공원네거리">
+          <div class="num">10</div>
+          <div class="card-body">
+            <div class="card-title">두류공원네거리 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 두리봉네거리-우측 11 두리봉네거리-우측">
+          <div class="num">11</div>
+          <div class="card-body">
+            <div class="card-title">두리봉네거리-우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 두리봉네거리-좌측 12 두리봉네거리-좌측">
+          <div class="num">12</div>
+          <div class="card-body">
+            <div class="card-title">두리봉네거리-좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 모다아울렛 건너편 13 모다아울렛 건너편">
+          <div class="num">13</div>
+          <div class="card-body">
+            <div class="card-title">모다아울렛 건너편 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 문화예술회관 14 문화예술회관">
+          <div class="num">14</div>
+          <div class="card-body">
+            <div class="card-title">문화예술회관 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 삼성명가타운 15 삼성명가타운">
+          <div class="num">15</div>
+          <div class="card-body">
+            <div class="card-title">삼성명가타운 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 삼성명가타운202동 서편 16 삼성명가타운202동 서편">
+          <div class="num">16</div>
+          <div class="card-body">
+            <div class="card-title">삼성명가타운202동 서편 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 삼성물류센터 우측 17 삼성물류센터 우측">
+          <div class="num">17</div>
+          <div class="card-body">
+            <div class="card-title">삼성물류센터 우측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 삼성물류센터 좌측 18 삼성물류센터 좌측">
+          <div class="num">18</div>
+          <div class="card-body">
+            <div class="card-title">삼성물류센터 좌측 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 성당우방아파트 19 성당우방아파트">
+          <div class="num">19</div>
+          <div class="card-body">
+            <div class="card-title">성당우방아파트 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 성서공단북로 칠성플라스틱 .. 20 성서공단북로 칠성플라스틱 ..">
+          <div class="num">20</div>
+          <div class="card-body">
+            <div class="card-title">성서공단북로 칠성플라스틱 .. </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 성서금빛마을 21 성서금빛마을">
+          <div class="num">21</div>
+          <div class="card-body">
+            <div class="card-title">성서금빛마을 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 성서대구은행 동편 22 성서대구은행 동편">
+          <div class="num">22</div>
+          <div class="card-body">
+            <div class="card-title">성서대구은행 동편 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 성서대구은행 서편 23 성서대구은행 서편">
+          <div class="num">23</div>
+          <div class="card-body">
+            <div class="card-title">성서대구은행 서편 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 성서로 영광테크 옆 24 성서로 영광테크 옆">
+          <div class="num">24</div>
+          <div class="card-body">
+            <div class="card-title">성서로 영광테크 옆 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 성서보성2차아파트 25 성서보성2차아파트">
+          <div class="num">25</div>
+          <div class="card-body">
+            <div class="card-title">성서보성2차아파트 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 성서산업단지 환경사업소앞 26 성서산업단지 환경사업소앞">
+          <div class="num">26</div>
+          <div class="card-body">
+            <div class="card-title">성서산업단지 환경사업소앞 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 성서서한2차아파트 27 성서서한2차아파트">
+          <div class="num">27</div>
+          <div class="card-body">
+            <div class="card-title">성서서한2차아파트 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 성서세븐하이츠 28 성서세븐하이츠">
+          <div class="num">28</div>
+          <div class="card-body">
+            <div class="card-title">성서세븐하이츠 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 성서이마트입구 29 성서이마트입구">
+          <div class="num">29</div>
+          <div class="card-body">
+            <div class="card-title">성서이마트입구 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 성서주공1단지아파트 30 성서주공1단지아파트">
+          <div class="num">30</div>
+          <div class="card-body">
+            <div class="card-title">성서주공1단지아파트 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 성서평화타운 31 성서평화타운">
+          <div class="num">31</div>
+          <div class="card-body">
+            <div class="card-title">성서평화타운 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 성서푸른마을 32 성서푸른마을">
+          <div class="num">32</div>
+          <div class="card-body">
+            <div class="card-title">성서푸른마을 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 송일초등학교 코너 33 송일초등학교 코너">
+          <div class="num">33</div>
+          <div class="card-body">
+            <div class="card-title">송일초등학교 코너 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 영남우방1차아파트 34 영남우방1차아파트">
+          <div class="num">34</div>
+          <div class="card-body">
+            <div class="card-title">영남우방1차아파트 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 와룡공원 맞은편 35 와룡공원 맞은편">
+          <div class="num">35</div>
+          <div class="card-body">
+            <div class="card-title">와룡공원 맞은편 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 와룡 상(上)공원 북쪽코너 36 와룡 상(上)공원 북쪽코너">
+          <div class="num">36</div>
+          <div class="card-body">
+            <div class="card-title">와룡 상(上)공원 북쪽코너 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 용산대구은행앞 37 용산대구은행앞">
+          <div class="num">37</div>
+          <div class="card-body">
+            <div class="card-title">용산대구은행앞 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 용산한마음아파트 서편 38 용산한마음아파트 서편">
+          <div class="num">38</div>
+          <div class="card-body">
+            <div class="card-title">용산한마음아파트 서편 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 월촌고가도로 39 월촌고가도로">
+          <div class="num">39</div>
+          <div class="card-body">
+            <div class="card-title">월촌고가도로 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 이곡1동 행정복지센터 서편 40 이곡1동 행정복지센터 서편">
+          <div class="num">40</div>
+          <div class="card-body">
+            <div class="card-title">이곡1동 행정복지센터 서편 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 이곡한라아파트 41 이곡한라아파트">
+          <div class="num">41</div>
+          <div class="card-body">
+            <div class="card-title">이곡한라아파트 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 장산초등학교 서편 42 장산초등학교 서편">
+          <div class="num">42</div>
+          <div class="card-body">
+            <div class="card-title">장산초등학교 서편 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 종합복지회관 43 종합복지회관">
+          <div class="num">43</div>
+          <div class="card-body">
+            <div class="card-title">종합복지회관 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 지역난방공사 남쪽 44 지역난방공사 남쪽">
+          <div class="num">44</div>
+          <div class="card-body">
+            <div class="card-title">지역난방공사 남쪽 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 한화꿈에그린 아파트 45 한화꿈에그린 아파트">
+          <div class="num">45</div>
+          <div class="card-body">
+            <div class="card-title">한화꿈에그린 아파트 </div>
+            
+          </div>
+        </article>
+        <article class="board-card" data-region="달서구" data-search="달서구 희성전자네거리 46 희성전자네거리">
+          <div class="num">46</div>
+          <div class="card-body">
+            <div class="card-title">희성전자네거리 </div>
+            
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="district" id="dalseong" data-district="달성군">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">District</p>
+          <h2>달성군</h2>
+        </div>
+        <span class="count-pill">84개</span>
+      </div>
+      <div class="board-grid">
+        
+        <article class="board-card" data-region="달성군" data-search="달성군 대원고맞은편(천내근린공원앞-좌) 1 대원고맞은편(천내근린공원앞-좌) 화원읍 천내리 56 15 29,510 700x90 4">
+          <div class="num">1</div>
+          <div class="card-body">
+            <div class="card-title">대원고맞은편(천내근린공원앞-좌) </div>
+            <div class="meta"><span><em>주소</em>화원읍 천내리 56</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 대원고맞은편(천내근린공원앞-우) 2 대원고맞은편(천내근린공원앞-우) 화원읍 천내리 56 15 31,820 800x90 4">
+          <div class="num">2</div>
+          <div class="card-body">
+            <div class="card-title">대원고맞은편(천내근린공원앞-우) </div>
+            <div class="meta"><span><em>주소</em>화원읍 천내리 56</span><span><em>부착일</em>15일</span><span><em>금액</em>31,820원</span><span><em>규격</em>800x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 비슬로성천로합류구간앞{유천ic근처) 3 비슬로성천로합류구간앞{유천ic근처) 화원읍 구라리 1118-5 15 29,510 700x90 4">
+          <div class="num">3</div>
+          <div class="card-body">
+            <div class="card-title">비슬로성천로합류구간앞{유천ic근처) </div>
+            <div class="meta"><span><em>주소</em>화원읍 구라리 1118-5</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 명곡우체국 4 명곡우체국 화원읍 명곡리 145 15 29,510 700x90 4">
+          <div class="num">4</div>
+          <div class="card-body">
+            <div class="card-title">명곡우체국 </div>
+            <div class="meta"><span><em>주소</em>화원읍 명곡리 145</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 명천교 5 명천교 화원읍 명곡리 144 15 29,510 700x90 4">
+          <div class="num">5</div>
+          <div class="card-body">
+            <div class="card-title">명천교 </div>
+            <div class="meta"><span><em>주소</em>화원읍 명곡리 144</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 본리삼거리(화원읍비슬로532길42앞) 6 본리삼거리(화원읍비슬로532길42앞) 화원읍 본리리 146 15 31,820 820x90 4">
+          <div class="num">6</div>
+          <div class="card-body">
+            <div class="card-title">본리삼거리(화원읍비슬로532길42앞) </div>
+            <div class="meta"><span><em>주소</em>화원읍 본리리 146</span><span><em>부착일</em>15일</span><span><em>금액</em>31,820원</span><span><em>규격</em>820x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 보성아파트106동옆 7 보성아파트106동옆 화원읍 천내리 117 15 29,510 700x90 4">
+          <div class="num">7</div>
+          <div class="card-body">
+            <div class="card-title">보성아파트106동옆 </div>
+            <div class="meta"><span><em>주소</em>화원읍 천내리 117</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 천내초등학교맞은편 8 천내초등학교맞은편 화원읍 구라리 1118-5 15 29,510 700x90 3">
+          <div class="num">8</div>
+          <div class="card-body">
+            <div class="card-title">천내초등학교맞은편 </div>
+            <div class="meta"><span><em>주소</em>화원읍 구라리 1118-5</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>3</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)화원중학교맞은편 9 (행정)화원중학교맞은편 화원읍 본리리 300 15 0 700x90 5">
+          <div class="num">9</div>
+          <div class="card-body">
+            <div class="card-title">(행정)화원중학교맞은편 <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>화원읍 본리리 300</span><span><em>부착일</em>15일</span><span><em>금액</em>0</span><span><em>규격</em>700x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 논공출장소우측 10 논공출장소우측 논공읍 논공중앙로33길10 15 29,510 700x90 4">
+          <div class="num">10</div>
+          <div class="card-body">
+            <div class="card-title">논공출장소우측 </div>
+            <div class="meta"><span><em>주소</em>논공읍 논공중앙로33길10</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 동아제약앞 11 동아제약앞 논공읍 논공중앙로 347 15 31,820 800x90 4">
+          <div class="num">11</div>
+          <div class="card-body">
+            <div class="card-title">동아제약앞 </div>
+            <div class="meta"><span><em>주소</em>논공읍 논공중앙로 347</span><span><em>부착일</em>15일</span><span><em>금액</em>31,820원</span><span><em>규격</em>800x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 남강장어앞좌측 12 남강장어앞좌측 논공읍 남리 산 79-1번지선 15 31,820 800x90 4">
+          <div class="num">12</div>
+          <div class="card-body">
+            <div class="card-title">남강장어앞좌측 </div>
+            <div class="meta"><span><em>주소</em>논공읍 남리 산 79-1번지선</span><span><em>부착일</em>15일</span><span><em>금액</em>31,820원</span><span><em>규격</em>800x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 남강장어앞우측 13 남강장어앞우측 논공읍 난리 산 75-4번지 15 29,510 700x90 4">
+          <div class="num">13</div>
+          <div class="card-body">
+            <div class="card-title">남강장어앞우측 </div>
+            <div class="meta"><span><em>주소</em>논공읍 난리 산 75-4번지</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 달성보맞은편-우 14 달성보맞은편-우 논공읍 라히 716-4번지 15 29,510 700x90 4">
+          <div class="num">14</div>
+          <div class="card-body">
+            <div class="card-title">달성보맞은편-우 </div>
+            <div class="meta"><span><em>주소</em>논공읍 라히 716-4번지</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 대구경북기계조합앞 15 대구경북기계조합앞 다사읍 세천리 1687-2 15 29,510 700x90 4">
+          <div class="num">15</div>
+          <div class="card-body">
+            <div class="card-title">대구경북기계조합앞 </div>
+            <div class="meta"><span><em>주소</em>다사읍 세천리 1687-2</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 gs칼텍스주유소맞은편 16 gs칼텍스주유소맞은편 다사읍 세천리 1679-6번지선 15 29,510 700x90 3">
+          <div class="num">16</div>
+          <div class="card-body">
+            <div class="card-title">GS칼텍스주유소맞은편 </div>
+            <div class="meta"><span><em>주소</em>다사읍 세천리 1679-6번지선</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>3</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 세천고개-좌 17 세천고개-좌 다사읍 서재리 722번지선 15 29,510 700x90 3">
+          <div class="num">17</div>
+          <div class="card-body">
+            <div class="card-title">세천고개-좌 </div>
+            <div class="meta"><span><em>주소</em>다사읍 서재리 722번지선</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>3</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 대실역앞 18 대실역앞 다사읍 죽곡리 814-2번지 선 15 29,510 700x90 4">
+          <div class="num">18</div>
+          <div class="card-body">
+            <div class="card-title">대실역앞 </div>
+            <div class="meta"><span><em>주소</em>다사읍 죽곡리 814-2번지 선</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 세천교 19 세천교 다사읍 세천리 1110 15 29,510 700x90 4">
+          <div class="num">19</div>
+          <div class="card-body">
+            <div class="card-title">세천교 </div>
+            <div class="meta"><span><em>주소</em>다사읍 세천리 1110</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 가창댐입구-좌 20 가창댐입구-좌 가창면 용계리 477-3번지 15 29,510 700x70 4">
+          <div class="num">20</div>
+          <div class="card-body">
+            <div class="card-title">가창댐입구-좌 </div>
+            <div class="meta"><span><em>주소</em>가창면 용계리 477-3번지</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x70</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 달성군한일우호관인근 21 달성군한일우호관인근 가창면 우록리 135-3 15 29,510 700x90 4">
+          <div class="num">21</div>
+          <div class="card-body">
+            <div class="card-title">달성군한일우호관인근 </div>
+            <div class="meta"><span><em>주소</em>가창면 우록리 135-3</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 스파벨리앞 22 스파벨리앞 가창면 냉천리 43-1번지 인근 15 29,510 700x90 3">
+          <div class="num">22</div>
+          <div class="card-body">
+            <div class="card-title">스파벨리앞 </div>
+            <div class="meta"><span><em>주소</em>가창면 냉천리 43-1번지 인근</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>3</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 가창댐입구-우 23 가창댐입구-우 가창면 용계리 477-3 15 29,510 700x90 4">
+          <div class="num">23</div>
+          <div class="card-body">
+            <div class="card-title">가창댐입구-우 </div>
+            <div class="meta"><span><em>주소</em>가창면 용계리 477-3</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 국도30호선동곡네거리(좌) 24 국도30호선동곡네거리(좌) 하빈면 동곡리 124-3번지 15 29,510 700x90 4">
+          <div class="num">24</div>
+          <div class="card-body">
+            <div class="card-title">국도30호선동곡네거리(좌) </div>
+            <div class="meta"><span><em>주소</em>하빈면 동곡리 124-3번지</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 국도30호선동곡네거리(우) 25 국도30호선동곡네거리(우) 하빈면 동곡리 124-3번지 15 29,510 700x90 4">
+          <div class="num">25</div>
+          <div class="card-body">
+            <div class="card-title">국도30호선동곡네거리(우) </div>
+            <div class="meta"><span><em>주소</em>하빈면 동곡리 124-3번지</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 하빈주유소삼거리 26 하빈주유소삼거리 하빈면 감문리 384-2번지 15 29,510 700x90 4">
+          <div class="num">26</div>
+          <div class="card-body">
+            <div class="card-title">하빈주유소삼거리 </div>
+            <div class="meta"><span><em>주소</em>하빈면 감문리 384-2번지</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 대성베르힐2차아파트버스정류장옆 27 대성베르힐2차아파트버스정류장옆 옥포읍 교향리 3069번지 15 14,000 500x60 3">
+          <div class="num">27</div>
+          <div class="card-body">
+            <div class="card-title">대성베르힐2차아파트버스정류장옆 </div>
+            <div class="meta"><span><em>주소</em>옥포읍 교향리 3069번지</span><span><em>부착일</em>15일</span><span><em>금액</em>14,000원</span><span><em>규격</em>500x60</span><span><em>면수</em>3</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 옥포지구허브시티아파트진입로 28 옥포지구허브시티아파트진입로 옥포읍 비슬로387길 6 15 29,510 700x90 4">
+          <div class="num">28</div>
+          <div class="card-body">
+            <div class="card-title">옥포지구허브시티아파트진입로 </div>
+            <div class="meta"><span><em>주소</em>옥포읍 비슬로387길 6</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 박석진교앞 29 박석진교앞 현풍읍 성하리 산80-3번지선 15 29,510 700x90 4">
+          <div class="num">29</div>
+          <div class="card-body">
+            <div class="card-title">박석진교앞 </div>
+            <div class="meta"><span><em>주소</em>현풍읍 성하리 산80-3번지선</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 남대구자동차학원앞(좌) 30 남대구자동차학원앞(좌) 현풍읍 성하리 산 18-14번지 15 31,820 800x90 4">
+          <div class="num">30</div>
+          <div class="card-body">
+            <div class="card-title">남대구자동차학원앞(좌) </div>
+            <div class="meta"><span><em>주소</em>현풍읍 성하리 산 18-14번지</span><span><em>부착일</em>15일</span><span><em>금액</em>31,820원</span><span><em>규격</em>800x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 남대구자동차학원앞(우) 31 남대구자동차학원앞(우) 현풍읍 성하리 산 18-14번지 15 29,510 700x90 4">
+          <div class="num">31</div>
+          <div class="card-body">
+            <div class="card-title">남대구자동차학원앞(우) </div>
+            <div class="meta"><span><em>주소</em>현풍읍 성하리 산 18-14번지</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 포산고맞은편 32 포산고맞은편 현풍읍 중리 544번지 15 14,000 500x60 3">
+          <div class="num">32</div>
+          <div class="card-body">
+            <div class="card-title">포산고맞은편 </div>
+            <div class="meta"><span><em>주소</em>현풍읍 중리 544번지</span><span><em>부착일</em>15일</span><span><em>금액</em>14,000원</span><span><em>규격</em>500x60</span><span><em>면수</em>3</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 비슬산휴양림진입로(etri맞은편) 33 비슬산휴양림진입로(etri맞은편) 유가읍 용리 889-1번지 15 29,510 700x90 4">
+          <div class="num">33</div>
+          <div class="card-body">
+            <div class="card-title">비슬산휴양림진입로(ETRI맞은편) </div>
+            <div class="meta"><span><em>주소</em>유가읍 용리 889-1번지</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 엠스퀘어맞은편 34 엠스퀘어맞은편 유가읍 봉리 595-4번지 15 14,000 500x60 3">
+          <div class="num">34</div>
+          <div class="card-body">
+            <div class="card-title">엠스퀘어맞은편 </div>
+            <div class="meta"><span><em>주소</em>유가읍 봉리 595-4번지</span><span><em>부착일</em>15일</span><span><em>금액</em>14,000원</span><span><em>규격</em>500x60</span><span><em>면수</em>3</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 우미린아파트앞 35 우미린아파트앞 유가읍 봉리 621-1번지 15 14,000 500x60 3">
+          <div class="num">35</div>
+          <div class="card-body">
+            <div class="card-title">우미린아파트앞 </div>
+            <div class="meta"><span><em>주소</em>유가읍 봉리 621-1번지</span><span><em>부착일</em>15일</span><span><em>금액</em>14,000원</span><span><em>규격</em>500x60</span><span><em>면수</em>3</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 남해오네뜨2차아파트앞 36 남해오네뜨2차아파트앞 유가읍 봉리 604-1번지 15 14,000 500x60 3">
+          <div class="num">36</div>
+          <div class="card-body">
+            <div class="card-title">남해오네뜨2차아파트앞 </div>
+            <div class="meta"><span><em>주소</em>유가읍 봉리 604-1번지</span><span><em>부착일</em>15일</span><span><em>금액</em>14,000원</span><span><em>규격</em>500x60</span><span><em>면수</em>3</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 사거리국가산단웰빙온천방면 37 사거리국가산단웰빙온천방면 구지면 내리 840-7번지 15 29,510 700x90 4">
+          <div class="num">37</div>
+          <div class="card-body">
+            <div class="card-title">사거리국가산단웰빙온천방면 </div>
+            <div class="meta"><span><em>주소</em>구지면 내리 840-7번지</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 사거리(주)kct한국클래드텍(좌) 38 사거리(주)kct한국클래드텍(좌) 구지면 달성2차동1로 89 15 29,510 700x90 4">
+          <div class="num">38</div>
+          <div class="card-body">
+            <div class="card-title">사거리(주)KCT한국클래드텍(좌) </div>
+            <div class="meta"><span><em>주소</em>구지면 달성2차동1로 89</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 사거리(주)kct한국클래드텍(우) 39 사거리(주)kct한국클래드텍(우) 구지면 달성2차동1로 89 15 29,510 700x90 4">
+          <div class="num">39</div>
+          <div class="card-body">
+            <div class="card-title">사거리(주)KCT한국클래드텍(우) </div>
+            <div class="meta"><span><em>주소</em>구지면 달성2차동1로 89</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 창리네거리(우) 40 창리네거리(우) 구지면 응암리 1195 15 29,510 700x90 4">
+          <div class="num">40</div>
+          <div class="card-body">
+            <div class="card-title">창리네거리(우) </div>
+            <div class="meta"><span><em>주소</em>구지면 응암리 1195</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 달성군농업기술센터앞 41 달성군농업기술센터앞 옥포면 교항리 3039번지 15 29,510 700x90 4">
+          <div class="num">41</div>
+          <div class="card-body">
+            <div class="card-title">달성군농업기술센터앞 </div>
+            <div class="meta"><span><em>주소</em>옥포면 교항리 3039번지</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 달성군농업기술센터뒤 42 달성군농업기술센터뒤 옥포면 교항리 3040번지 15 29,510 700x90 4">
+          <div class="num">42</div>
+          <div class="card-body">
+            <div class="card-title">달성군농업기술센터뒤 </div>
+            <div class="meta"><span><em>주소</em>옥포면 교항리 3040번지</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 강림초등학교앞 43 강림초등학교앞 옥포면 강림리 1249번지 15 29,510 700x90 4">
+          <div class="num">43</div>
+          <div class="card-body">
+            <div class="card-title">강림초등학교앞 </div>
+            <div class="meta"><span><em>주소</em>옥포면 강림리 1249번지</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 김흥저수지옹벽앞 44 김흥저수지옹벽앞 옥포읍 김흥리 산 140-3 15 29,510 700x90 3">
+          <div class="num">44</div>
+          <div class="card-body">
+            <div class="card-title">김흥저수지옹벽앞 </div>
+            <div class="meta"><span><em>주소</em>옥포읍 김흥리 산 140-3</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>3</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 송해공원1주차창입구-좌측 45 송해공원1주차창입구-좌측 옥포읍 기세리 653-3번지 15 29,510 700x90 1">
+          <div class="num">45</div>
+          <div class="card-body">
+            <div class="card-title">송해공원1주차창입구-좌측 </div>
+            <div class="meta"><span><em>주소</em>옥포읍 기세리 653-3번지</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>1</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 송해공원1주차장입구-우측 46 송해공원1주차장입구-우측 옥포읍 기세리 653-3번지 15 29,510 700x90 1">
+          <div class="num">46</div>
+          <div class="card-body">
+            <div class="card-title">송해공원1주차장입구-우측 </div>
+            <div class="meta"><span><em>주소</em>옥포읍 기세리 653-3번지</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>1</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)화원읍사무소앞 47 (행정)화원읍사무소앞 화원읍 비슬로 2594 0 0 700x90 5">
+          <div class="num">47</div>
+          <div class="card-body">
+            <div class="card-title">(행정)화원읍사무소앞 <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>화원읍 비슬로 2594</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>700x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)달성중학교앞 48 (행정)달성중학교앞 화원읍 비슬로506길 14 0 0 800x90 5">
+          <div class="num">48</div>
+          <div class="card-body">
+            <div class="card-title">(행정)달성중학교앞 <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>화원읍 비슬로506길 14</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>800x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)하나로클럽맞은편(좌) 49 (행정)하나로클럽맞은편(좌) 화원읍 설화리 556-2 0 0 700x90 3">
+          <div class="num">49</div>
+          <div class="card-body">
+            <div class="card-title">(행정)하나로클럽맞은편(좌) <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>화원읍 설화리 556-2</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>700x90</span><span><em>면수</em>3</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)하나로클럽맞은편(우) 50 (행정)하나로클럽맞은편(우) 화원읍 설화리 556-2 0 0 700x90 3">
+          <div class="num">50</div>
+          <div class="card-body">
+            <div class="card-title">(행정)하나로클럽맞은편(우) <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>화원읍 설화리 556-2</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>700x90</span><span><em>면수</em>3</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)화남파출소앞(좌) 51 (행정)화남파출소앞(좌) 화원읍 설화리 1102 0 0 500x60 4">
+          <div class="num">51</div>
+          <div class="card-body">
+            <div class="card-title">(행정)화남파출소앞(좌) <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>화원읍 설화리 1102</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>500x60</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)화남파출소앞(우) 52 (행정)화남파출소앞(우) 화원읍 설화리 1102 0 0 500x60 4">
+          <div class="num">52</div>
+          <div class="card-body">
+            <div class="card-title">(행정)화남파출소앞(우) <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>화원읍 설화리 1102</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>500x60</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)군청삼거리앞 53 (행정)군청삼거리앞 논공읍 금포리 971-1번지 0 0 650x90 5">
+          <div class="num">53</div>
+          <div class="card-body">
+            <div class="card-title">(행정)군청삼거리앞 <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>논공읍 금포리 971-1번지</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>650x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)논공읍사무소앞 54 (행정)논공읍사무소앞 논공읍 금포리 1998번지 0 0 700x90 5">
+          <div class="num">54</div>
+          <div class="card-body">
+            <div class="card-title">(행정)논공읍사무소앞 <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>논공읍 금포리 1998번지</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>700x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)대실역3번출구앞 55 (행정)대실역3번출구앞 다사읍 죽곡리 109-10번지 0 0 700x90 2">
+          <div class="num">55</div>
+          <div class="card-body">
+            <div class="card-title">(행정)대실역3번출구앞 <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>다사읍 죽곡리 109-10번지</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>700x90</span><span><em>면수</em>2</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)강서소방서옆(좌) 56 (행정)강서소방서옆(좌) 다사읍 죽곡리 243번지선 0 0 700x90 5">
+          <div class="num">56</div>
+          <div class="card-body">
+            <div class="card-title">(행정)강서소방서옆(좌) <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>다사읍 죽곡리 243번지선</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>700x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)다사지구대앞 57 (행정)다사지구대앞 다사읍 달구벌대로 802 0 0 700x90 5">
+          <div class="num">57</div>
+          <div class="card-body">
+            <div class="card-title">(행정)다사지구대앞 <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>다사읍 달구벌대로 802</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>700x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)다사읍사무소앞 58 (행정)다사읍사무소앞 다사읍 매곡리 921번지선 0 0 700x90 5">
+          <div class="num">58</div>
+          <div class="card-body">
+            <div class="card-title">(행정)다사읍사무소앞 <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>다사읍 매곡리 921번지선</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>700x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)서재동화아이위시1차옹벽앞행정용 59 (행정)서재동화아이위시1차옹벽앞행정용 다사읍 서재리 1129번지선 0 0 500x60 4">
+          <div class="num">59</div>
+          <div class="card-body">
+            <div class="card-title">(행정)서재동화아이위시1차옹벽앞행정용 <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>다사읍 서재리 1129번지선</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>500x60</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)가창면사무소 60 (행정)가창면사무소 가창면 가창로 1100 0 0 700x90 5">
+          <div class="num">60</div>
+          <div class="card-body">
+            <div class="card-title">(행정)가창면사무소 <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>가창면 가창로 1100</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>700x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)동곡삼거리(농협동곡지점앞) 61 (행정)동곡삼거리(농협동곡지점앞) 하빈면 달구벌대로55길 67 0 0 700x90 5">
+          <div class="num">61</div>
+          <div class="card-body">
+            <div class="card-title">(행정)동곡삼거리(농협동곡지점앞) <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>하빈면 달구벌대로55길 67</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>700x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)하빈면사무소앞 62 (행정)하빈면사무소앞 하빈면 하빈로 423 0 0 700x90 5">
+          <div class="num">62</div>
+          <div class="card-body">
+            <div class="card-title">(행정)하빈면사무소앞 <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>하빈면 하빈로 423</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>700x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)하빈면사무소내행정용 63 (행정)하빈면사무소내행정용 하빈면 하빈로84길 1 0 0 500x60 4">
+          <div class="num">63</div>
+          <div class="card-body">
+            <div class="card-title">(행정)하빈면사무소내행정용 <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>하빈면 하빈로84길 1</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>500x60</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)포산초등학교앞(좌)행정용 64 (행정)포산초등학교앞(좌)행정용 현풍면 중리 535번지 0 0 500x60 4">
+          <div class="num">64</div>
+          <div class="card-body">
+            <div class="card-title">(행정)포산초등학교앞(좌)행정용 <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>현풍면 중리 535번지</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>500x60</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)포산초등학교앞(우)행정용 65 (행정)포산초등학교앞(우)행정용 현풍면 중리 535번지 0 0 500x60 4">
+          <div class="num">65</div>
+          <div class="card-body">
+            <div class="card-title">(행정)포산초등학교앞(우)행정용 <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>현풍면 중리 535번지</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>500x60</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)유가농협앞 66 (행정)유가농협앞 유가읍 유곡리 794번지 선 0 0 700x90 5">
+          <div class="num">66</div>
+          <div class="card-body">
+            <div class="card-title">(행정)유가농협앞 <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>유가읍 유곡리 794번지 선</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>700x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 산성지하차도위쌍계오거리 67 산성지하차도위쌍계오거리 유가읍 쌍계리 656번지 15 29,510 700x90 4">
+          <div class="num">67</div>
+          <div class="card-body">
+            <div class="card-title">산성지하차도위쌍계오거리 </div>
+            <div class="meta"><span><em>주소</em>유가읍 쌍계리 656번지</span><span><em>부착일</em>15일</span><span><em>금액</em>29,510원</span><span><em>규격</em>700x90</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)유가면사무소앞(좌)행정용 68 (행정)유가면사무소앞(좌)행정용 유가읍 봉리 599-2번지 0 0 500x60 4">
+          <div class="num">68</div>
+          <div class="card-body">
+            <div class="card-title">(행정)유가면사무소앞(좌)행정용 <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>유가읍 봉리 599-2번지</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>500x60</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)유가면사무소앞(우)행정용 69 (행정)유가면사무소앞(우)행정용 유가읍 봉리 599-2번지 0 0 500x60 4">
+          <div class="num">69</div>
+          <div class="card-body">
+            <div class="card-title">(행정)유가면사무소앞(우)행정용 <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>유가읍 봉리 599-2번지</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>500x60</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 테크노폴리스중앙공원맞은편 70 테크노폴리스중앙공원맞은편 유가읍 상리 916번지 15 14,000 500x60 3">
+          <div class="num">70</div>
+          <div class="card-body">
+            <div class="card-title">테크노폴리스중앙공원맞은편 </div>
+            <div class="meta"><span><em>주소</em>유가읍 상리 916번지</span><span><em>부착일</em>15일</span><span><em>금액</em>14,000원</span><span><em>규격</em>500x60</span><span><em>면수</em>3</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)사거리공원쪽 71 (행정)사거리공원쪽 구지면 창리 1502 0 0 700x90 5">
+          <div class="num">71</div>
+          <div class="card-body">
+            <div class="card-title">(행정)사거리공원쪽 <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>구지면 창리 1502</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>700x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)사거리옹벽쪽행정용 72 (행정)사거리옹벽쪽행정용 구지면 창리 1502 0 0 500x60 4">
+          <div class="num">72</div>
+          <div class="card-body">
+            <div class="card-title">(행정)사거리옹벽쪽행정용 <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>구지면 창리 1502</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>500x60</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)화원휴양림입구(휴양림안) 73 (행정)화원휴양림입구(휴양림안) 화원읍 본리리 산129번지선 0 0 700x90 5">
+          <div class="num">73</div>
+          <div class="card-body">
+            <div class="card-title">(행정)화원휴양림입구(휴양림안) <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>화원읍 본리리 산129번지선</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>700x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)화원동산내 74 (행정)화원동산내 화원읍 성산리 313-1번지 0 0 700x90 2">
+          <div class="num">74</div>
+          <div class="card-body">
+            <div class="card-title">(행정)화원동산내 <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>화원읍 성산리 313-1번지</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>700x90</span><span><em>면수</em>2</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)소재사앞 75 (행정)소재사앞 유가읍 용리 산2-10 0 0 700x90 5">
+          <div class="num">75</div>
+          <div class="card-body">
+            <div class="card-title">(행정)소재사앞 <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>유가읍 용리 산2-10</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>700x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)달성군청행동동앞-좌측 76 (행정)달성군청행동동앞-좌측 논공읍 청로 33 0 0 499x59 2">
+          <div class="num">76</div>
+          <div class="card-body">
+            <div class="card-title">(행정)달성군청행동동앞-좌측 <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>논공읍 청로 33</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>499x59</span><span><em>면수</em>2</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)달성군청행동동앞-우측 77 (행정)달성군청행동동앞-우측 논공읍 청로 33 0 0 499x59 2">
+          <div class="num">77</div>
+          <div class="card-body">
+            <div class="card-title">(행정)달성군청행동동앞-우측 <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>논공읍 청로 33</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>499x59</span><span><em>면수</em>2</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)옥포면사무소앞-좌측 78 (행정)옥포면사무소앞-좌측 옥포면 본리리 814-6 0 0 499x59 2">
+          <div class="num">78</div>
+          <div class="card-body">
+            <div class="card-title">(행정)옥포면사무소앞-좌측 <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>옥포면 본리리 814-6</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>499x59</span><span><em>면수</em>2</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)옥포초등학교앞 79 (행정)옥포초등학교앞 옥포면 본리리 814-6 0 0 499x59 2">
+          <div class="num">79</div>
+          <div class="card-body">
+            <div class="card-title">(행정)옥포초등학교앞 <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>옥포면 본리리 814-6</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>499x59</span><span><em>면수</em>2</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)달성군농업기술센터맞은편 80 (행정)달성군농업기술센터맞은편 옥포면 교향리 3069번지 0 0 500x60 4">
+          <div class="num">80</div>
+          <div class="card-body">
+            <div class="card-title">(행정)달성군농업기술센터맞은편 <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>옥포면 교향리 3069번지</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>500x60</span><span><em>면수</em>4</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)원호루교앞 81 (행정)원호루교앞 현풍면 중리 443-11번지 0 0 800x90 5">
+          <div class="num">81</div>
+          <div class="card-body">
+            <div class="card-title">(행정)원호루교앞 <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>현풍면 중리 443-11번지</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>800x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)서한이다음apt앞 82 (행정)서한이다음apt앞 현풍면 중리 539번지 0 0 499x59 2">
+          <div class="num">82</div>
+          <div class="card-body">
+            <div class="card-title">(행정)서한이다음APT앞 <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>현풍면 중리 539번지</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>499x59</span><span><em>면수</em>2</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)다사읍사무소서재출장소내 83 (행정)다사읍사무소서재출장소내 다사읍 서재본길 25 0 0 500x60 3">
+          <div class="num">83</div>
+          <div class="card-body">
+            <div class="card-title">(행정)다사읍사무소서재출장소내 <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>다사읍 서재본길 25</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>500x60</span><span><em>면수</em>3</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="달성군" data-search="달성군 (행정)강서소방서옆 84 (행정)강서소방서옆 죽곡리 243번지 0 0 700x90 5">
+          <div class="num">84</div>
+          <div class="card-body">
+            <div class="card-title">(행정)강서소방서옆 <span class="tag admin">행정</span></div>
+            <div class="meta"><span><em>주소</em>죽곡리 243번지</span><span><em>부착일</em>0일</span><span><em>금액</em>0</span><span><em>규격</em>700x90</span><span><em>면수</em>5</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="district" id="gunwi" data-district="군위군">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">District</p>
+          <h2>군위군</h2>
+        </div>
+        <span class="count-pill">65개</span>
+      </div>
+      <div class="board-grid">
+        
+        <article class="board-card" data-region="군위군" data-search="군위군 군위읍-1 — 보건소 로터리 앞 1 군위읍-1 군위읍 동부리 679 보건소 로터리 앞 7m × 0.9m 5단 2018 사다리식 ">
+          <div class="num">1</div>
+          <div class="card-body">
+            <div class="card-title">군위읍-1 — 보건소 로터리 앞 </div>
+            <div class="meta"><span><em>지번</em>군위읍 동부리 679</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>설치년도</em>2018</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 군위읍-2 — 군위읍 동부네거리 2 군위읍-2 군위읍 동부리 106-19 군위읍 동부네거리 7m × 0.9m 5단  사다리식 ">
+          <div class="num">2</div>
+          <div class="card-body">
+            <div class="card-title">군위읍-2 — 군위읍 동부네거리 </div>
+            <div class="meta"><span><em>지번</em>군위읍 동부리 106-19</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 군위읍-3 — 군위읍 동부네거리 3 군위읍-3 군위읍 동부리 106-19 군위읍 동부네거리 7m × 0.9m 5단 2022.6.(보수) 사다리식 ">
+          <div class="num">3</div>
+          <div class="card-body">
+            <div class="card-title">군위읍-3 — 군위읍 동부네거리 </div>
+            <div class="meta"><span><em>지번</em>군위읍 동부리 106-19</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>설치년도</em>2022.6.(보수)</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 군위읍-4 — 군위읍 동부네거리 4 군위읍-4 군위읍 동부리 106-19 군위읍 동부네거리 7m × 0.9m 5단  사다리식 ">
+          <div class="num">4</div>
+          <div class="card-body">
+            <div class="card-title">군위읍-4 — 군위읍 동부네거리 </div>
+            <div class="meta"><span><em>지번</em>군위읍 동부리 106-19</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 군위읍-5 — 군위읍 동부네거리 5 군위읍-5 군위읍 동부리 106-19 군위읍 동부네거리 5m × 0.7m 6단 2020.4. 반자동 ">
+          <div class="num">5</div>
+          <div class="card-body">
+            <div class="card-title">군위읍-5 — 군위읍 동부네거리 </div>
+            <div class="meta"><span><em>지번</em>군위읍 동부리 106-19</span><span><em>크기</em>5m × 0.7m</span><span><em>단수</em>6단</span><span><em>설치년도</em>2020.4.</span><span><em>유형</em>반자동</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 군위읍-6 — 군청 로터리 앞 6 군위읍-6 군위읍 동부리 290-10 군청 로터리 앞 7m × 0.9m 5단 2018 사다리식 ">
+          <div class="num">6</div>
+          <div class="card-body">
+            <div class="card-title">군위읍-6 — 군청 로터리 앞 </div>
+            <div class="meta"><span><em>지번</em>군위읍 동부리 290-10</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>설치년도</em>2018</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 군위읍-7 — 군위농산물센터 앞 7 군위읍-7 군위읍 서부리 543-1 군위농산물센터 앞 7m × 0.9m 5단 2019(이설) 사다리식 ">
+          <div class="num">7</div>
+          <div class="card-body">
+            <div class="card-title">군위읍-7 — 군위농산물센터 앞 </div>
+            <div class="meta"><span><em>지번</em>군위읍 서부리 543-1</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>설치년도</em>2019(이설)</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 군위읍-8 — 군위농산물센터 앞 8 군위읍-8 군위읍 서부리 543-1 군위농산물센터 앞 5m × 0.7m 6단 2020.4. 반자동 ">
+          <div class="num">8</div>
+          <div class="card-body">
+            <div class="card-title">군위읍-8 — 군위농산물센터 앞 </div>
+            <div class="meta"><span><em>지번</em>군위읍 서부리 543-1</span><span><em>크기</em>5m × 0.7m</span><span><em>단수</em>6단</span><span><em>설치년도</em>2020.4.</span><span><em>유형</em>반자동</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 군위읍-9 — 군위농산물센터 앞 9 군위읍-9 군위읍 서부리 543-1 군위농산물센터 앞 5m × 0.7m 6단 2021.4. 반자동 ">
+          <div class="num">9</div>
+          <div class="card-body">
+            <div class="card-title">군위읍-9 — 군위농산물센터 앞 </div>
+            <div class="meta"><span><em>지번</em>군위읍 서부리 543-1</span><span><em>크기</em>5m × 0.7m</span><span><em>단수</em>6단</span><span><em>설치년도</em>2021.4.</span><span><em>유형</em>반자동</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 군위읍-10 — 군위농산물센터 앞 10 군위읍-10 군위읍 서부리 543-1 군위농산물센터 앞 5m × 0.7m 6단 2021.4. 반자동 ">
+          <div class="num">10</div>
+          <div class="card-body">
+            <div class="card-title">군위읍-10 — 군위농산물센터 앞 </div>
+            <div class="meta"><span><em>지번</em>군위읍 서부리 543-1</span><span><em>크기</em>5m × 0.7m</span><span><em>단수</em>6단</span><span><em>설치년도</em>2021.4.</span><span><em>유형</em>반자동</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 군위읍-11 — 군위농공단지 앞 11 군위읍-11 군위읍 수서리 620-1 군위농공단지 앞 5m × 0.7m 5단  반자동 ">
+          <div class="num">11</div>
+          <div class="card-body">
+            <div class="card-title">군위읍-11 — 군위농공단지 앞 </div>
+            <div class="meta"><span><em>지번</em>군위읍 수서리 620-1</span><span><em>크기</em>5m × 0.7m</span><span><em>단수</em>5단</span><span><em>유형</em>반자동</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 군위읍-12 — 군위농공단지 입구 12 군위읍-12 군위읍 수서리 1660 군위농공단지 입구 5m × 0.7m 6단 2022.5. 접철식 ">
+          <div class="num">12</div>
+          <div class="card-body">
+            <div class="card-title">군위읍-12 — 군위농공단지 입구 </div>
+            <div class="meta"><span><em>지번</em>군위읍 수서리 1660</span><span><em>크기</em>5m × 0.7m</span><span><em>단수</em>6단</span><span><em>설치년도</em>2022.5.</span><span><em>유형</em>접철식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 군위읍-13 — 군위읍 동부네거리 13 군위읍-13 군위읍 동부리 106-19 군위읍 동부네거리 5m × 0.7m 6단 2022.6. 반자동 ">
+          <div class="num">13</div>
+          <div class="card-body">
+            <div class="card-title">군위읍-13 — 군위읍 동부네거리 </div>
+            <div class="meta"><span><em>지번</em>군위읍 동부리 106-19</span><span><em>크기</em>5m × 0.7m</span><span><em>단수</em>6단</span><span><em>설치년도</em>2022.6.</span><span><em>유형</em>반자동</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 군위읍-14 — 군위농산물센터 앞 14 군위읍-14 군위읍 서부리 542-7 군위농산물센터 앞 7m × 0.9m 5단 2022.6. 반자동 정치 우선">
+          <div class="num">14</div>
+          <div class="card-body">
+            <div class="card-title">군위읍-14 — 군위농산물센터 앞 <span class="tag priority">정치 우선</span></div>
+            <div class="meta"><span><em>지번</em>군위읍 서부리 542-7</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>설치년도</em>2022.6.</span><span><em>유형</em>반자동</span><span><em>비고</em>정치 우선</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 군위읍-15 — 보건소 앞 15 군위읍-15 군위읍 동부리 676-2 보건소 앞 5m × 0.7m 6단 2024.12. 반자동 정치 우선">
+          <div class="num">15</div>
+          <div class="card-body">
+            <div class="card-title">군위읍-15 — 보건소 앞 <span class="tag priority">정치 우선</span></div>
+            <div class="meta"><span><em>지번</em>군위읍 동부리 676-2</span><span><em>크기</em>5m × 0.7m</span><span><em>단수</em>6단</span><span><em>설치년도</em>2024.12.</span><span><em>유형</em>반자동</span><span><em>비고</em>정치 우선</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 소보면-1 — 소보면사무소 앞 16 소보면-1 소보면 송원리 1076-5 소보면사무소 앞 7m × 0.9m 5단  사다리식 ">
+          <div class="num">16</div>
+          <div class="card-body">
+            <div class="card-title">소보면-1 — 소보면사무소 앞 </div>
+            <div class="meta"><span><em>지번</em>소보면 송원리 1076-5</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 소보면-2 — 소보면사무소 앞 17 소보면-2 소보면 송원리 615-4 소보면사무소 앞 5m × 0.7m 6단 2020.7. 반자동 ">
+          <div class="num">17</div>
+          <div class="card-body">
+            <div class="card-title">소보면-2 — 소보면사무소 앞 </div>
+            <div class="meta"><span><em>지번</em>소보면 송원리 615-4</span><span><em>크기</em>5m × 0.7m</span><span><em>단수</em>6단</span><span><em>설치년도</em>2020.7.</span><span><em>유형</em>반자동</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 소보면-3 — 우회도로(소보교) 18 소보면-3 소보면 송원리 산 73-3 우회도로(소보교) 7m × 0.9m 5단  사다리식 ">
+          <div class="num">18</div>
+          <div class="card-body">
+            <div class="card-title">소보면-3 — 우회도로(소보교) </div>
+            <div class="meta"><span><em>지번</em>소보면 송원리 산 73-3</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 소보면-4 — 우회도로(소보교) 19 소보면-4 소보면 송원리 산 73-3 우회도로(소보교) 7m × 0.9m 5단  사다리식 ">
+          <div class="num">19</div>
+          <div class="card-body">
+            <div class="card-title">소보면-4 — 우회도로(소보교) </div>
+            <div class="meta"><span><em>지번</em>소보면 송원리 산 73-3</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 소보면-5 — 우회도로(소보교) 20 소보면-5 소보면 송원리 산 73-3 우회도로(소보교) 7m × 0.9m 5단  사다리식 ">
+          <div class="num">20</div>
+          <div class="card-body">
+            <div class="card-title">소보면-5 — 우회도로(소보교) </div>
+            <div class="meta"><span><em>지번</em>소보면 송원리 산 73-3</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 효령면-1 — 박타산쉼터 앞 21 효령면-1 효령면 중구리 266 박타산쉼터 앞 7m × 0.9m 5단  사다리식 ">
+          <div class="num">21</div>
+          <div class="card-body">
+            <div class="card-title">효령면-1 — 박타산쉼터 앞 </div>
+            <div class="meta"><span><em>지번</em>효령면 중구리 266</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 효령면-2 — 효령삼거리 22 효령면-2 효령면 중구리 264-4 효령삼거리 7m × 0.9m 5단  사다리식 ">
+          <div class="num">22</div>
+          <div class="card-body">
+            <div class="card-title">효령면-2 — 효령삼거리 </div>
+            <div class="meta"><span><em>지번</em>효령면 중구리 264-4</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 효령면-3 — 거매리 버스승강장 맞은편 23 효령면-3 효령면 거매리 202-9 거매리 버스승강장 맞은편 7m × 0.9m 5단  사다리식 ">
+          <div class="num">23</div>
+          <div class="card-body">
+            <div class="card-title">효령면-3 — 거매리 버스승강장 맞은편 </div>
+            <div class="meta"><span><em>지번</em>효령면 거매리 202-9</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 효령면-4 — 장기교 옆 24 효령면-4 효령면 장기리 1045-100 장기교 옆 7m × 0.9m 5단 2018 사다리식 ">
+          <div class="num">24</div>
+          <div class="card-body">
+            <div class="card-title">효령면-4 — 장기교 옆 </div>
+            <div class="meta"><span><em>지번</em>효령면 장기리 1045-100</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>설치년도</em>2018</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 효령면-5 — 고곡1리 진입로 부근 25 효령면-5 효령면 고곡리 1429-1 고곡1리 진입로 부근 7m × 0.9m 5단 2019 사다리식 ">
+          <div class="num">25</div>
+          <div class="card-body">
+            <div class="card-title">효령면-5 — 고곡1리 진입로 부근 </div>
+            <div class="meta"><span><em>지번</em>효령면 고곡리 1429-1</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>설치년도</em>2019</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 효령면-6 — 군위, 칠곡 경계지점 26 효령면-6 효령면 고곡리 산85-1 군위, 칠곡 경계지점 7m × 0.9m 5단 2017 사다리식 ">
+          <div class="num">26</div>
+          <div class="card-body">
+            <div class="card-title">효령면-6 — 군위, 칠곡 경계지점 </div>
+            <div class="meta"><span><em>지번</em>효령면 고곡리 산85-1</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>설치년도</em>2017</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 효령면-7 — 고곡1리 진입로 부근 27 효령면-7 효령면 고곡리 1429-1 고곡1리 진입로 부근 7m × 0.9m 5단 2021.6. 반자동 ">
+          <div class="num">27</div>
+          <div class="card-body">
+            <div class="card-title">효령면-7 — 고곡1리 진입로 부근 </div>
+            <div class="meta"><span><em>지번</em>효령면 고곡리 1429-1</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>설치년도</em>2021.6.</span><span><em>유형</em>반자동</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 효령면-8 — 효령삼거리 부근 28 효령면-8 효령면 중구리 255-1 효령삼거리 부근 5m × 0.7m 6단 2023.12. 사다리식 ">
+          <div class="num">28</div>
+          <div class="card-body">
+            <div class="card-title">효령면-8 — 효령삼거리 부근 </div>
+            <div class="meta"><span><em>지번</em>효령면 중구리 255-1</span><span><em>크기</em>5m × 0.7m</span><span><em>단수</em>6단</span><span><em>설치년도</em>2023.12.</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 효령면-9 — 효령삼거리 부근 29 효령면-9 효령면 중구리 255-1 효령삼거리 부근 5m × 0.7m 6단 2023.12. 사다리식 ">
+          <div class="num">29</div>
+          <div class="card-body">
+            <div class="card-title">효령면-9 — 효령삼거리 부근 </div>
+            <div class="meta"><span><em>지번</em>효령면 중구리 255-1</span><span><em>크기</em>5m × 0.7m</span><span><em>단수</em>6단</span><span><em>설치년도</em>2023.12.</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 부계면-1 — 주차장 안 30 부계면-1 부계면 창평리 1554-4 주차장 안 7m × 0.9m 5단 2021.1.(이설) 사다리식 ">
+          <div class="num">30</div>
+          <div class="card-body">
+            <div class="card-title">부계면-1 — 주차장 안 </div>
+            <div class="meta"><span><em>지번</em>부계면 창평리 1554-4</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>설치년도</em>2021.1.(이설)</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 부계면-2 — 창평리 회전 교차로 부근 31 부계면-2 부계면 창평리 1039-9 창평리 회전 교차로 부근 7m × 0.9m 5단 2021.3. 반자동 ">
+          <div class="num">31</div>
+          <div class="card-body">
+            <div class="card-title">부계면-2 — 창평리 회전 교차로 부근 </div>
+            <div class="meta"><span><em>지번</em>부계면 창평리 1039-9</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>설치년도</em>2021.3.</span><span><em>유형</em>반자동</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 부계면-3 — 창평리 회전 교차로 부근 32 부계면-3 부계면 창평리 산137-5 창평리 회전 교차로 부근 7m × 0.9m 5단 2019(이설) 사다리식 ">
+          <div class="num">32</div>
+          <div class="card-body">
+            <div class="card-title">부계면-3 — 창평리 회전 교차로 부근 </div>
+            <div class="meta"><span><em>지번</em>부계면 창평리 산137-5</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>설치년도</em>2019(이설)</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 부계면-4 — 창평리 회전 교차로 부근 33 부계면-4 부계면 창평리 산137-5 창평리 회전 교차로 부근 7m × 0.9m 5단 2019(이설) 사다리식 ">
+          <div class="num">33</div>
+          <div class="card-body">
+            <div class="card-title">부계면-4 — 창평리 회전 교차로 부근 </div>
+            <div class="meta"><span><em>지번</em>부계면 창평리 산137-5</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>설치년도</em>2019(이설)</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 부계면-5 — 대율솔밭 주차장 34 부계면-5 부계면 대율리 1357-1 대율솔밭 주차장 7m × 0.9m 5단  사다리식 ">
+          <div class="num">34</div>
+          <div class="card-body">
+            <div class="card-title">부계면-5 — 대율솔밭 주차장 </div>
+            <div class="meta"><span><em>지번</em>부계면 대율리 1357-1</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 부계면-6 — 남산리 주차장 35 부계면-6 부계면 남산리 317-1 남산리 주차장 7m × 0.9m 5단 2020.(이설) 사다리식 ">
+          <div class="num">35</div>
+          <div class="card-body">
+            <div class="card-title">부계면-6 — 남산리 주차장 </div>
+            <div class="meta"><span><em>지번</em>부계면 남산리 317-1</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>설치년도</em>2020.(이설)</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 부계면-7 — 신화교 부근 36 부계면-7 부계면 신화리 산43-5 신화교 부근 7m × 0.9m 5단 2020.4. 사다리식 ">
+          <div class="num">36</div>
+          <div class="card-body">
+            <div class="card-title">부계면-7 — 신화교 부근 </div>
+            <div class="meta"><span><em>지번</em>부계면 신화리 산43-5</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>설치년도</em>2020.4.</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 부계면-8 — 백송스파비스 앞 37 부계면-8 부계면 춘산리 산106-5 백송스파비스 앞 7m × 0.9m 5단 2021.6. 반자동 ">
+          <div class="num">37</div>
+          <div class="card-body">
+            <div class="card-title">부계면-8 — 백송스파비스 앞 </div>
+            <div class="meta"><span><em>지번</em>부계면 춘산리 산106-5</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>설치년도</em>2021.6.</span><span><em>유형</em>반자동</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 부계면-9 — 부계교차로 앞 38 부계면-9 부계면 창평리 산137-10 부계교차로 앞 5m × 0.7m 6단 2024.12. 반자동 정치 우선">
+          <div class="num">38</div>
+          <div class="card-body">
+            <div class="card-title">부계면-9 — 부계교차로 앞 <span class="tag priority">정치 우선</span></div>
+            <div class="meta"><span><em>지번</em>부계면 창평리 산137-10</span><span><em>크기</em>5m × 0.7m</span><span><em>단수</em>6단</span><span><em>설치년도</em>2024.12.</span><span><em>유형</em>반자동</span><span><em>비고</em>정치 우선</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 우보면-1 — 호포삼거리 39 우보면-1 우보면 이화리 1633-4 호포삼거리 7m × 0.9m 5단  사다리식 ">
+          <div class="num">39</div>
+          <div class="card-body">
+            <div class="card-title">우보면-1 — 호포삼거리 </div>
+            <div class="meta"><span><em>지번</em>우보면 이화리 1633-4</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 우보면-2 — 호포삼거리 40 우보면-2 우보면 이화리 1633-4 호포삼거리 7m × 0.9m 5단  사다리식 ">
+          <div class="num">40</div>
+          <div class="card-body">
+            <div class="card-title">우보면-2 — 호포삼거리 </div>
+            <div class="meta"><span><em>지번</em>우보면 이화리 1633-4</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 우보면-3 — 우보삼거리 이화교 입구 41 우보면-3 우보면 이화리 952-3 우보삼거리 이화교 입구 7m × 0.9m 5단  사다리식 ">
+          <div class="num">41</div>
+          <div class="card-body">
+            <div class="card-title">우보면-3 — 우보삼거리 이화교 입구 </div>
+            <div class="meta"><span><em>지번</em>우보면 이화리 952-3</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 우보면-4 — 우보면 경계지역 42 우보면-4 우보면 나호리 1329-6 우보면 경계지역 7m × 0.9m 5단 2019 사다리식 ">
+          <div class="num">42</div>
+          <div class="card-body">
+            <div class="card-title">우보면-4 — 우보면 경계지역 </div>
+            <div class="meta"><span><em>지번</em>우보면 나호리 1329-6</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>설치년도</em>2019</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 우보면-5 — 백양교 부근 삼거리 43 우보면-5 우보면 이화리 산44-9 백양교 부근 삼거리 5m × 0.7m 6단 2022.6. 반자동 ">
+          <div class="num">43</div>
+          <div class="card-body">
+            <div class="card-title">우보면-5 — 백양교 부근 삼거리 </div>
+            <div class="meta"><span><em>지번</em>우보면 이화리 산44-9</span><span><em>크기</em>5m × 0.7m</span><span><em>단수</em>6단</span><span><em>설치년도</em>2022.6.</span><span><em>유형</em>반자동</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 의흥면-1 — 수서삼거리 44 의흥면-1 의흥면 수서리 663-1 수서삼거리 7m × 0.9m 5단  사다리식 ">
+          <div class="num">44</div>
+          <div class="card-body">
+            <div class="card-title">의흥면-1 — 수서삼거리 </div>
+            <div class="meta"><span><em>지번</em>의흥면 수서리 663-1</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 의흥면-2 — 수서삼거리 45 의흥면-2 의흥면 수서리 663-1 수서삼거리 5m × 0.7m 6단 2020.6. 반자동 ">
+          <div class="num">45</div>
+          <div class="card-body">
+            <div class="card-title">의흥면-2 — 수서삼거리 </div>
+            <div class="meta"><span><em>지번</em>의흥면 수서리 663-1</span><span><em>크기</em>5m × 0.7m</span><span><em>단수</em>6단</span><span><em>설치년도</em>2020.6.</span><span><em>유형</em>반자동</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 의흥면-3 — 이지교 46 의흥면-3 의흥면 이지리 1585-23 이지교 7m × 0.9m 5단  사다리식 ">
+          <div class="num">46</div>
+          <div class="card-body">
+            <div class="card-title">의흥면-3 — 이지교 </div>
+            <div class="meta"><span><em>지번</em>의흥면 이지리 1585-23</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 의흥면-4 — 이지교 47 의흥면-4 의흥면 이지리 1585-23 이지교 7m × 0.9m 5단  사다리식 ">
+          <div class="num">47</div>
+          <div class="card-body">
+            <div class="card-title">의흥면-4 — 이지교 </div>
+            <div class="meta"><span><em>지번</em>의흥면 이지리 1585-23</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 의흥면-5 — 자율방범대 초소 옆(의흥향교) 48 의흥면-5 의흥면 읍내리 245-2 자율방범대 초소 옆(의흥향교) 5m × 0.7m 6단 2020.6. 반자동 ">
+          <div class="num">48</div>
+          <div class="card-body">
+            <div class="card-title">의흥면-5 — 자율방범대 초소 옆(의흥향교) </div>
+            <div class="meta"><span><em>지번</em>의흥면 읍내리 245-2</span><span><em>크기</em>5m × 0.7m</span><span><em>단수</em>6단</span><span><em>설치년도</em>2020.6.</span><span><em>유형</em>반자동</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 의흥면-6 — 경북능금공장 입구 부근 49 의흥면-6 의흥면 파전리 689-26 경북능금공장 입구 부근 5m × 0.7m 6단 2021.6. 반자동 ">
+          <div class="num">49</div>
+          <div class="card-body">
+            <div class="card-title">의흥면-6 — 경북능금공장 입구 부근 </div>
+            <div class="meta"><span><em>지번</em>의흥면 파전리 689-26</span><span><em>크기</em>5m × 0.7m</span><span><em>단수</em>6단</span><span><em>설치년도</em>2021.6.</span><span><em>유형</em>반자동</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 의흥면-7 — 수서삼거리 50 의흥면-7 의흥면 수서리 663-1 수서삼거리 5m × 0.7m 6단 2022.6. 반자동 ">
+          <div class="num">50</div>
+          <div class="card-body">
+            <div class="card-title">의흥면-7 — 수서삼거리 </div>
+            <div class="meta"><span><em>지번</em>의흥면 수서리 663-1</span><span><em>크기</em>5m × 0.7m</span><span><em>단수</em>6단</span><span><em>설치년도</em>2022.6.</span><span><em>유형</em>반자동</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 의흥면-8 — 자율방범대 초소 옆(의흥향교) 51 의흥면-8 의흥면 읍내리 245-2 자율방범대 초소 옆(의흥향교) 5m × 0.7m 6단 2022.6. 반자동 정치 우선">
+          <div class="num">51</div>
+          <div class="card-body">
+            <div class="card-title">의흥면-8 — 자율방범대 초소 옆(의흥향교) <span class="tag priority">정치 우선</span></div>
+            <div class="meta"><span><em>지번</em>의흥면 읍내리 245-2</span><span><em>크기</em>5m × 0.7m</span><span><em>단수</em>6단</span><span><em>설치년도</em>2022.6.</span><span><em>유형</em>반자동</span><span><em>비고</em>정치 우선</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 의흥면-9 — 이지교 근처 52 의흥면-9 의흥면 이지리 1585-43 이지교 근처 7m × 0.9m 5단 2023.8. 사다리식 ">
+          <div class="num">52</div>
+          <div class="card-body">
+            <div class="card-title">의흥면-9 — 이지교 근처 </div>
+            <div class="meta"><span><em>지번</em>의흥면 이지리 1585-43</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>설치년도</em>2023.8.</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 산성면-1 — 화본저수지 앞 53 산성면-1 산성면 화전리 1134 화본저수지 앞 7m × 0.9m 5단  사다리식 ">
+          <div class="num">53</div>
+          <div class="card-body">
+            <div class="card-title">산성면-1 — 화본저수지 앞 </div>
+            <div class="meta"><span><em>지번</em>산성면 화전리 1134</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 산성면-2 — 화본저수지 앞 54 산성면-2 산성면 화전리 1134 화본저수지 앞 7m × 0.9m 5단 2022.3.(교체) 반자동 ">
+          <div class="num">54</div>
+          <div class="card-body">
+            <div class="card-title">산성면-2 — 화본저수지 앞 </div>
+            <div class="meta"><span><em>지번</em>산성면 화전리 1134</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>설치년도</em>2022.3.(교체)</span><span><em>유형</em>반자동</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 산성면-3 — 화본복지회관 앞 55 산성면-3 산성면 화본리 1150-4 화본복지회관 앞 7m × 0.9m 5단  사다리식 ">
+          <div class="num">55</div>
+          <div class="card-body">
+            <div class="card-title">산성면-3 — 화본복지회관 앞 </div>
+            <div class="meta"><span><em>지번</em>산성면 화본리 1150-4</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 산성면-4 — 산성 구 중학교 부근 56 산성면-4 산성면 화본리 823-1 산성 구 중학교 부근 5m × 0.7m 6단 2020.5. 반자동 정치 우선">
+          <div class="num">56</div>
+          <div class="card-body">
+            <div class="card-title">산성면-4 — 산성 구 중학교 부근 <span class="tag priority">정치 우선</span></div>
+            <div class="meta"><span><em>지번</em>산성면 화본리 823-1</span><span><em>크기</em>5m × 0.7m</span><span><em>단수</em>6단</span><span><em>설치년도</em>2020.5.</span><span><em>유형</em>반자동</span><span><em>비고</em>정치 우선</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 산성면-5 — 화본저수지 앞 57 산성면-5 산성면 화전리 1134 화본저수지 앞 7m × 0.9m 5단 2022.3. 반자동 ">
+          <div class="num">57</div>
+          <div class="card-body">
+            <div class="card-title">산성면-5 — 화본저수지 앞 </div>
+            <div class="meta"><span><em>지번</em>산성면 화전리 1134</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>설치년도</em>2022.3.</span><span><em>유형</em>반자동</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 산성면-6 — 백학1리 마을회관 앞 58 산성면-6 산성면 백학리 586-1 백학1리 마을회관 앞 7m × 0.9m 5단 2023.5. 사다리식 ">
+          <div class="num">58</div>
+          <div class="card-body">
+            <div class="card-title">산성면-6 — 백학1리 마을회관 앞 </div>
+            <div class="meta"><span><em>지번</em>산성면 백학리 586-1</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>설치년도</em>2023.5.</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 산성면-7 — 삼국유사배움터 주차장 앞 59 산성면-7 산성면 화본1길 5 삼국유사배움터 주차장 앞 5m × 0.7m 6단 2025.3. 반자동 정치 우선">
+          <div class="num">59</div>
+          <div class="card-body">
+            <div class="card-title">산성면-7 — 삼국유사배움터 주차장 앞 <span class="tag priority">정치 우선</span></div>
+            <div class="meta"><span><em>지번</em>산성면 화본1길 5</span><span><em>크기</em>5m × 0.7m</span><span><em>단수</em>6단</span><span><em>설치년도</em>2025.3.</span><span><em>유형</em>반자동</span><span><em>비고</em>정치 우선</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 삼국유사-1 — 화수삼거리 60 삼국유사-1 삼국유사면 화수리 904-2 화수삼거리 7m × 0.9m 5단 2020.5. 사다리식 ">
+          <div class="num">60</div>
+          <div class="card-body">
+            <div class="card-title">삼국유사-1 — 화수삼거리 </div>
+            <div class="meta"><span><em>지번</em>삼국유사면 화수리 904-2</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>설치년도</em>2020.5.</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 삼국유사-2 — 삼국유사면사무소 앞 61 삼국유사-2 삼국유사면 학성리 412 삼국유사면사무소 앞 7m × 0.9m 5단  사다리식 ">
+          <div class="num">61</div>
+          <div class="card-body">
+            <div class="card-title">삼국유사-2 — 삼국유사면사무소 앞 </div>
+            <div class="meta"><span><em>지번</em>삼국유사면 학성리 412</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 삼국유사-3 — 삼국유사면사무소 앞 62 삼국유사-3 삼국유사면 학성리 412 삼국유사면사무소 앞 7m × 0.9m 5단  사다리식 ">
+          <div class="num">62</div>
+          <div class="card-body">
+            <div class="card-title">삼국유사-3 — 삼국유사면사무소 앞 </div>
+            <div class="meta"><span><em>지번</em>삼국유사면 학성리 412</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 삼국유사-4 — 삼국유사면사무소 앞 63 삼국유사-4 삼국유사면 학성리 412 삼국유사면사무소 앞 7m × 0.9m 5단  사다리식 ">
+          <div class="num">63</div>
+          <div class="card-body">
+            <div class="card-title">삼국유사-4 — 삼국유사면사무소 앞 </div>
+            <div class="meta"><span><em>지번</em>삼국유사면 학성리 412</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 삼국유사-5 — 아미산등산로주차장 64 삼국유사-5 삼국유사면 양지리 18-4 아미산등산로주차장 7m × 0.9m 5단  사다리식 ">
+          <div class="num">64</div>
+          <div class="card-body">
+            <div class="card-title">삼국유사-5 — 아미산등산로주차장 </div>
+            <div class="meta"><span><em>지번</em>삼국유사면 양지리 18-4</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>유형</em>사다리식</span></div>
+          </div>
+        </article>
+        <article class="board-card" data-region="군위군" data-search="군위군 삼국유사-6 — 용아교차로 부근 65 삼국유사-6 삼국유사면 학성리 505-5 용아교차로 부근 7m × 0.9m 5단 2024.8. 반자동 정치 우선">
+          <div class="num">65</div>
+          <div class="card-body">
+            <div class="card-title">삼국유사-6 — 용아교차로 부근 <span class="tag priority">정치 우선</span></div>
+            <div class="meta"><span><em>지번</em>삼국유사면 학성리 505-5</span><span><em>크기</em>7m × 0.9m</span><span><em>단수</em>5단</span><span><em>설치년도</em>2024.8.</span><span><em>유형</em>반자동</span><span><em>비고</em>정치 우선</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <a class="top-btn" href="#top" aria-label="맨 위로">↑</a>
+  <footer>
+    원본에 말줄임표(..)로 들어온 항목은 임의로 보정하지 않고 그대로 유지했습니다.
+  </footer>
+
+  <script>
+    const input = document.getElementById('searchInput');
+    const cards = [...document.querySelectorAll('.board-card')];
+    const sections = [...document.querySelectorAll('.district')];
+    const notice = document.getElementById('resultNotice');
+
+    function filterCards() {
+      const q = input.value.trim().toLowerCase();
+      let visibleTotal = 0;
+      cards.forEach(card => {
+        const matched = !q || card.dataset.search.includes(q);
+        card.style.display = matched ? '' : 'none';
+        if (matched) visibleTotal += 1;
+      });
+      sections.forEach(section => {
+        const visibleCards = [...section.querySelectorAll('.board-card')].filter(card => card.style.display !== 'none');
+        section.style.display = visibleCards.length ? '' : 'none';
+      });
+      notice.style.display = visibleTotal ? 'none' : 'block';
+    }
+    input.addEventListener('input', filterCards);
+  </script>
+</body>
+</html>
