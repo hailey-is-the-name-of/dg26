@@ -1,0 +1,1463 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="dark light" />
+  <title>대구시당 프롬프터</title>
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="stylesheet" crossorigin
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+
+  <style>
+    :root {
+      --bg: #080a0d;
+      --surface: rgba(20, 23, 29, 0.92);
+      --surface-strong: #171b22;
+      --surface-soft: #222731;
+      --text: #f7f8fa;
+      --muted: #9ca4b2;
+      --line: rgba(255,255,255,0.11);
+      --accent: #72a7ff;
+      --accent-strong: #3d82f7;
+      --accent-text: #07101f;
+      --danger: #ff6b6b;
+      --shadow: 0 24px 80px rgba(0,0,0,0.45);
+      --font-size: 62px;
+    }
+
+    body[data-theme="amber"] {
+      --bg: #0d0903;
+      --surface: rgba(35, 24, 8, 0.94);
+      --surface-strong: #2b1d08;
+      --surface-soft: #3a280d;
+      --text: #ffd98b;
+      --muted: #b89251;
+      --line: rgba(255, 190, 82, 0.18);
+      --accent: #ffb83e;
+      --accent-strong: #f49a00;
+      --accent-text: #281700;
+      --shadow: 0 24px 80px rgba(0,0,0,0.52);
+    }
+
+    body[data-theme="light"] {
+      --bg: #eef1f5;
+      --surface: rgba(255,255,255,0.94);
+      --surface-strong: #ffffff;
+      --surface-soft: #e7ebf1;
+      --text: #15181e;
+      --muted: #697180;
+      --line: rgba(19,24,32,0.12);
+      --accent: #246fe5;
+      --accent-strong: #165ac4;
+      --accent-text: #ffffff;
+      --shadow: 0 24px 80px rgba(30,40,60,0.18);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    body {
+      font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-weight: 700;
+      background:
+        radial-gradient(circle at 50% -20%, color-mix(in srgb, var(--accent) 11%, transparent), transparent 38%),
+        var(--bg);
+      color: var(--text);
+      transition: background .2s ease, color .2s ease;
+    }
+
+    button, textarea {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+    }
+
+    .app {
+      height: 100%;
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto;
+    }
+
+    .stage {
+      min-height: 0;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      padding: 24px 32px 0;
+      overflow: hidden;
+    }
+
+    .timer-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 88px;
+      position: relative;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .timer-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .timer-wrap.no-time {
+      min-height: 0;
+      height: 0;
+    }
+
+    .timer {
+      font-size: clamp(24px, 3vw, 42px);
+      letter-spacing: -0.035em;
+      font-variant-numeric: tabular-nums;
+      color: var(--text);
+      background: color-mix(in srgb, var(--surface-strong) 82%, transparent);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 11px 22px 12px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.18);
+      backdrop-filter: blur(18px);
+    }
+
+    .timer .slash { color: var(--muted); padding: 0 7px; }
+    .timer .elapsed.running { color: var(--accent); }
+    .timer .elapsed.over-limit { color: var(--danger); }
+
+    .remaining-time {
+      min-height: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.015em;
+    }
+
+    .remaining-time.over-limit {
+      color: var(--danger);
+    }
+
+    .time-alert {
+      position: fixed;
+      top: max(18px, env(safe-area-inset-top));
+      left: 50%;
+      z-index: 90;
+      min-width: min(420px, calc(100vw - 32px));
+      padding: 15px 22px;
+      border: 1px solid color-mix(in srgb, var(--danger) 52%, var(--line));
+      border-radius: 16px;
+      color: #fff;
+      background: color-mix(in srgb, var(--danger) 88%, #141414);
+      box-shadow: 0 18px 60px rgba(0,0,0,.42);
+      text-align: center;
+      font-size: clamp(18px, 2.4vw, 28px);
+      font-variant-numeric: tabular-nums;
+      transform: translate(-50%, -24px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .18s ease, transform .18s ease;
+    }
+
+    .time-alert.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    .prompter-viewport {
+      position: relative;
+      min-height: 0;
+      overflow: hidden;
+      mask-image: linear-gradient(to bottom, transparent 0, #000 7%, #000 87%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 7%, #000 87%, transparent 100%);
+    }
+
+    .guide-line {
+      position: absolute;
+      left: 5%;
+      right: 5%;
+      top: 43%;
+      height: 2px;
+      z-index: 3;
+      opacity: .42;
+      background: linear-gradient(90deg, transparent, var(--accent) 18%, var(--accent) 82%, transparent);
+      pointer-events: none;
+    }
+
+    .guide-line::before,
+    .guide-line::after {
+      content: "";
+      position: absolute;
+      top: -5px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 16px color-mix(in srgb, var(--accent) 65%, transparent);
+    }
+
+    .guide-line::before { left: 0; }
+    .guide-line::after { right: 0; }
+
+    .scroll-area {
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      scrollbar-width: none;
+      overscroll-behavior: none;
+    }
+
+    .scroll-area::-webkit-scrollbar { display: none; }
+
+    .script-transform {
+      width: 100%;
+      min-height: 100%;
+      transform-origin: center center;
+      transition: transform .18s ease;
+    }
+
+    .script {
+      width: min(1320px, 88vw);
+      margin: 0 auto;
+      padding: 36vh 0 56vh;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      word-break: keep-all;
+      text-align: center;
+      font-size: var(--font-size);
+      line-height: 1.55;
+      letter-spacing: -0.038em;
+      text-wrap: pretty;
+    }
+
+    .script.empty {
+      color: var(--muted);
+      font-size: clamp(34px, 4.8vw, 64px);
+    }
+
+    .control-shell {
+      padding: 12px 18px max(16px, env(safe-area-inset-bottom));
+      background: linear-gradient(to top, var(--bg) 60%, transparent);
+      position: relative;
+      z-index: 10;
+    }
+
+    .controls {
+      width: min(1440px, calc(100vw - 32px));
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(22px);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .controls::-webkit-scrollbar { display: none; }
+
+    .divider {
+      width: 1px;
+      height: 28px;
+      flex: 0 0 auto;
+      background: var(--line);
+      margin: 0 3px;
+    }
+
+    .btn,
+    .value-chip {
+      min-height: 46px;
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      border-radius: 13px;
+      padding: 0 14px;
+      color: var(--text);
+      background: transparent;
+      border: 1px solid transparent;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease, color .12s ease;
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+      font-size: 14px;
+      letter-spacing: -0.02em;
+    }
+
+    .btn:hover {
+      background: var(--surface-soft);
+      border-color: var(--line);
+    }
+
+    .btn:active { transform: translateY(1px) scale(.98); }
+
+    .btn.primary {
+      min-width: 56px;
+      color: var(--accent-text);
+      background: var(--accent);
+    }
+
+    .btn.primary:hover { background: var(--accent-strong); }
+
+    .btn.stop {
+      min-width: 56px;
+      color: var(--danger);
+      background: color-mix(in srgb, var(--danger) 10%, transparent);
+    }
+
+    .btn.square {
+      width: 46px;
+      padding: 0;
+      font-size: 22px;
+    }
+
+    .btn.toggle.active {
+      color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 14%, transparent);
+      border-color: color-mix(in srgb, var(--accent) 38%, transparent);
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 10%, transparent);
+    }
+
+    .value-chip {
+      min-width: 92px;
+      border-color: var(--line);
+      background: var(--surface-strong);
+      font-variant-numeric: tabular-nums;
+      cursor: default;
+    }
+
+    .kbd {
+      color: var(--muted);
+      font-size: 11px;
+      border: 1px solid var(--line);
+      background: var(--surface-strong);
+      border-radius: 6px;
+      padding: 2px 5px;
+    }
+
+    .icon {
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+      fill: currentColor;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: grid;
+      place-items: center;
+      padding: 22px;
+      background: rgba(0,0,0,.62);
+      backdrop-filter: blur(13px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .18s ease;
+    }
+
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal {
+      width: min(960px, 100%);
+      max-height: min(840px, calc(100vh - 44px));
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      background: var(--surface-strong);
+      box-shadow: 0 34px 100px rgba(0,0,0,.48);
+      transform: translateY(12px) scale(.985);
+      transition: transform .18s ease;
+    }
+
+    .modal-backdrop.open .modal {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-header {
+      position: sticky;
+      top: 0;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 24px;
+      background: color-mix(in srgb, var(--surface-strong) 94%, transparent);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(16px);
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      font-size: 24px;
+      letter-spacing: -0.035em;
+    }
+
+    .close-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      cursor: pointer;
+      color: var(--muted);
+      background: var(--surface-soft);
+      font-size: 23px;
+    }
+
+    .modal-body {
+      padding: 24px;
+      display: grid;
+      gap: 24px;
+    }
+
+    .section-title {
+      margin: 0 0 11px;
+      color: var(--text);
+      font-size: 16px;
+      letter-spacing: -0.025em;
+    }
+
+    .time-setting {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 17px 18px;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      background: var(--surface);
+    }
+
+    .time-setting-copy {
+      min-width: 0;
+    }
+
+    .time-setting-copy strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 16px;
+    }
+
+    .time-setting-copy small {
+      display: block;
+      color: var(--muted);
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .time-inputs {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+    }
+
+    .time-inputs input {
+      width: 82px;
+      height: 48px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      outline: none;
+      color: var(--text);
+      background: var(--bg);
+      text-align: center;
+      font: inherit;
+      font-size: 18px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .time-inputs input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 14%, transparent);
+    }
+
+    .time-extra-settings {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) minmax(220px, 1.1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .check-option,
+    .alert-option {
+      min-height: 54px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      color: var(--text);
+      background: var(--surface);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .check-option input {
+      width: 20px;
+      height: 20px;
+      margin: 0;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .alert-option {
+      justify-content: flex-end;
+      cursor: default;
+      color: var(--muted);
+    }
+
+    .alert-option input {
+      width: 80px;
+      height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      outline: none;
+      color: var(--text);
+      background: var(--bg);
+      text-align: center;
+      font: inherit;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .alert-option input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 14%, transparent);
+    }
+
+    .editor-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 270px;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .textarea-wrap {
+      position: relative;
+    }
+
+    textarea {
+      width: 100%;
+      height: 330px;
+      resize: vertical;
+      display: block;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      outline: none;
+      color: var(--text);
+      background: var(--bg);
+      font-weight: 600;
+      font-size: 17px;
+      line-height: 1.65;
+      letter-spacing: -0.02em;
+    }
+
+    textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 14%, transparent);
+    }
+
+    .text-stats {
+      position: absolute;
+      right: 12px;
+      bottom: 10px;
+      padding: 6px 9px;
+      border-radius: 8px;
+      color: var(--muted);
+      background: color-mix(in srgb, var(--surface-strong) 90%, transparent);
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+      pointer-events: none;
+    }
+
+    .estimate-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      background: var(--surface);
+    }
+
+    .calculate-btn {
+      width: 100%;
+      min-height: 46px;
+      border-radius: 12px;
+      cursor: pointer;
+      color: var(--accent-text);
+      background: var(--accent);
+    }
+
+    .estimate-card {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 4px 12px;
+      align-items: center;
+      padding: 13px;
+      border-radius: 12px;
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+    }
+
+    .estimate-card span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .estimate-card strong {
+      grid-row: span 2;
+      grid-column: 2;
+      font-size: 17px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .theme-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .theme-option {
+      min-height: 92px;
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      color: var(--text);
+      background: var(--surface);
+      text-align: left;
+      cursor: pointer;
+      transition: border-color .12s ease, box-shadow .12s ease, transform .12s ease;
+    }
+
+    .theme-option:hover { transform: translateY(-1px); }
+
+    .theme-option.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 13%, transparent);
+    }
+
+    .theme-preview {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 11px;
+    }
+
+    .theme-preview i {
+      height: 19px;
+      border-radius: 6px;
+      display: block;
+    }
+
+    .theme-preview i:first-child { width: 62%; }
+    .theme-preview i:last-child { width: 38%; }
+
+    .preview-dark i:first-child { background: #080a0d; }
+    .preview-dark i:last-child { background: #72a7ff; }
+    .preview-amber i:first-child { background: #0d0903; }
+    .preview-amber i:last-child { background: #ffb83e; }
+    .preview-light i:first-child { background: #eef1f5; border: 1px solid #d9dee6; }
+    .preview-light i:last-child { background: #246fe5; }
+
+    .theme-option small {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .modal-actions {
+      position: sticky;
+      bottom: 0;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      padding: 18px 24px;
+      border-top: 1px solid var(--line);
+      background: color-mix(in srgb, var(--surface-strong) 95%, transparent);
+      backdrop-filter: blur(16px);
+    }
+
+    .action-btn {
+      min-height: 48px;
+      padding: 0 22px;
+      border-radius: 13px;
+      cursor: pointer;
+      color: var(--text);
+      background: var(--surface-soft);
+    }
+
+    .action-btn.save {
+      color: var(--accent-text);
+      background: var(--accent);
+    }
+
+    .shortcut-note {
+      text-align: center;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 104px;
+      z-index: 120;
+      transform: translate(-50%, 18px);
+      opacity: 0;
+      pointer-events: none;
+      padding: 12px 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      color: var(--text);
+      background: var(--surface-strong);
+      box-shadow: var(--shadow);
+      transition: .2s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    @media (max-width: 760px) {
+      .stage { padding: 12px 14px 0; }
+      .timer-wrap { min-height: 62px; }
+      .script { width: 92vw; padding-top: 34vh; }
+      .control-shell { padding-inline: 8px; }
+      .controls { justify-content: flex-start; width: calc(100vw - 16px); }
+      .editor-grid { grid-template-columns: 1fr; }
+      .theme-options { grid-template-columns: 1fr; }
+      .time-setting { align-items: flex-start; flex-direction: column; }
+      .time-inputs { width: 100%; }
+      .time-inputs input { flex: 1; width: auto; }
+      .time-extra-settings { grid-template-columns: 1fr; }
+      .alert-option { justify-content: flex-start; }
+      textarea { height: 290px; }
+    }
+  </style>
+</head>
+
+<body data-theme="dark">
+  <main class="app">
+    <div class="time-alert" id="timeAlert" role="alert" aria-live="assertive">30초 남았습니다</div>
+    <section class="stage" id="stage" aria-label="프롬프터 화면">
+      <div class="timer-wrap" id="timerTransform">
+        <div class="timer-stack" aria-live="polite">
+          <div class="timer" id="playbackTimer">
+            <span id="elapsed" class="elapsed">00:00</span>
+            <span class="slash">/</span>
+            <span id="total">05:00</span>
+          </div>
+          <div class="remaining-time" id="remainingTime">남은 시간 05:00</div>
+        </div>
+      </div>
+
+      <div class="prompter-viewport">
+        <div class="guide-line" aria-hidden="true"></div>
+        <div class="scroll-area" id="scrollArea">
+          <div class="script-transform" id="scriptTransform">
+            <article class="script empty" id="script">
+설정 버튼을 눌러 정견발표 원고를 입력하세요.
+
+Space 재생·일시정지
+↑ ↓ 속도 조절
+M 수평 미러
+Esc 종료
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="control-shell">
+      <div class="controls" aria-label="재생 제어">
+        <button type="button" class="btn primary" id="playBtn" title="재생 또는 일시정지 (Space)">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.2v13.6c0 .8.9 1.3 1.6.8l9.8-6.8a1 1 0 0 0 0-1.6L9.6 4.4A1 1 0 0 0 8 5.2Z"/></svg>
+          <span id="playLabel">재생</span>
+        </button>
+
+        <button type="button" class="btn stop" id="stopBtn" title="종료 후 처음으로 (Esc)">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.8 5h10.4A1.8 1.8 0 0 1 19 6.8v10.4a1.8 1.8 0 0 1-1.8 1.8H6.8A1.8 1.8 0 0 1 5 17.2V6.8A1.8 1.8 0 0 1 6.8 5Z"/></svg>
+          멈춤
+        </button>
+
+        <div class="divider"></div>
+
+        <button type="button" class="btn square" id="slowerBtn" title="속도 낮추기 (↓)">−</button>
+        <div class="value-chip" id="wpmDisplay">150 WPM</div>
+        <button type="button" class="btn square" id="fasterBtn" title="속도 높이기 (↑)">＋</button>
+
+        <div class="divider"></div>
+
+        <button type="button" class="btn" id="fontUpBtn" title="글씨 크게">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.7 4h4.6l5.4 16h-3.9l-1.1-3.6H9.1L8 20H4.3L9.7 4Zm.3 9.4h3.8L12 7.5l-2 5.9ZM20 4v2h2v2h-2v2h-2V8h-2V6h2V4h2Z"/></svg>
+          글씨 키우기
+        </button>
+        <button type="button" class="btn" id="fontDownBtn" title="글씨 작게">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.7 4h4.6l5.4 16h-3.9l-1.1-3.6H9.1L8 20H4.3L9.7 4Zm.3 9.4h3.8L12 7.5l-2 5.9ZM16 6h6v2h-6V6Z"/></svg>
+          글씨 줄이기
+        </button>
+
+        <div class="divider"></div>
+
+        <button type="button" class="btn toggle" id="mirrorHBtn" aria-pressed="false" title="수평 미러 (M)">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3h2v18h-2V3ZM3 6.2C3 5.5 3.5 5 4.2 5H9v14H4.2A1.2 1.2 0 0 1 3 17.8V6.2Zm4 1H5v9.6h2V7.2ZM15 5h4.8c.7 0 1.2.5 1.2 1.2v11.6c0 .7-.5 1.2-1.2 1.2H15V5Zm2 2.2v9.6h2V7.2h-2Z"/></svg>
+          미러(수평)
+        </button>
+
+        <button type="button" class="btn toggle" id="mirrorVBtn" aria-pressed="false" title="수직 미러">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11h18v2H3v-2Zm3.2-8h11.6c.7 0 1.2.5 1.2 1.2V9H5V4.2C5 3.5 5.5 3 6.2 3Zm1 4h9.6V5H7.2v2ZM5 15h14v4.8c0 .7-.5 1.2-1.2 1.2H6.2c-.7 0-1.2-.5-1.2-1.2V15Zm2.2 2v2h9.6v-2H7.2Z"/></svg>
+          미러(수직)
+        </button>
+
+        <div class="divider"></div>
+
+        <button type="button" class="btn" id="settingsBtn" title="설정 열기">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m19.4 13 .1-1-.1-1 2.1-1.6-2-3.5-2.6 1a7.6 7.6 0 0 0-1.7-1L14.8 3h-4l-.4 2.9c-.6.3-1.2.6-1.7 1L6.1 5.8l-2 3.5L6.2 11l-.1 1 .1 1-2.1 1.6 2 3.5 2.6-1c.5.4 1.1.8 1.7 1l.4 2.9h4l.4-2.9c.6-.3 1.2-.6 1.7-1l2.6 1.1 2-3.5-2.1-1.7ZM12.8 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm0-2.2a1.8 1.8 0 1 0 0-3.6 1.8 1.8 0 0 0 0 3.6Z"/></svg>
+          설정
+        </button>
+      </div>
+      <div class="shortcut-note">실행 중: Space = 재생/일시정지 · ↑↓ = 속도 · M = 수평 미러 · Esc = 종료</div>
+    </footer>
+  </main>
+
+  <div class="modal-backdrop" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <section class="modal">
+      <header class="modal-header">
+        <h2 id="settingsTitle">프롬프터 설정</h2>
+        <button type="button" class="close-btn" id="closeModalBtn" aria-label="닫기">×</button>
+      </header>
+
+      <div class="modal-body">
+        <section>
+          <h3 class="section-title">시간 설정</h3>
+          <div class="time-setting">
+            <div class="time-setting-copy">
+              <strong>촬영 제한시간</strong>
+              <small>상단의 총 시간과 남은 시간에 사용됩니다. 원고 예상시간과는 별개입니다.</small>
+            </div>
+            <div class="time-inputs">
+              <input type="number" id="limitMinutes" min="0" max="99" step="1" inputmode="numeric" aria-label="제한시간 분" value="5">
+              <span>분</span>
+              <input type="number" id="limitSeconds" min="0" max="59" step="1" inputmode="numeric" aria-label="제한시간 초" value="0">
+              <span>초</span>
+            </div>
+          </div>
+          <div class="time-extra-settings">
+            <label class="check-option">
+              <input type="checkbox" id="showPlaybackTime" checked>
+              <span>재생시간 보이기</span>
+            </label>
+
+            <label class="check-option">
+              <input type="checkbox" id="showRemainingTime" checked>
+              <span>남은시간 보이기</span>
+            </label>
+
+            <label class="alert-option">
+              <input type="number" id="alertSeconds" min="0" max="5999" step="1" inputmode="numeric" value="30" aria-label="종료 전 알림 시간">
+              <span>초 전 알림</span>
+            </label>
+          </div>
+        </section>
+
+        <section>
+          <h3 class="section-title">본문 입력하기</h3>
+          <div class="editor-grid">
+            <div class="textarea-wrap">
+              <textarea id="scriptInput" placeholder="정견발표 원고를 여기에 붙여넣으세요."></textarea>
+              <div class="text-stats" id="textStats">0자 · 0어절</div>
+            </div>
+
+            <aside class="estimate-panel">
+              <button type="button" class="calculate-btn" id="calculateBtn">예상시간 계산</button>
+              <div style="color:var(--muted);font-size:11px;line-height:1.45;text-align:center;font-weight:600;">
+                한국어 기준: 표시 WPM × 2자/분 환산
+              </div>
+
+              <div class="estimate-card">
+                <div>느리게</div>
+                <span>130 WPM 기준</span>
+                <strong id="estimate130">0분 0초</strong>
+              </div>
+
+              <div class="estimate-card">
+                <div>대화체</div>
+                <span>160 WPM 기준</span>
+                <strong id="estimate160">0분 0초</strong>
+              </div>
+
+              <div class="estimate-card">
+                <div>빠르게</div>
+                <span>180 WPM 기준</span>
+                <strong id="estimate180">0분 0초</strong>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section>
+          <h3 class="section-title">테마</h3>
+          <div class="theme-options" role="radiogroup" aria-label="테마 선택">
+            <button type="button" class="theme-option active" data-theme-option="dark" role="radio" aria-checked="true">
+              <span class="theme-preview preview-dark"><i></i><i></i></span>
+              다크
+              <small>검은 배경과 흰 글씨</small>
+            </button>
+
+            <button type="button" class="theme-option" data-theme-option="amber" role="radio" aria-checked="false">
+              <span class="theme-preview preview-amber"><i></i><i></i></span>
+              엠버
+              <small>어두운 배경과 주황 글씨</small>
+            </button>
+
+            <button type="button" class="theme-option" data-theme-option="light" role="radio" aria-checked="false">
+              <span class="theme-preview preview-light"><i></i><i></i></span>
+              라이트
+              <small>밝은 배경과 검은 글씨</small>
+            </button>
+          </div>
+        </section>
+      </div>
+
+      <footer class="modal-actions">
+        <button type="button" class="action-btn" id="cancelBtn">취소</button>
+        <button type="button" class="action-btn save" id="saveBtn">저장하기</button>
+      </footer>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status">저장되었습니다.</div>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const STORAGE_KEY = "campaign-teleprompter-v1";
+
+      const els = {
+        body: document.body,
+        elapsed: document.getElementById("elapsed"),
+        total: document.getElementById("total"),
+        playbackTimer: document.getElementById("playbackTimer"),
+        remainingTime: document.getElementById("remainingTime"),
+        timeAlert: document.getElementById("timeAlert"),
+        scrollArea: document.getElementById("scrollArea"),
+        script: document.getElementById("script"),
+        scriptTransform: document.getElementById("scriptTransform"),
+        timerTransform: document.getElementById("timerTransform"),
+        playBtn: document.getElementById("playBtn"),
+        playLabel: document.getElementById("playLabel"),
+        stopBtn: document.getElementById("stopBtn"),
+        slowerBtn: document.getElementById("slowerBtn"),
+        fasterBtn: document.getElementById("fasterBtn"),
+        wpmDisplay: document.getElementById("wpmDisplay"),
+        fontUpBtn: document.getElementById("fontUpBtn"),
+        fontDownBtn: document.getElementById("fontDownBtn"),
+        mirrorHBtn: document.getElementById("mirrorHBtn"),
+        mirrorVBtn: document.getElementById("mirrorVBtn"),
+        settingsBtn: document.getElementById("settingsBtn"),
+        modal: document.getElementById("settingsModal"),
+        closeModalBtn: document.getElementById("closeModalBtn"),
+        cancelBtn: document.getElementById("cancelBtn"),
+        saveBtn: document.getElementById("saveBtn"),
+        scriptInput: document.getElementById("scriptInput"),
+        limitMinutes: document.getElementById("limitMinutes"),
+        limitSeconds: document.getElementById("limitSeconds"),
+        showPlaybackTime: document.getElementById("showPlaybackTime"),
+        showRemainingTime: document.getElementById("showRemainingTime"),
+        alertSeconds: document.getElementById("alertSeconds"),
+        calculateBtn: document.getElementById("calculateBtn"),
+        estimate130: document.getElementById("estimate130"),
+        estimate160: document.getElementById("estimate160"),
+        estimate180: document.getElementById("estimate180"),
+        textStats: document.getElementById("textStats"),
+        toast: document.getElementById("toast"),
+        themeOptions: [...document.querySelectorAll("[data-theme-option]")]
+      };
+
+      const defaults = {
+        text: "",
+        wpm: 150,
+        durationSeconds: 300,
+        showPlaybackTime: true,
+        showRemainingTime: true,
+        alertSeconds: 30,
+        fontSize: 62,
+        theme: "dark",
+        mirrorH: false,
+        mirrorV: false
+      };
+
+      let state = loadState();
+      state.durationSeconds = Math.max(1, Number(state.durationSeconds) || 300);
+      state.showPlaybackTime = state.showPlaybackTime !== false;
+      state.showRemainingTime = state.showRemainingTime !== false;
+      state.alertSeconds = Math.max(0, Number(state.alertSeconds) || 0);
+      let modalDraftTheme = state.theme;
+
+      let playing = false;
+      let animationId = null;
+      let lastFrameTime = null;
+      let elapsedSeconds = 0;
+      let progressedUnits = 0;
+      let alertShown = false;
+      let alertHideTimer = null;
+      let toastTimer = null;
+
+      function loadState() {
+        try {
+          const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+          return { ...defaults, ...stored };
+        } catch {
+          return { ...defaults };
+        }
+      }
+
+      function persistState() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      }
+
+      function countWords(text) {
+        const cleaned = String(text || "")
+          .replace(/[“”"'‘’()[\]{}<>]/g, " ")
+          .replace(/[.,!?;:…·—–\-_/\\|]+/g, " ")
+          .trim();
+
+        if (!cleaned) return 0;
+        return cleaned.split(/\s+/).filter(Boolean).length;
+      }
+
+      function countReadingUnits(text) {
+        // 한국어 프롬프터용 읽기 단위:
+        // 공백과 문장부호를 제외한 글자 수를 사용합니다.
+        return Array.from(
+          String(text || "")
+            .normalize("NFC")
+            .replace(/\s/g, "")
+            .replace(/[.,!?;:…·—–\-_/\\|“”"'‘’()[\]{}<>]/g, "")
+        ).length;
+      }
+
+      function readingUnitsPerMinute(wpm) {
+        // Speecher와 비슷한 체감을 위한 한국어 보정:
+        // 표시 160 WPM ≈ 실제 320자/분.
+        return Math.max(1, wpm * 2);
+      }
+
+      function formatClock(totalSeconds) {
+        const safe = Math.max(0, Math.round(Number.isFinite(totalSeconds) ? totalSeconds : 0));
+        const minutes = Math.floor(safe / 60);
+        const seconds = safe % 60;
+        return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+      }
+
+      function formatKoreanTime(totalSeconds) {
+        const safe = Math.max(0, Math.round(Number.isFinite(totalSeconds) ? totalSeconds : 0));
+        const minutes = Math.floor(safe / 60);
+        const seconds = safe % 60;
+        return `${minutes}분 ${seconds}초`;
+      }
+
+      function estimatedSeconds(units, wpm) {
+        return units > 0 ? (units / readingUnitsPerMinute(wpm)) * 60 : 0;
+      }
+
+      function currentReadingUnitCount() {
+        return countReadingUnits(state.text);
+      }
+
+      function updateTimer() {
+        const limit = Math.max(1, Number(state.durationSeconds) || 300);
+        const remaining = limit - elapsedSeconds;
+        const overLimit = remaining < 0;
+
+        els.elapsed.textContent = formatClock(elapsedSeconds);
+        els.total.textContent = formatClock(limit);
+        els.remainingTime.textContent = overLimit
+          ? `제한시간 초과 ${formatClock(Math.abs(remaining))}`
+          : `남은 시간 ${formatClock(remaining)}`;
+
+        els.playbackTimer.hidden = !state.showPlaybackTime;
+        els.remainingTime.hidden = !state.showRemainingTime;
+        els.timerTransform.classList.toggle(
+          "no-time",
+          !state.showPlaybackTime && !state.showRemainingTime
+        );
+
+        els.elapsed.classList.toggle("running", playing && !overLimit);
+        els.elapsed.classList.toggle("over-limit", overLimit);
+        els.remainingTime.classList.toggle("over-limit", overLimit);
+      }
+
+      function hideTimeAlert() {
+        clearTimeout(alertHideTimer);
+        alertHideTimer = null;
+        els.timeAlert.classList.remove("show");
+      }
+
+      function showTimeAlert(seconds) {
+        const safeSeconds = Math.max(0, Math.round(seconds));
+        els.timeAlert.textContent = `${safeSeconds}초 남았습니다`;
+        els.timeAlert.classList.add("show");
+
+        clearTimeout(alertHideTimer);
+        alertHideTimer = setTimeout(() => {
+          els.timeAlert.classList.remove("show");
+        }, 4000);
+      }
+
+      function checkTimeAlert(previousElapsed, currentElapsed) {
+        if (alertShown) return;
+
+        const limit = Math.max(1, Number(state.durationSeconds) || 300);
+        const alertSeconds = Math.max(0, Number(state.alertSeconds) || 0);
+        if (alertSeconds <= 0) return;
+
+        const triggerAt = Math.max(0, limit - alertSeconds);
+        if (previousElapsed <= triggerAt && currentElapsed >= triggerAt) {
+          alertShown = true;
+          showTimeAlert(Math.min(alertSeconds, limit));
+        }
+      }
+
+      function updateWpm() {
+        els.wpmDisplay.textContent = `${String(state.wpm).padStart(3, "0")} WPM`;
+        updateTimer();
+      }
+
+      function updateFontSize() {
+        document.documentElement.style.setProperty("--font-size", `${state.fontSize}px`);
+        requestAnimationFrame(syncScrollFromProgress);
+      }
+
+      function updateScript() {
+        const text = state.text.trim();
+        if (text) {
+          els.script.textContent = state.text;
+          els.script.classList.remove("empty");
+        } else {
+          els.script.textContent =
+`설정 버튼을 눌러 정견발표 원고를 입력하세요.
+
+Space 재생·일시정지
+↑ ↓ 속도 조절
+M 수평 미러
+Esc 종료`;
+          els.script.classList.add("empty");
+        }
+
+        progressedUnits = 0;
+        elapsedSeconds = 0;
+        alertShown = false;
+        hideTimeAlert();
+        requestAnimationFrame(() => {
+          setScrollProgress(0);
+          updateTimer();
+        });
+      }
+
+      function updateTheme(theme = state.theme) {
+        els.body.dataset.theme = theme;
+        els.themeOptions.forEach((button) => {
+          const selected = button.dataset.themeOption === theme;
+          button.classList.toggle("active", selected);
+          button.setAttribute("aria-checked", String(selected));
+        });
+      }
+
+      function updateMirror() {
+        const sx = state.mirrorH ? -1 : 1;
+        const sy = state.mirrorV ? -1 : 1;
+        const transform = `scale(${sx}, ${sy})`;
+
+        els.scriptTransform.style.transform = transform;
+        els.timerTransform.style.transform = transform;
+
+        els.mirrorHBtn.classList.toggle("active", state.mirrorH);
+        els.mirrorVBtn.classList.toggle("active", state.mirrorV);
+        els.mirrorHBtn.setAttribute("aria-pressed", String(state.mirrorH));
+        els.mirrorVBtn.setAttribute("aria-pressed", String(state.mirrorV));
+
+        requestAnimationFrame(syncScrollFromProgress);
+      }
+
+      function maxScroll() {
+        return Math.max(0, els.scrollArea.scrollHeight - els.scrollArea.clientHeight);
+      }
+
+      function setScrollProgress(progress) {
+        const normalized = Math.min(1, Math.max(0, progress));
+        const target = state.mirrorV
+          ? maxScroll() * (1 - normalized)
+          : maxScroll() * normalized;
+        els.scrollArea.scrollTop = target;
+      }
+
+      function syncScrollFromProgress() {
+        const units = currentReadingUnitCount();
+        const progress = units ? progressedUnits / units : 0;
+        setScrollProgress(progress);
+      }
+
+      function setPlaying(nextPlaying) {
+        if (nextPlaying && !state.text.trim()) {
+          openSettings();
+          return;
+        }
+
+        playing = nextPlaying;
+        els.playLabel.textContent = playing ? "일시정지" : "재생";
+        els.playBtn.setAttribute("aria-pressed", String(playing));
+        updateTimer();
+
+        if (playing) {
+          lastFrameTime = performance.now();
+          cancelAnimationFrame(animationId);
+          animationId = requestAnimationFrame(tick);
+        } else {
+          cancelAnimationFrame(animationId);
+          animationId = null;
+          lastFrameTime = null;
+        }
+      }
+
+      function togglePlay() {
+        const units = currentReadingUnitCount();
+        if (units && progressedUnits >= units) {
+          stopAndReset();
+        }
+        setPlaying(!playing);
+      }
+
+      function stopAndReset() {
+        setPlaying(false);
+        elapsedSeconds = 0;
+        progressedUnits = 0;
+        alertShown = false;
+        hideTimeAlert();
+        setScrollProgress(0);
+        updateTimer();
+      }
+
+      function tick(now) {
+        if (!playing) return;
+
+        const dt = Math.min(0.12, Math.max(0, (now - lastFrameTime) / 1000));
+        lastFrameTime = now;
+
+        const previousElapsed = elapsedSeconds;
+        elapsedSeconds += dt;
+        progressedUnits += (readingUnitsPerMinute(state.wpm) / 60) * dt;
+        checkTimeAlert(previousElapsed, elapsedSeconds);
+
+        const units = currentReadingUnitCount();
+        if (!units || progressedUnits >= units) {
+          progressedUnits = units;
+          syncScrollFromProgress();
+          updateTimer();
+          setPlaying(false);
+          showToast("원고가 끝났습니다.");
+          return;
+        }
+
+        syncScrollFromProgress();
+        updateTimer();
+        animationId = requestAnimationFrame(tick);
+      }
+
+      function changeWpm(amount) {
+        state.wpm = Math.min(300, Math.max(50, state.wpm + amount));
+        updateWpm();
+        persistState();
+      }
+
+      function changeFont(amount) {
+        state.fontSize = Math.min(120, Math.max(28, state.fontSize + amount));
+        updateFontSize();
+        persistState();
+      }
+
+      function toggleMirror(axis) {
+        if (axis === "h") state.mirrorH = !state.mirrorH;
+        if (axis === "v") state.mirrorV = !state.mirrorV;
+        updateMirror();
+        persistState();
+      }
+
+      function calculateEstimates() {
+        const units = countReadingUnits(els.scriptInput.value);
+        els.estimate130.textContent = formatKoreanTime(estimatedSeconds(units, 130));
+        els.estimate160.textContent = formatKoreanTime(estimatedSeconds(units, 160));
+        els.estimate180.textContent = formatKoreanTime(estimatedSeconds(units, 180));
+        updateTextStats();
+      }
+
+      function updateTextStats() {
+        const text = els.scriptInput.value;
+        els.textStats.textContent =
+          `${text.replace(/\s/g, "").length.toLocaleString("ko-KR")}자 · ${countWords(text).toLocaleString("ko-KR")}어절`;
+      }
+
+      function openSettings() {
+        setPlaying(false);
+        modalDraftTheme = state.theme;
+        els.scriptInput.value = state.text;
+        els.limitMinutes.value = Math.floor((Number(state.durationSeconds) || 300) / 60);
+        els.limitSeconds.value = (Number(state.durationSeconds) || 300) % 60;
+        els.showPlaybackTime.checked = state.showPlaybackTime !== false;
+        els.showRemainingTime.checked = state.showRemainingTime !== false;
+        els.alertSeconds.value = Math.max(0, Number(state.alertSeconds) || 0);
+        updateTextStats();
+        calculateEstimates();
+        updateTheme(modalDraftTheme);
+        els.modal.classList.add("open");
+        requestAnimationFrame(() => els.scriptInput.focus());
+      }
+
+      function closeSettings({ restoreTheme = true } = {}) {
+        if (restoreTheme) updateTheme(state.theme);
+        els.modal.classList.remove("open");
+      }
+
+      function saveSettings() {
+        const minutes = Math.max(0, Math.min(99, Number.parseInt(els.limitMinutes.value, 10) || 0));
+        const seconds = Math.max(0, Math.min(59, Number.parseInt(els.limitSeconds.value, 10) || 0));
+
+        state.text = els.scriptInput.value;
+        state.durationSeconds = Math.max(1, minutes * 60 + seconds);
+        state.showPlaybackTime = els.showPlaybackTime.checked;
+        state.showRemainingTime = els.showRemainingTime.checked;
+        state.alertSeconds = Math.max(
+          0,
+          Math.min(5999, Number.parseInt(els.alertSeconds.value, 10) || 0)
+        );
+        state.theme = modalDraftTheme;
+        persistState();
+        updateTheme(state.theme);
+        updateScript();
+        closeSettings({ restoreTheme: false });
+        showToast("설정이 저장되었습니다.");
+      }
+
+      function showToast(message) {
+        els.toast.textContent = message;
+        els.toast.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => els.toast.classList.remove("show"), 1700);
+      }
+
+      els.playBtn.addEventListener("click", togglePlay);
+      els.stopBtn.addEventListener("click", stopAndReset);
+      els.slowerBtn.addEventListener("click", () => changeWpm(-5));
+      els.fasterBtn.addEventListener("click", () => changeWpm(5));
+      els.fontUpBtn.addEventListener("click", () => changeFont(4));
+      els.fontDownBtn.addEventListener("click", () => changeFont(-4));
+      els.mirrorHBtn.addEventListener("click", () => toggleMirror("h"));
+      els.mirrorVBtn.addEventListener("click", () => toggleMirror("v"));
+      els.settingsBtn.addEventListener("click", openSettings);
+
+      els.closeModalBtn.addEventListener("click", () => closeSettings());
+      els.cancelBtn.addEventListener("click", () => closeSettings());
+      els.saveBtn.addEventListener("click", saveSettings);
+      els.calculateBtn.addEventListener("click", calculateEstimates);
+      els.scriptInput.addEventListener("input", updateTextStats);
+
+      [els.limitMinutes, els.limitSeconds].forEach((input) => {
+        input.addEventListener("input", () => {
+          if (input === els.limitMinutes) {
+            input.value = Math.max(0, Math.min(99, Number.parseInt(input.value, 10) || 0));
+          } else {
+            input.value = Math.max(0, Math.min(59, Number.parseInt(input.value, 10) || 0));
+          }
+        });
+      });
+
+      els.alertSeconds.addEventListener("input", () => {
+        els.alertSeconds.value = Math.max(
+          0,
+          Math.min(5999, Number.parseInt(els.alertSeconds.value, 10) || 0)
+        );
+      });
+
+      els.modal.addEventListener("click", (event) => {
+        if (event.target === els.modal) closeSettings();
+      });
+
+      els.themeOptions.forEach((button) => {
+        button.addEventListener("click", () => {
+          modalDraftTheme = button.dataset.themeOption;
+          updateTheme(modalDraftTheme);
+        });
+      });
+
+      document.addEventListener("keydown", (event) => {
+        const modalOpen = els.modal.classList.contains("open");
+        const typing = ["TEXTAREA", "INPUT"].includes(document.activeElement?.tagName);
+
+        if (event.key === "Escape") {
+          event.preventDefault();
+          if (modalOpen) closeSettings();
+          else stopAndReset();
+          return;
+        }
+
+        if (modalOpen || typing) return;
+
+        if (event.code === "Space") {
+          event.preventDefault();
+          togglePlay();
+          return;
+        }
+
+        if (event.key === "ArrowUp") {
+          event.preventDefault();
+          changeWpm(5);
+          return;
+        }
+
+        if (event.key === "ArrowDown") {
+          event.preventDefault();
+          changeWpm(-5);
+          return;
+        }
+
+        if (event.key.toLowerCase() === "m") {
+          event.preventDefault();
+          toggleMirror("h");
+        }
+      });
+
+      window.addEventListener("resize", syncScrollFromProgress);
+
+      updateTheme();
+      updateWpm();
+      updateFontSize();
+      updateScript();
+      updateMirror();
+    })();
+  </script>
+</body>
+</html>
