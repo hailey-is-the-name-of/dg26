@@ -779,7 +779,7 @@
         <div class="scroll-area" id="scrollArea">
           <div class="script-transform" id="scriptTransform">
             <article class="script empty" id="script">
-설정 버튼을 눌러 정견발표 원고를 입력하세요.
+설정 버튼을 눌러 원고를 입력하세요.
 
 Space 재생·일시정지
 ↑ ↓ 속도 조절
@@ -894,7 +894,7 @@ Esc 종료
             <aside class="estimate-panel">
               <button type="button" class="calculate-btn" id="calculateBtn">예상시간 계산</button>
               <div style="color:var(--muted);font-size:11px;line-height:1.45;text-align:center;font-weight:600;">
-                한국어 기준: 표시 WPM × 2자/분 환산
+                한국어 기준: 160 WPM ≈ 285자/분
               </div>
 
               <div class="estimate-card">
@@ -1051,20 +1051,20 @@ Esc 종료
       }
 
       function countReadingUnits(text) {
-        // 한국어 프롬프터용 읽기 단위:
-        // 공백과 문장부호를 제외한 글자 수를 사용합니다.
+        // Speecher 한국어 계산과 동일하게 공백만 제외합니다.
+        // 문장부호, 숫자, 따옴표, 특수기호도 글자 수에 포함됩니다.
         return Array.from(
           String(text || "")
             .normalize("NFC")
             .replace(/\s/g, "")
-            .replace(/[.,!?;:…·—–\-_/\\|“”"'‘’()[\]{}<>]/g, "")
         ).length;
       }
 
       function readingUnitsPerMinute(wpm) {
-        // Speecher와 비슷한 체감을 위한 한국어 보정:
-        // 표시 160 WPM ≈ 실제 320자/분.
-        return Math.max(1, wpm * 2);
+        // Speecher의 한국어 보정값:
+        // 대화체 160 WPM = 약 285자/분.
+        // 다른 WPM 값은 160을 기준으로 비례 조정합니다.
+        return Math.max(1, 285 * (wpm / 160));
       }
 
       function formatClock(totalSeconds) {
