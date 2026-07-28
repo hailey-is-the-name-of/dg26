@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="color-scheme" content="dark light" />
-  <title>대구시당 프롬프터</title>
+  <title>더불어민주당 대구시당 프롬프터</title>
 
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link rel="stylesheet" crossorigin
@@ -779,7 +779,7 @@
         <div class="scroll-area" id="scrollArea">
           <div class="script-transform" id="scriptTransform">
             <article class="script empty" id="script">
-설정 버튼을 눌러 원고를 입력하세요.
+설정 버튼을 눌러 정견발표 원고를 입력하세요.
 
 Space 재생·일시정지
 ↑ ↓ 속도 조절
@@ -839,7 +839,7 @@ Esc 종료
           설정
         </button>
       </div>
-      <div class="shortcut-note">실행 중: Space = 재생/일시정지 · ↑↓ = 속도 · M = 수평 미러 · Esc = 종료</div>
+      <div class="shortcut-note" id="shortcutNote">실행 중: Space = 재생/일시정지 · ↑↓ = 속도 · Page Up/Down = 속도 · M = 수평 미러 · Esc = 종료</div>
     </footer>
   </main>
 
@@ -879,6 +879,13 @@ Esc 종료
             <label class="alert-option">
               <input type="number" id="alertSeconds" min="0" max="5999" step="1" inputmode="numeric" value="30" aria-label="종료 전 알림 시간">
               <span>초 전 알림</span>
+            </label>
+          </div>
+
+          <div class="time-extra-settings" style="grid-template-columns:1fr;">
+            <label class="check-option">
+              <input type="checkbox" id="usePageKeys" checked>
+              <span>WPM 조절에 Page Up / Page Down 사용하기</span>
             </label>
           </div>
         </section>
@@ -989,6 +996,8 @@ Esc 종료
         showPlaybackTime: document.getElementById("showPlaybackTime"),
         showRemainingTime: document.getElementById("showRemainingTime"),
         alertSeconds: document.getElementById("alertSeconds"),
+        usePageKeys: document.getElementById("usePageKeys"),
+        shortcutNote: document.getElementById("shortcutNote"),
         calculateBtn: document.getElementById("calculateBtn"),
         estimate130: document.getElementById("estimate130"),
         estimate160: document.getElementById("estimate160"),
@@ -1005,6 +1014,7 @@ Esc 종료
         showPlaybackTime: true,
         showRemainingTime: true,
         alertSeconds: 30,
+        usePageKeys: true,
         fontSize: 62,
         theme: "dark",
         mirrorH: false,
@@ -1016,6 +1026,7 @@ Esc 종료
       state.showPlaybackTime = state.showPlaybackTime !== false;
       state.showRemainingTime = state.showRemainingTime !== false;
       state.alertSeconds = Math.max(0, Number(state.alertSeconds) || 0);
+      state.usePageKeys = state.usePageKeys !== false;
       let modalDraftTheme = state.theme;
 
       let playing = false;
@@ -1146,6 +1157,12 @@ Esc 종료
       function updateWpm() {
         els.wpmDisplay.textContent = `${String(state.wpm).padStart(3, "0")} WPM`;
         updateTimer();
+      }
+
+      function updateShortcutNote() {
+        const pageKeyText = state.usePageKeys ? " · Page Up/Down = 속도" : "";
+        els.shortcutNote.textContent =
+          `실행 중: Space = 재생/일시정지 · ↑↓ = 속도${pageKeyText} · M = 수평 미러 · Esc = 종료`;
       }
 
       function updateFontSize() {
@@ -1330,6 +1347,7 @@ Esc 종료`;
         els.showPlaybackTime.checked = state.showPlaybackTime !== false;
         els.showRemainingTime.checked = state.showRemainingTime !== false;
         els.alertSeconds.value = Math.max(0, Number(state.alertSeconds) || 0);
+        els.usePageKeys.checked = state.usePageKeys !== false;
         updateTextStats();
         calculateEstimates();
         updateTheme(modalDraftTheme);
@@ -1354,10 +1372,12 @@ Esc 종료`;
           0,
           Math.min(5999, Number.parseInt(els.alertSeconds.value, 10) || 0)
         );
+        state.usePageKeys = els.usePageKeys.checked;
         state.theme = modalDraftTheme;
         persistState();
         updateTheme(state.theme);
         updateScript();
+        updateShortcutNote();
         closeSettings({ restoreTheme: false });
         showToast("설정이 저장되었습니다.");
       }
@@ -1444,6 +1464,18 @@ Esc 종료`;
           return;
         }
 
+        if (state.usePageKeys && event.key === "PageUp") {
+          event.preventDefault();
+          changeWpm(10);
+          return;
+        }
+
+        if (state.usePageKeys && event.key === "PageDown") {
+          event.preventDefault();
+          changeWpm(-10);
+          return;
+        }
+
         if (event.key.toLowerCase() === "m") {
           event.preventDefault();
           toggleMirror("h");
@@ -1454,6 +1486,7 @@ Esc 종료`;
 
       updateTheme();
       updateWpm();
+      updateShortcutNote();
       updateFontSize();
       updateScript();
       updateMirror();
