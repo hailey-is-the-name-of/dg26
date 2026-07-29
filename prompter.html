@@ -55,6 +55,25 @@
       --shadow: 0 24px 80px rgba(30,40,60,0.18);
     }
 
+    body[data-theme="yellow"] {
+      --bg: #000000;
+      --surface: #000000;
+      --surface-strong: #000000;
+      --surface-soft: #000000;
+      --text: #ffff00;
+      --muted: #ffff00;
+      --line: rgba(255, 255, 0, 0.42);
+      --accent: #ffff00;
+      --accent-strong: #ffff00;
+      --accent-text: #000000;
+      --danger: #ff4d4d;
+      --shadow: 0 0 0 rgba(0,0,0,0);
+    }
+
+    body[data-theme="yellow"] {
+      background: #000000;
+    }
+
     * { box-sizing: border-box; }
 
     html, body {
@@ -633,7 +652,7 @@
 
     .theme-options {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 12px;
     }
 
@@ -677,6 +696,8 @@
     .preview-amber i:last-child { background: #ffb83e; }
     .preview-light i:first-child { background: #eef1f5; border: 1px solid #d9dee6; }
     .preview-light i:last-child { background: #246fe5; }
+    .preview-yellow i:first-child { background: #000000; border: 1px solid #ffff00; }
+    .preview-yellow i:last-child { background: #ffff00; }
 
     .theme-option small {
       display: block;
@@ -944,6 +965,12 @@ Esc 종료
               <span class="theme-preview preview-light"><i></i><i></i></span>
               라이트
               <small>밝은 배경과 검은 글씨</small>
+            </button>
+
+            <button type="button" class="theme-option" data-theme-option="yellow" role="radio" aria-checked="false">
+              <span class="theme-preview preview-yellow"><i></i><i></i></span>
+              블랙·옐로우
+              <small>완전 검정 배경과 완전 노란 글씨</small>
             </button>
           </div>
         </section>
